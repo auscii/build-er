@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 // 🏘️ Local imports
 import '../../core/providers/user.dart';
+import '../../core/utils/global.dart';
 import 'login.dart';
 import '../../router/routes.dart';
 import '../../router/router.dart';
@@ -70,10 +71,10 @@ class ResetPassword extends StatelessWidget {
                           ),
                         ),
                         child: const Text(
-                          "Reset Password",
+                          "RESET PASSWORD",
                           style: TextStyle(
-                            fontFamily: "SF Pro Rounded",
-                            fontSize: 18,
+                            fontFamily: Var.defaultFont,
+                            fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
                         ),

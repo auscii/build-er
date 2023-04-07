@@ -53,6 +53,11 @@ class SwitchRoles extends StatelessWidget {
   Widget _generateRoles(BuildContext context) {
     Widget roleItem(Roles role) => ElevatedButton(
           onPressed: () => _navToRole(role),
+          // onPressed: () {
+          //   print("navigate to PagesRoutes.user");
+          //   GlobalNavigator.router.currentState!
+          //       .pushReplacementNamed(PageNavigator.id, arguments: PagesRoutes.user);
+          // },
           style: ElevatedButton.styleFrom(
             primary: AppColors.bgDark,
             onSurface: AppColors.primary,

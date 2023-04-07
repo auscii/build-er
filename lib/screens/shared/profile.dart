@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 // 🏘️ Local imports
 import '../../core/providers/user.dart';
+import '../../core/utils/global.dart';
 import '../../styles/ui/colors.dart';
 import '../../router/navigator/roles.dart';
 
@@ -96,9 +97,9 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                     child: const Text(
-                      "Logout",
+                      Var.logout,
                       style: TextStyle(
-                        fontFamily: "SF Pro Rounded",
+                        fontFamily: Var.defaultFont,
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),

@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:client/core/models/user.dart';
 import 'package:client/core/providers/user.dart';
+import 'package:client/core/utils/global.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-// 🏘️ Local imports
 import '../../styles/icons/builder_icons.dart';
 import '../../styles/ui/colors.dart';
 import '../../router/router.dart';
@@ -15,14 +15,21 @@ import '../../router/routes.dart';
 Widget buildBranding(BuildContext context) {
   return Column(
     mainAxisSize: MainAxisSize.min,
-    children: const <Widget>[
-      Icon(ProjectBuilder.logo, size: 100),
-      SizedBox(height: 18),
-      Text(
-        "ProjectBuilder",
+    children: <Widget>[
+      Image.asset(
+        Var.appLogo,
+        width: 250,
+        height: 250,
+        fit: BoxFit.cover,
+        alignment: Alignment.center,
+        filterQuality: FilterQuality.high,
+      ),
+      const SizedBox(height: 18),
+      const Text(
+        Var.appName,
         style: TextStyle(
-          fontFamily: "SF Pro Rounded",
-          fontSize: 36,
+          fontFamily: Var.defaultFont,
+          fontSize: 45,
           fontWeight: FontWeight.w700,
         ),
       ),
@@ -101,7 +108,17 @@ class Onboarding extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         ),
-        child: icon,
+        child: //icon,
+          const Text(
+            "Login to your Account",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: AppColors.input,
+              fontSize: 20,
+              fontFamily: Var.defaultFont,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
       ),
     );
   }
@@ -128,26 +145,31 @@ class Onboarding extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               buildBranding(context),
-              const SizedBox(height: 40),
-              const Text(
-                "Login to your Account ",
-                style: TextStyle(
-                  fontFamily: "SF Pro Rounded",
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18,
-                ),
-              ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 25),
+              // const Text(
+              //   "Login to your Account ",
+              //   style: TextStyle(
+              //     fontFamily: Var.defaultFont,
+              //     fontWeight: FontWeight.w700,
+              //     fontSize: 25,
+              //   ),
+              // ),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  authLet(() => _googleSignIn(context),
-                      const Icon(ProjectBuilder.google, size: 36)),
-                  const SizedBox(width: 15),
-                  authLet(() => _gitHubSignIn(context),
-                      const Icon(ProjectBuilder.github, size: 36)),
-                  const SizedBox(width: 15),
-                  authLet(_emailSignIn, const Icon(ProjectBuilder.email, size: 36)),
+                  // authLet(() => _googleSignIn(context),
+                  //     const Icon(ProjectBuilder.google, size: 36)),
+                  // const SizedBox(width: 15),
+                  // authLet(() => _gitHubSignIn(context),
+                  //     const Icon(ProjectBuilder.github, size: 36)),
+                  // const SizedBox(width: 15),
+                  authLet(
+                    _emailSignIn,
+                    const Icon(
+                      ProjectBuilder.email,
+                      size: 36
+                    )
+                  ),
                 ],
               ),
               const SizedBox(height: 20),
@@ -180,8 +202,8 @@ Container createAccountShortcut() {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: AppColors.primary,
-              fontSize: 13,
-              fontFamily: "SF Pro Rounded",
+              fontSize: 18,
+              fontFamily: Var.defaultFont,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -189,10 +211,9 @@ Container createAccountShortcut() {
             "Create Account",
             textAlign: TextAlign.center,
             style: TextStyle(
-              // color: Color(0xff4285f4),
               color: AppColors.success,
-              fontSize: 13,
-              fontFamily: "SF Pro Rounded",
+              fontSize: 18,
+              fontFamily: Var.defaultFont,
               fontWeight: FontWeight.w700,
             ),
           ),

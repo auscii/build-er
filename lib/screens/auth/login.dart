@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 // 🏘️ Local imports
 import '../../core/models/user.dart';
 import '../../core/providers/user.dart';
+import '../../core/utils/global.dart';
 import '../../core/utils/validator.dart';
 import '../../router/router.dart';
 import '../../router/routes.dart';
@@ -97,10 +98,10 @@ class Login extends StatelessWidget {
                             ),
                           ),
                           child: const Text(
-                            "Login",
+                            "LOGIN",
                             style: TextStyle(
-                              fontFamily: "SF Pro Rounded",
-                              fontSize: 18,
+                              fontFamily: Var.defaultFont,
+                              fontSize: 20,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -117,8 +118,8 @@ class Login extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: AppColors.success,
-                      fontSize: 13,
-                      fontFamily: "SF Pro Rounded",
+                      fontSize: 18,
+                      fontFamily: Var.defaultFont,
                       fontWeight: FontWeight.w700,
                     ),
                   ),

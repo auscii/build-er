@@ -34,6 +34,12 @@ class GlobalNavigator {
       case GlobalRoutes.switchRoles:
         return PageRouteBuilder(
             pageBuilder: (_, __, ___) => const SwitchRoles());
+      case PagesRoutes.user:
+        return PageRouteBuilder(
+          pageBuilder: (_, __, ___) => PageNavigator(
+            routeToNavigate: PagesRoutes.user //settings.arguments as String,
+          ),
+        );
       default:
         return PageRouteBuilder(
             pageBuilder: (_, __, ___) => const AuthNavigator());
@@ -44,7 +50,8 @@ class GlobalNavigator {
     if (FirebaseAuth.instance.currentUser == null) {
       return GlobalRoutes.auth;
     } else {
-      return GlobalRoutes.switchRoles;
+      return PagesRoutes.user;
+      // return GlobalRoutes.switchRoles;
     }
   }
 }

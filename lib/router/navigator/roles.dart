@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../../core/models/user.dart';
 import '../../core/providers/appdata.dart';
 import '../../core/providers/user.dart';
+import '../../core/utils/global.dart';
 import '../router.dart';
 import '../routes.dart';
 import '../../styles/icons/builder_icons.dart';
@@ -54,20 +55,20 @@ class PageNavigator extends StatelessWidget {
       return SizedBox(
         height: kIsWeb ? 50 : null,
         child: ElevatedButton(
-          onPressed: () => Provider.of<UserProvider>(context, listen: false)
-              .signOut(context),
+          onPressed: () 
+            => Provider.of<UserProvider>(context, listen: false).signOut(context),
           style: ElevatedButton.styleFrom(
             primary: AppColors.primary,
-            padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 80),
+            padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 40),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
           ),
           child: const Text(
-            "Logout",
+            Var.logout,
             style: TextStyle(
-              fontFamily: "SF Pro Rounded",
-              fontSize: 18,
+              fontFamily: Var.defaultFont,
+              fontSize: 20,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -82,17 +83,25 @@ class PageNavigator extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CircleAvatar(
-              minRadius: 30,
-              maxRadius: 60,
-              backgroundColor: AppColors.input.withOpacity(0.7),
-              backgroundImage: NetworkImage(
-                Provider.of<UserProvider>(context).user.profilePhoto,
-              ),
+            // CircleAvatar(
+            //   minRadius: 30,
+            //   maxRadius: 60,
+            //   backgroundColor: AppColors.input.withOpacity(0.7),
+            //   backgroundImage: NetworkImage(
+            //     Provider.of<UserProvider>(context).user.profilePhoto,
+            //   ),
+            // ),
+            Image.asset(
+              Var.appLogo,
+              width: 150,
+              height: 150,
+              fit: BoxFit.cover,
+              alignment: Alignment.topLeft,
+              filterQuality: FilterQuality.high,
             ),
             const SizedBox(height: 20),
             Text(
-              Provider.of<UserProvider>(context).user.name,
+              "NAME: \n ${Provider.of<UserProvider>(context).user.name}",
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 24,
@@ -180,53 +189,59 @@ class PageNavigator extends StatelessWidget {
     }
 
     return Drawer(
-      width: 270,
+      width: 260,
       child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            profile(),
-            const SizedBox(height: 40),
-            Column(
+        child: 
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+            child:
+              Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildRoles(context),
-                  navLink(
-                    icon: ProjectBuilder.user,
-                    label: "Profile",
-                    onPressed: () {
-                      Provider.of<AppData>(context, listen: false)
-                          .changeRoute(SharedRoutes.profile);
-                      PageRouter.router.currentState!
-                          .pushReplacementNamed(SharedRoutes.profile);
-                    },
+                  profile(),
+                  const SizedBox(height: 40),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      buildRoles(context),
+                      navLink(
+                        icon: ProjectBuilder.user,
+                        label: "Profile",
+                        onPressed: () {
+                          Provider.of<AppData>(context, listen: false)
+                              .changeRoute(SharedRoutes.profile);
+                          PageRouter.router.currentState!
+                              .pushReplacementNamed(SharedRoutes.profile);
+                        },
+                      ),
+                      navLink(
+                        icon: Icons.settings,
+                        label: "Settings",
+                        onPressed: () {
+                          Provider.of<AppData>(context, listen: false)
+                              .changeRoute(SharedRoutes.settings);
+                          PageRouter.router.currentState!
+                              .pushReplacementNamed(SharedRoutes.settings);
+                        },
+                      ),
+                      navLink(
+                        icon: ProjectBuilder.info,
+                        label: "About",
+                        onPressed: () {
+                          Provider.of<AppData>(context, listen: false)
+                              .changeRoute(SharedRoutes.about);
+                          PageRouter.router.currentState!
+                              .pushReplacementNamed(SharedRoutes.about);
+                        },
+                      ),
+                    ]
                   ),
-                  navLink(
-                    icon: Icons.settings,
-                    label: "Settings",
-                    onPressed: () {
-                      Provider.of<AppData>(context, listen: false)
-                          .changeRoute(SharedRoutes.settings);
-                      PageRouter.router.currentState!
-                          .pushReplacementNamed(SharedRoutes.settings);
-                    },
-                  ),
-                  navLink(
-                    icon: ProjectBuilder.info,
-                    label: "About",
-                    onPressed: () {
-                      Provider.of<AppData>(context, listen: false)
-                          .changeRoute(SharedRoutes.about);
-                      PageRouter.router.currentState!
-                          .pushReplacementNamed(SharedRoutes.about);
-                    },
-                  ),
-                ]),
-            const SizedBox(height: 40),
-            logoutButton(),
-          ],
-        ),
+                  const SizedBox(height: 40),
+                  logoutButton(),
+                ],
+              ),
+          )
       ),
     );
   }
@@ -243,7 +258,7 @@ class PageNavigator extends StatelessWidget {
         primary: AppColors.primary,
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 60),
         textStyle: const TextStyle(
-          fontFamily: "SF Pro Rounded",
+          fontFamily: Var.defaultFont,
           fontSize: 18,
           fontWeight: FontWeight.w700,
         ),
@@ -279,7 +294,7 @@ class PageAppBar extends StatelessWidget {
             Text(
               Provider.of<AppData>(context).currentRoute,
               style: const TextStyle(
-                fontFamily: "SF Pro Rounded",
+                fontFamily: Var.defaultFont,
                 fontSize: 24,
                 fontWeight: FontWeight.w500,
               ),

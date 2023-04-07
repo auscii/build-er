@@ -8,6 +8,7 @@ import '../../core/models/garage.dart';
 // 🏘️ Local imports
 import '../../core/models/user.dart';
 import '../../core/providers/user.dart';
+import '../../core/utils/global.dart';
 import '../../core/utils/validator.dart';
 import '../../router/router.dart';
 import '../../router/routes.dart';
@@ -57,9 +58,9 @@ class Register extends StatelessWidget {
                 const Text(
                   "Create your Account",
                   style: TextStyle(
-                    fontFamily: "SF Pro Rounded",
+                    fontFamily: Var.defaultFont,
                     fontWeight: FontWeight.w700,
-                    fontSize: 18,
+                    fontSize: 25,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -185,10 +186,10 @@ class Register extends StatelessWidget {
                           ),
                         ),
                         child: const Text(
-                          "Register",
+                          "REGISTER",
                           style: TextStyle(
-                            fontFamily: "SF Pro Rounded",
-                            fontSize: 18,
+                            fontFamily: Var.defaultFont,
+                            fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
                         ),

@@ -1,7 +1,6 @@
+import 'package:client/core/utils/global.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-// 🏘️ Local imports
 import 'providers/location.dart';
 import 'providers/appdata.dart';
 import 'providers/user.dart';
@@ -20,10 +19,10 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => AppData()),
       ],
       child: MaterialApp(
-        title: "Build-er",
+        title: Var.builder,
         theme: ThemeData(
-          scaffoldBackgroundColor: AppColors.bgDark,
-          fontFamily: "SF Pro Rounded",
+          // scaffoldBackgroundColor: AppColors.bgDark,
+          fontFamily: Var.defaultFont,
         ),
         darkTheme: ThemeData.light(), //ThemeData.dark(),
         navigatorKey: GlobalNavigator.router,
