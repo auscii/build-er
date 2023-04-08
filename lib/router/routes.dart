@@ -1,13 +1,14 @@
 
 // 🏘️ Local imports
 import '../screens/auth/resetPassword.dart';
+import '../screens/roles/user/shopping_cart.dart';
 import 'navigator/auth.dart';
 import 'navigator/roles.dart';
 import '../../screens/auth/login.dart';
 import '../../screens/auth/onboarding.dart';
 import '../../screens/auth/register.dart';
 import '../../screens/roles/admin/home.dart';
-import '../../screens/roles/garage/home.dart';
+import '../../screens/roles/client/home.dart';
 import '../../screens/roles/switch_roles.dart';
 import '../../screens/roles/user/home.dart';
 
@@ -30,11 +31,12 @@ class SharedRoutes {
   static const String settings = "settings";
   static const String profile = "profile";
   static const String about = "about";
+  static const String shoppingCart = ShoppingCart.id;
 }
 
 class PagesRoutes {
   static const String admin = AdminHome.id;
   static const String user = UserHome.id;
-  static const String garage = GarageHome.id;
+  static const String client = ClientHome.id;
   static const String requestRole = "request_role";
 }

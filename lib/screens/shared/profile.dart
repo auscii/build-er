@@ -71,7 +71,7 @@ class ProfilePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 const Text(
-                  "No Activity Currently, Book a garage and your activity will be shown here",
+                  "No Activity Currently, Book a client and your activity will be shown here",
                   softWrap: true,
                   textAlign: TextAlign.center,
                   style: TextStyle(

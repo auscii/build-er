@@ -80,10 +80,10 @@ class AdminHome extends StatelessWidget {
                       children: [
                         _buildAddItem(
                           context: context,
-                          label: "+ Add Garage",
+                          label: "+ Add Client",
                           onPressed: () => showDialog(
                             context: context,
-                            builder: (context) => AddGarage(
+                            builder: (context) => AddClient(
                               admin: true,
                             ),
                           ),
@@ -119,9 +119,9 @@ class AdminHome extends StatelessWidget {
                     SizedBox(height: 27),
                     Expanded(
                       child: TabbedLayout(
-                        tabLabel: ["Garage Requests", "Admin Requests"],
+                        tabLabel: ["Client Requests", "Admin Requests"],
                         tabs: [
-                          GarageRequestsTab(),
+                          ClientRequestsTab(),
                           AdminRequests(),
                         ],
                       ),
@@ -194,8 +194,8 @@ class TabbedLayout extends StatelessWidget {
   }
 }
 
-class GarageRequestsTab extends StatelessWidget {
-  const GarageRequestsTab({Key? key}) : super(key: key);
+class ClientRequestsTab extends StatelessWidget {
+  const ClientRequestsTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -203,23 +203,23 @@ class GarageRequestsTab extends StatelessWidget {
         builder: (context, instance, child) => ListView.separated(
               padding: const EdgeInsets.all(5),
               separatorBuilder: (_, __) => const SizedBox(height: 15),
-              itemCount: instance.garageRequest.length,
+              itemCount: instance.clientRequest.length,
               itemBuilder: (_, i) => RoundedTile(
-                label: instance.garageRequest[i].garage.name,
-                avatar: Image.network(instance.garageRequest[i].garage.image),
+                label: instance.clientRequest[i].client.name,
+                avatar: Image.network(instance.clientRequest[i].client.image),
                 icon: const Icon(ProjectBuilder.add),
                 onPressed: () {
                   updateUserDetails(
-                    userId: instance.garageRequest[i].garage.userUid,
-                    role: Roles.garage,
+                    userId: instance.clientRequest[i].client.userUid,
+                    role: Roles.client,
                   ).then(
                     (_) => instance
-                        .createGarage(
-                          garage: instance.garageRequest[i].garage,
+                        .createClient(
+                          client: instance.clientRequest[i].client,
                         )
                         .then((value) => FirebaseFirestore.instance
-                            .collection("garageRequests")
-                            .doc(instance.garageRequest[i].userId)
+                            .collection("clientRequests")
+                            .doc(instance.clientRequest[i].userId)
                             .delete()),
                   );
                 },

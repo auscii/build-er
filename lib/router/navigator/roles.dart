@@ -125,8 +125,8 @@ class PageNavigator extends StatelessWidget {
           case Roles.user:
             route = PagesRoutes.user;
             break;
-          case Roles.garage:
-            route = PagesRoutes.garage;
+          case Roles.client:
+            route = PagesRoutes.client;
             break;
           default:
             route = SharedRoutes.profile;
@@ -142,7 +142,7 @@ class PageNavigator extends StatelessWidget {
             return ProjectBuilder.admin;
           case Roles.user:
             return ProjectBuilder.home;
-          case Roles.garage:
+          case Roles.client:
             return ProjectBuilder.car;
           default:
             return ProjectBuilder.info;
@@ -155,8 +155,8 @@ class PageNavigator extends StatelessWidget {
             return "Admin";
           case Roles.user:
             return "Home";
-          case Roles.garage:
-            return "Garage";
+          case Roles.client:
+            return "Client";
           default:
             return "User ⚠";
         }
@@ -233,6 +233,16 @@ class PageNavigator extends StatelessWidget {
                               .changeRoute(SharedRoutes.about);
                           PageRouter.router.currentState!
                               .pushReplacementNamed(SharedRoutes.about);
+                        },
+                      ),
+                      navLink(
+                        icon: ProjectBuilder.products,
+                        label: "Products",
+                        onPressed: () {
+                          Provider.of<AppData>(context, listen: false)
+                              .changeRoute(SharedRoutes.shoppingCart);
+                          PageRouter.router.currentState!
+                              .pushReplacementNamed(SharedRoutes.shoppingCart);
                         },
                       ),
                     ]

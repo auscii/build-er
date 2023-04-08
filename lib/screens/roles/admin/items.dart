@@ -6,7 +6,7 @@ import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 import 'package:provider/provider.dart';
 
 // 🏘️ Local imports
-import '../../../core/models/garage.dart';
+import '../../../core/models/client.dart';
 import '../../../core/models/user.dart';
 import '../../../core/providers/appdata.dart';
 import '../../../core/utils/validator.dart';
@@ -111,44 +111,44 @@ class _AddAdminState extends State<AddAdmin> {
     );
   }
 
-  late List<Garage> users = [];
+  late List<Client> users = [];
 
   @override
   void initState() {
     super.initState();
 
     FirebaseFirestore.instance
-        .collection('garage')
+        .collection('client')
         .withConverter(
-          fromFirestore: Garage.fromFirestore,
-          toFirestore: (Garage userModel, _) => userModel.toFirestore(),
+          fromFirestore: Client.fromFirestore,
+          toFirestore: (Client userModel, _) => userModel.toFirestore(),
         )
         .snapshots()
         .listen((val) {
       setState(() {
         users = val.docs
-            .map((QueryDocumentSnapshot<Garage> garageSnapshot) =>
-                garageSnapshot.data())
+            .map((QueryDocumentSnapshot<Client> clientSnapshot) =>
+                clientSnapshot.data())
             .toList();
       });
     });
   }
 
   void runFilter(String enteredKeyword) {
-    List<Garage> results = [];
+    List<Client> results = [];
     if (enteredKeyword.isEmpty) {
       // if the search field is empty or only contains white-space, we'll display all users
       results = users;
     } else {
       results = users
-              .where((garage) => garage.name
+              .where((client) => client.name
                   .toLowerCase()
                   .contains(enteredKeyword.toLowerCase()))
               .toList()
               .isEmpty
           ? users
           : users
-              .where((garage) => garage.name
+              .where((client) => client.name
                   .toLowerCase()
                   .contains(enteredKeyword.toLowerCase()))
               .toList();
@@ -258,8 +258,8 @@ class RoundedTile extends StatelessWidget {
   }
 }
 
-class AddGarage extends StatelessWidget {
-  AddGarage({required this.admin, super.key});
+class AddClient extends StatelessWidget {
+  AddClient({required this.admin, super.key});
 
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
@@ -283,7 +283,7 @@ class AddGarage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                "Add Garage",
+                "Add Client",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 30,
@@ -292,21 +292,21 @@ class AddGarage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 25),
-              garageInfo(),
+              clientInfo(),
               const SizedBox(height: 25),
-              garageDescription(),
+              clientDescription(),
               const SizedBox(height: 25),
-              garageAddress(context),
+              clientAddress(context),
               const SizedBox(height: 25),
-              garageAdminUser(),
+              clientAdminUser(),
               const SizedBox(height: 25),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     if (admin) {
                       Provider.of<AppData>(context, listen: false)
-                          .createGarage(
-                        garage: Garage(
+                          .createClient(
+                        client: Client(
                           name: _nameController.text,
                           description: _descriptionController.text,
                           address: _addressController.value!,
@@ -325,10 +325,10 @@ class AddGarage extends StatelessWidget {
                       );
                     } else {
                       Provider.of<AppData>(context, listen: false)
-                          .createGarageRequest(
-                        payload: GarageRequests(
+                          .createClientRequest(
+                        payload: ClientRequests(
                           userId: FirebaseAuth.instance.currentUser!.uid,
-                          garage: Garage(
+                          client: Client(
                             name: _nameController.text,
                             description: _descriptionController.text,
                             address: _addressController.value!,
@@ -374,13 +374,13 @@ class AddGarage extends StatelessWidget {
     );
   }
 
-  garageAdminUser() {
+  clientAdminUser() {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          "Garage Admin User",
+          "Client Admin User",
           style: TextStyle(
             color: Colors.black,
             fontSize: 18,
@@ -399,7 +399,7 @@ class AddGarage extends StatelessWidget {
             letterSpacing: 0.6,
           ),
           decoration: InputDecoration(
-            hintText: "User responsible for the garage",
+            hintText: "User responsible for the client",
             filled: true,
             isCollapsed: true,
             prefixIcon: const Icon(ProjectBuilder.user, size: 20),
@@ -416,13 +416,13 @@ class AddGarage extends StatelessWidget {
     );
   }
 
-  garageAddress(context) {
+  clientAddress(context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          "Garage Address",
+          "Client Address",
           style: TextStyle(
             color: Colors.black,
             fontSize: 18,
@@ -444,11 +444,11 @@ class AddGarage extends StatelessWidget {
                 minZoomLevel: 5,
                 maxZoomLevel: 16,
                 trackMyPosition: true,
-                selectLocationButtonText: 'Select Garage Location',
+                selectLocationButtonText: 'Select Client Location',
                 selectLocationButtonStyle: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(AppColors.primary),
                 ),
-                markerIcon: ProjectBuilder.garage,
+                markerIcon: ProjectBuilder.client,
                 markerIconColor: AppColors.primary,
                 searchBarBackgroundColor: AppColors.input,
                 zoomButtonsBackgroundColor: AppColors.primary,
@@ -488,13 +488,13 @@ class AddGarage extends StatelessWidget {
     );
   }
 
-  garageDescription() {
+  clientDescription() {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          "Garage Description",
+          "Client Description",
           style: TextStyle(
             color: Colors.black,
             fontSize: 18,
@@ -507,7 +507,7 @@ class AddGarage extends StatelessWidget {
           controller: _descriptionController,
           focusNode: _descriptionFocusNode,
           validator: (value) => InputValidator.validateName(
-              name: value!, label: 'Garage Description'),
+              name: value!, label: 'Client Description'),
           minLines: 4,
           maxLines: 5,
           style: const TextStyle(
@@ -531,7 +531,7 @@ class AddGarage extends StatelessWidget {
     );
   }
 
-  Row garageInfo() {
+  Row clientInfo() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -558,7 +558,7 @@ class AddGarage extends StatelessWidget {
             ),
             const SizedBox(height: 5),
             const Text(
-              "Garage Image",
+              "Client Image",
               style: TextStyle(
                 color: Color.fromRGBO(106, 106, 106, 1),
                 fontSize: 15,
@@ -572,7 +572,7 @@ class AddGarage extends StatelessWidget {
             controller: _nameController,
             focusNode: _nameFocusNode,
             validator: (value) =>
-                InputValidator.validateName(name: value!, label: 'Garage Name'),
+                InputValidator.validateName(name: value!, label: 'Client Name'),
             style: const TextStyle(
               fontFamily: "SF Pro Rounded",
               fontSize: 15,
@@ -581,7 +581,7 @@ class AddGarage extends StatelessWidget {
             ),
             decoration: InputDecoration(
               filled: true,
-              hintText: "Garage Name",
+              hintText: "Client Name",
               isCollapsed: true,
               contentPadding: const EdgeInsets.fromLTRB(20, 20, 10, 20),
               fillColor: AppColors.input,
@@ -599,7 +599,7 @@ class AddGarage extends StatelessWidget {
 
 getImage() {
   return Image.asset(
-    'assets/images/img/garage.png',
+    'assets/images/img/client.png',
     errorBuilder: (_, __, ___) {
       return const FlutterLogo(size: 78);
     },

@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-// 🏘️ Local imports
 import '../screens/auth/resetPassword.dart';
+import '../screens/roles/user/shopping_cart.dart';
 import '../screens/shared/about.dart';
 import 'navigator/auth.dart';
 import 'navigator/roles.dart';
@@ -10,7 +9,7 @@ import '../../screens/auth/login.dart';
 import '../../screens/auth/onboarding.dart';
 import '../../screens/auth/register.dart';
 import '../../screens/roles/admin/home.dart';
-import '../../screens/roles/garage/home.dart';
+import '../../screens/roles/client/home.dart';
 import '../../screens/roles/switch_roles.dart';
 import '../../screens/roles/user/home.dart';
 import '../../screens/shared/profile.dart';
@@ -51,7 +50,6 @@ class GlobalNavigator {
       return GlobalRoutes.auth;
     } else {
       return PagesRoutes.user;
-      // return GlobalRoutes.switchRoles;
     }
   }
 }
@@ -95,8 +93,8 @@ class PageRouter {
       case PagesRoutes.admin:
         page = const AdminHome();
         break;
-      case PagesRoutes.garage:
-        page = const GarageHome();
+      case PagesRoutes.client:
+        page = const ClientHome();
         break;
       case PagesRoutes.user:
         page = const UserHome();
@@ -110,7 +108,9 @@ class PageRouter {
       case SharedRoutes.about:
         page = const AboutPage();
         break;
-
+      case SharedRoutes.shoppingCart:
+        page = ShoppingCart();
+        break;
       default:
         page = const UserHome();
         break;
@@ -118,7 +118,7 @@ class PageRouter {
 
     return PageRouteBuilder(
       pageBuilder: (_, __, ___) => page,
-      transitionDuration: const Duration(milliseconds: 0),
+      transitionDuration: const Duration(milliseconds: 1),
     );
   }
 }

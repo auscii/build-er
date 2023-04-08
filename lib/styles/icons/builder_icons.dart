@@ -22,7 +22,7 @@ class ProjectBuilder {
       IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData home =
       IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData garage =
+  static const IconData client =
       IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData email =
       IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -48,4 +48,10 @@ class ProjectBuilder {
       IconData(0xf0c9, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData google =
       IconData(0xf1a0, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData products =
+      IconData(0xf070a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData shoppingBasket =
+      IconData(0xec91, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData addCart =
+      IconData(0xe05a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

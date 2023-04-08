@@ -5,9 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 // 🏘️ Local imports
-import 'garage.dart';
+import 'client.dart';
 
-enum Roles { user, garage, admin, error }
+enum Roles { user, client, admin, error }
 
 extension RolesListTransform on List {
   List<String> toRolesString() {
@@ -81,7 +81,7 @@ class UserModel {
       email: "email",
       password: "password",
       phone: "phone",
-      address: Garage.sample().address,
+      address: Client.sample().address,
       roles: [Roles.error],
     );
   }

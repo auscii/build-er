@@ -1,8 +1,7 @@
 import 'package:client/core/providers/user.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-// 🏘️ Local imports
 import '../../core/models/user.dart';
 import '../../router/router.dart';
 import '../../router/routes.dart';
@@ -10,10 +9,23 @@ import '../../router/navigator/roles.dart';
 import '../../styles/icons/builder_icons.dart';
 import '../../styles/ui/colors.dart';
 
-class SwitchRoles extends StatelessWidget {
-  const SwitchRoles({Key? key}) : super(key: key);
-
+class SwitchRoles extends StatefulWidget {
   static const String id = "switch_roles";
+  const SwitchRoles({super.key});
+
+  @override
+  State<SwitchRoles> createState() => _SwitchRolesState();
+}
+
+class _SwitchRolesState extends State<SwitchRoles> {
+
+  @override
+  void initState() {
+    Future.delayed(const Duration(milliseconds: 2500),() {
+      setState(() => _navToRole(Roles.client));
+    });
+    super.initState();
+  }
 
   void _navToRole(Roles role) {
     String route;
@@ -26,8 +38,8 @@ class SwitchRoles extends StatelessWidget {
       case Roles.user:
         route = PagesRoutes.user;
         break;
-      case Roles.garage:
-        route = PagesRoutes.garage;
+      case Roles.client:
+        route = PagesRoutes.client;
         break;
       default:
         route = SharedRoutes.profile;
@@ -43,7 +55,7 @@ class SwitchRoles extends StatelessWidget {
         return ProjectBuilder.admin;
       case Roles.user:
         return ProjectBuilder.user;
-      case Roles.garage:
+      case Roles.client:
         return ProjectBuilder.car;
       default:
         return ProjectBuilder.info;
@@ -53,11 +65,6 @@ class SwitchRoles extends StatelessWidget {
   Widget _generateRoles(BuildContext context) {
     Widget roleItem(Roles role) => ElevatedButton(
           onPressed: () => _navToRole(role),
-          // onPressed: () {
-          //   print("navigate to PagesRoutes.user");
-          //   GlobalNavigator.router.currentState!
-          //       .pushReplacementNamed(PageNavigator.id, arguments: PagesRoutes.user);
-          // },
           style: ElevatedButton.styleFrom(
             primary: AppColors.bgDark,
             onSurface: AppColors.primary,
@@ -98,16 +105,17 @@ class SwitchRoles extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                "Choose which Role to log into",
-                style: TextStyle(
-                  fontFamily: "SF Pro Rounded",
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
+              Container(
+                margin: EdgeInsets.zero,
+                child: const Center(
+                  child: 
+                  SizedBox(
+                    height: 150,
+                    width: 150,
+                    child: CupertinoActivityIndicator(color: Colors.black),
+                  ),
                 ),
               ),
-              const SizedBox(height: 30),
-              _generateRoles(context),
             ],
           ),
         ),

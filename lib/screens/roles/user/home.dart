@@ -1,16 +1,15 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-// 🏘️ Local imports
 import '../../../core/providers/location.dart';
 import '../../../router/navigator/roles.dart';
+import '../../../router/router.dart';
+import '../../../router/routes.dart';
 import '../../../styles/icons/builder_icons.dart';
 import '../../../styles/ui/colors.dart';
-import '../../../core/models/garage.dart';
+import '../../../core/models/client.dart';
 import '../../../core/models/user.dart';
 import '../../../core/providers/appdata.dart';
 import '../admin/items.dart';
@@ -48,39 +47,39 @@ class SearchOverlay extends StatefulWidget {
 }
 
 class _SearchOverlayState extends State<SearchOverlay> {
-  Stream<QuerySnapshot<Garage>> getGarages() {
+  Stream<QuerySnapshot<Client>> getClients() {
     return FirebaseFirestore.instance
-        .collection('garage')
+        .collection('client')
         .withConverter(
-          fromFirestore: Garage.fromFirestore,
-          toFirestore: (Garage userModel, _) => userModel.toFirestore(),
+          fromFirestore: Client.fromFirestore,
+          toFirestore: (Client userModel, _) => userModel.toFirestore(),
         )
         .snapshots();
   }
 
   TextEditingController searchController = TextEditingController();
 
-  late List<Garage> data = [];
+  late List<Client> data = [];
 
-  late Stream<QuerySnapshot<Garage>> instance;
+  late Stream<QuerySnapshot<Client>> instance;
 
   @override
   void initState() {
     super.initState();
 
     instance = FirebaseFirestore.instance
-        .collection('garage')
+        .collection('client')
         .withConverter(
-          fromFirestore: Garage.fromFirestore,
-          toFirestore: (Garage userModel, _) => userModel.toFirestore(),
+          fromFirestore: Client.fromFirestore,
+          toFirestore: (Client userModel, _) => userModel.toFirestore(),
         )
         .snapshots();
 
     instance.listen((val) {
       setState(() {
         data = val.docs
-            .map((QueryDocumentSnapshot<Garage> garageSnapshot) =>
-                garageSnapshot.data())
+            .map((QueryDocumentSnapshot<Client> clientSnapshot) =>
+                clientSnapshot.data())
             .toList();
       });
     });
@@ -88,20 +87,20 @@ class _SearchOverlayState extends State<SearchOverlay> {
 
   // This function is called whenever the text field changes
   void runFilter(String enteredKeyword) {
-    List<Garage> results = [];
+    List<Client> results = [];
     if (enteredKeyword.isEmpty) {
       // if the search field is empty or only contains white-space, we'll display all users
       results = data;
     } else {
       results = data
-              .where((garage) => garage.name
+              .where((client) => client.name
                   .toLowerCase()
                   .contains(enteredKeyword.toLowerCase()))
               .toList()
               .isEmpty
           ? data
           : data
-              .where((garage) => garage.name
+              .where((client) => client.name
                   .toLowerCase()
                   .contains(enteredKeyword.toLowerCase()))
               .toList();
@@ -126,7 +125,7 @@ class _SearchOverlayState extends State<SearchOverlay> {
             child: data.isEmpty
                 ? const Center(
                     child: Text(
-                      "Fetching Garages",
+                      "Fetching Clients",
                       style: TextStyle(
                         fontFamily: "SF Pro Rounded",
                         fontWeight: FontWeight.w500,
@@ -148,7 +147,7 @@ class _SearchOverlayState extends State<SearchOverlay> {
                           Provider.of<AppData>(context, listen: false)
                               .createServiceRequest(ServiceRequest(
                                 userId: FirebaseAuth.instance.currentUser!.uid,
-                                garageId: data[i].userUid,
+                                clientId: data[i].userUid,
                                 completed: false,
                               ))
                               .then((value) => {
@@ -202,7 +201,7 @@ class _SearchOverlayState extends State<SearchOverlay> {
             width: 2,
           ),
         ),
-        hintText: "Looking for a Garage",
+        hintText: "Looking for a Client",
       ),
     );
   }
@@ -221,9 +220,16 @@ Positioned mapUtils(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             ElevatedButton(
-              onPressed: callback,
+              onPressed: () {},
+              // onPressed: () {
+              //   print("pressed GPS");
+              //   Provider.of<AppData>(context, listen: false)
+              //       .changeRoute(SharedRoutes.shoppingCart);
+              //   PageRouter.router.currentState!
+              //       .pushReplacementNamed(SharedRoutes.shoppingCart);
+              // },
               style: ElevatedButton.styleFrom(
-                primary: AppColors.primary,
+                primary: Color.fromARGB(255, 162, 18, 18),
                 padding:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 0),
                 shape: RoundedRectangleBorder(
@@ -258,7 +264,7 @@ Positioned mapUtils(
                     borderRadius: BorderRadius.circular(16),
                     borderSide: BorderSide.none,
                   ),
-                  hintText: "Looking for a Garage",
+                  hintText: "Looking for a Client",
                 ),
               ),
             ),

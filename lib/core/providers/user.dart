@@ -4,11 +4,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // 🏘️ Local imports
-import '../models/garage.dart';
+import '../models/client.dart';
 import '../models/user.dart';
 import '../../screens/auth/onboarding.dart';
 import '../../router/router.dart';
 import '../../router/routes.dart';
+import '../utils/loader.dart';
 
 class UserProvider extends ChangeNotifier {
   late UserModel _user = UserModel.clear();
@@ -35,6 +36,7 @@ class UserProvider extends ChangeNotifier {
       GlobalNavigator.router.currentState!
           .pushReplacementNamed(GlobalRoutes.auth);
     }
+    Loader.stop();
   }
 
   UserProvider() {
@@ -176,7 +178,7 @@ class UserProvider extends ChangeNotifier {
                 uid: credentials.user!.uid,
                 password: credentials.user!.refreshToken ?? "No Auth Token",
                 phone: "No Phone Number",
-                address: Garage.sample().address,
+                address: Client.sample().address,
                 profileShot: credentials.user!.photoURL,
                 roles: [Roles.user],
               ),
@@ -298,7 +300,6 @@ class UserProvider extends ChangeNotifier {
       case SignInMethods.github:
         githubSignIn(context);
         break;
-
       default:
         ScaffoldMessenger.of(context).showSnackBar(
           alertSnackBar(message: "Unable to Sign In try again"),

@@ -48,13 +48,13 @@ class OSM extends StatelessWidget {
                 fitBoundsOptions: const FitBoundsOptions(
                   padding: EdgeInsets.all(50),
                 ),
-                markers: Provider.of<AppData>(context).garages.map((garage) {
+                markers: Provider.of<AppData>(context).clients.map((client) {
                   return Marker(
                     width: 40.0,
                     height: 40.0,
-                    point: garage.address.position,
+                    point: client.address.position,
                     builder: (ctx) => const Icon(
-                      Icons.garage_rounded,
+                      Icons.garage,
                     ),
                   );
                 }).toList(),

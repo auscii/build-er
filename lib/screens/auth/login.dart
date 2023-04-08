@@ -6,16 +6,22 @@ import 'package:provider/provider.dart';
 import '../../core/models/user.dart';
 import '../../core/providers/user.dart';
 import '../../core/utils/global.dart';
+import '../../core/utils/loader.dart';
 import '../../core/utils/validator.dart';
 import '../../router/router.dart';
 import '../../router/routes.dart';
 import '../../styles/ui/colors.dart';
 import 'onboarding.dart';
 
-class Login extends StatelessWidget {
-  Login({Key? key}) : super(key: key);
-
+class Login extends StatefulWidget {
   static const String id = "login";
+  const Login({Key? key}) : super(key: key);
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -23,9 +29,23 @@ class Login extends StatelessWidget {
   final FocusNode _passwordFocusNode = FocusNode();
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     _emailController.text = "sean@gmail.com";
     _passwordController.text = "123qwe";
+    super.initState();
+  }
+  
+  @override
+  void dispose() {
+    _emailController.clear();
+    _passwordController.clear();
+    _emailFocusNode.removeListener(() { });
+    _passwordFocusNode.removeListener(() { });
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -81,6 +101,7 @@ class Login extends StatelessWidget {
                         height: kIsWeb ? 50 : null,
                         child: ElevatedButton(
                           onPressed: () {
+                            Loader.show(context, 0);
                             if (_formKey.currentState!.validate()) {
                               _userAuth(
                                 context: context,

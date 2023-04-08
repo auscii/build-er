@@ -190,35 +190,48 @@ Container createAccountShortcut() {
       ),
     ),
     padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-    child: TextButton(
-      onPressed: () => AuthRouter.router.currentState!
-          .pushReplacementNamed(AuthRoutes.register),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
-          Text(
-            "Don’t have an Account ?  ",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.primary,
-              fontSize: 18,
-              fontFamily: Var.defaultFont,
-              fontWeight: FontWeight.w700,
+    // child: 
+    // TextButton(
+    //   onPressed: () => AuthRouter.router.currentState!
+    //       .pushReplacementNamed(AuthRoutes.register),
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        GestureDetector(
+          onTap: () => 
+            print("sign up as CLIENT"),
+          child:
+            const Text(
+              "Sign up as Client",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color.fromARGB(255, 17, 155, 114),
+                fontSize: 18,
+                fontFamily: Var.defaultFont,
+                fontWeight: FontWeight.w700,
+              ),
             ),
-          ),
-          Text(
-            "Create Account",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.success,
-              fontSize: 18,
-              fontFamily: Var.defaultFont,
-              fontWeight: FontWeight.w700,
+        ),
+        const SizedBox(width: 40),
+        GestureDetector(
+          onTap: () => 
+            print("sign up as CONTRACTOR"),
+  //   onPressed: () => AuthRouter.router.currentState!
+  //       .pushReplacementNamed(AuthRoutes.register),
+          child:
+            const Text(
+              "Sign up as Contractor",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color.fromARGB(255, 3, 99, 140),
+                fontSize: 18,
+                fontFamily: Var.defaultFont,
+                fontWeight: FontWeight.w700,
+              ),
             ),
-          ),
-        ],
-      ),
+        ),
+      ],
     ),
   );
 }

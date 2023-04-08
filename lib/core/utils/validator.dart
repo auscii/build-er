@@ -1,4 +1,4 @@
-import '../models/garage.dart';
+import '../models/client.dart';
 
 /// ### `📖` About this validator
 /// This is a validator class responsible for all validation
@@ -86,10 +86,10 @@ class InputValidator {
     return null;
   }
 
-  // TODO: Add address checking from [Address] model in garage class.
+  // TODO: Add address checking from [Address] model in client class.
   static String? validateAddress({Address? address}) {
     if (address == null) {
-      return 'Please add your address for garage booking';
+      return 'Please add your address for client booking';
     }
     return null;
   }

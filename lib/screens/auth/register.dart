@@ -4,7 +4,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/models/garage.dart';
+import '../../core/models/client.dart';
 // 🏘️ Local imports
 import '../../core/models/user.dart';
 import '../../core/providers/user.dart';
@@ -133,12 +133,12 @@ class Register extends StatelessWidget {
                             minZoomLevel: 5,
                             maxZoomLevel: 16,
                             trackMyPosition: true,
-                            selectLocationButtonText: 'Select Garage Location',
+                            selectLocationButtonText: 'Select Client Location',
                             selectLocationButtonStyle: ButtonStyle(
                               backgroundColor:
                                   MaterialStateProperty.all(AppColors.primary),
                             ),
-                            markerIcon: ProjectBuilder.garage,
+                            markerIcon: ProjectBuilder.client,
                             markerIconColor: AppColors.primary,
                             searchBarBackgroundColor: AppColors.input,
                             zoomButtonsBackgroundColor: AppColors.primary,

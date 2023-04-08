@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 // 🏘️ Local imports
 import '../models/user.dart';
-import '../models/garage.dart';
+import '../models/client.dart';
 
 class AppData extends ChangeNotifier {
-  late StreamSubscription<QuerySnapshot<GarageRequests>> garageRequestListener;
+  late StreamSubscription<QuerySnapshot<ClientRequests>> clientRequestListener;
   late StreamSubscription<QuerySnapshot<AdminRequests>> adminRequestListener;
   late StreamSubscription<QuerySnapshot<ServiceRequest>> serviceListener;
 
@@ -25,31 +25,31 @@ class AppData extends ChangeNotifier {
   }
 
   AppData() {
-    getGarageRequest();
+    getClientRequest();
     getAdminRequest();
     getServiceRequest();
 
     FirebaseAuth.instance.authStateChanges().listen((event) {
       if (FirebaseAuth.instance.currentUser == null && event == null) {
-        garageRequestListener.cancel();
+        clientRequestListener.cancel();
         adminRequestListener.cancel();
         serviceListener.cancel();
       }
       if (FirebaseAuth.instance.currentUser != null && event != null) {
-        garageRequestListener.resume();
+        clientRequestListener.resume();
         adminRequestListener.resume();
         serviceListener.resume();
       }
     });
   }
 
-  List<Garage> garages = [];
+  List<Client> clients = [];
 
-  late List<GarageRequests> _garageRequest = [];
+  late List<ClientRequests> _clientRequest = [];
   late List<AdminRequests> _adminRequest = [];
   late List<ServiceRequest> _serviceRequest = [];
 
-  List<GarageRequests> get garageRequest => _garageRequest;
+  List<ClientRequests> get clientRequest => _clientRequest;
 
   List<AdminRequests> get adminRequest => _adminRequest;
 
@@ -62,7 +62,7 @@ class AppData extends ChangeNotifier {
   Future<void> createServiceRequest(ServiceRequest request) async {
     return await FirebaseFirestore.instance
         .collection("serviceRequest")
-        .doc(request.garageId)
+        .doc(request.clientId)
         .collection("Requests")
         .doc(request.userId)
         .withConverter(
@@ -101,42 +101,42 @@ class AppData extends ChangeNotifier {
         .update({'status': completed});
   }
 
-  Future<void> createGarage({required Garage garage}) async {
+  Future<void> createClient({required Client client}) async {
     return await FirebaseFirestore.instance
-        .collection("garage")
-        .doc(garage.userUid)
+        .collection("client")
+        .doc(client.userUid)
         .withConverter(
-            fromFirestore: Garage.fromFirestore,
-            toFirestore: (Garage userModel, _) => userModel.toFirestore())
-        .set(garage);
+            fromFirestore: Client.fromFirestore,
+            toFirestore: (Client userModel, _) => userModel.toFirestore())
+        .set(client);
   }
 
-  Future<List<Garage>> getGaragesList() async {
+  Future<List<Client>> getClientsList() async {
     final res = await FirebaseFirestore.instance
-        .collection("garage")
+        .collection("client")
         .withConverter(
-            fromFirestore: Garage.fromFirestore,
-            toFirestore: (Garage userModel, _) => userModel.toFirestore())
+            fromFirestore: Client.fromFirestore,
+            toFirestore: (Client userModel, _) => userModel.toFirestore())
         .get()
         .then((res) {
-      garages = res.docs.toList().cast();
+      clients = res.docs.toList().cast();
       notifyListeners();
     });
 
-    return res.docs.toList().cast() ?? [Garage.sample()];
+    return res.docs.toList().cast() ?? [Client.sample()];
   }
 
-  Future<Garage> getGarage({required String userUid}) async {
+  Future<Client> getClient({required String userUid}) async {
     final res = await FirebaseFirestore.instance
-        .collection("garage")
+        .collection("client")
         .doc(userUid)
         .withConverter(
-            fromFirestore: Garage.fromFirestore,
-            toFirestore: (Garage userModel, _) => userModel.toFirestore())
+            fromFirestore: Client.fromFirestore,
+            toFirestore: (Client userModel, _) => userModel.toFirestore())
         .get()
-        .onError((error, stackTrace) => Future.error("Unable to Get Garage"));
+        .onError((error, stackTrace) => Future.error("Unable to Get Client"));
 
-    return res.data() ?? Garage.sample();
+    return res.data() ?? Client.sample();
   }
 
   Future<void> createAdminRequest({required AdminRequests payload}) async {
@@ -150,27 +150,27 @@ class AppData extends ChangeNotifier {
         .set(payload);
   }
 
-  Future<void> createGarageRequest({required GarageRequests payload}) async {
+  Future<void> createClientRequest({required ClientRequests payload}) async {
     return await FirebaseFirestore.instance
-        .collection("garageRequests")
+        .collection("clientRequests")
         .withConverter(
-          fromFirestore: GarageRequests.fromFirestore,
-          toFirestore: (GarageRequests req, _) => req.toFirestore(),
+          fromFirestore: ClientRequests.fromFirestore,
+          toFirestore: (ClientRequests req, _) => req.toFirestore(),
         )
         .doc(payload.userId)
         .set(payload);
   }
 
-  void getGarageRequest() {
-    garageRequestListener = FirebaseFirestore.instance
-        .collection("garageRequests")
+  void getClientRequest() {
+    clientRequestListener = FirebaseFirestore.instance
+        .collection("clientRequests")
         .withConverter(
-          fromFirestore: GarageRequests.fromFirestore,
-          toFirestore: (GarageRequests userModel, _) => userModel.toFirestore(),
+          fromFirestore: ClientRequests.fromFirestore,
+          toFirestore: (ClientRequests userModel, _) => userModel.toFirestore(),
         )
         .snapshots()
         .listen((val) {
-      _garageRequest = val.docs.map((e) => e.data()).toList();
+      _clientRequest = val.docs.map((e) => e.data()).toList();
       notifyListeners();
     });
   }
@@ -232,33 +232,33 @@ class AdminRequests {
   }
 }
 
-class GarageRequests {
+class ClientRequests {
   String userId;
-  Garage garage;
+  Client client;
 
-  GarageRequests({required this.garage, required this.userId});
+  ClientRequests({required this.client, required this.userId});
 
-  factory GarageRequests.fromFirestore(
+  factory ClientRequests.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
   ) {
     final data = snapshot.data();
-    return GarageRequests(
+    return ClientRequests(
       userId: data!['userId'],
-      garage: mapToGarage(data['garage']),
+      client: mapToClient(data['client']),
     );
   }
 
   toFirestore() {
     return {
       "userId": userId,
-      "garage": garage.toFirestore(),
+      "client": client.toFirestore(),
     };
   }
 }
 
-Garage mapToGarage(Map<String, dynamic> data) {
-  return Garage(
+Client mapToClient(Map<String, dynamic> data) {
+  return Client(
     name: data["name"],
     description: data['description'],
     image: data['image'],
