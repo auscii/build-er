@@ -18,7 +18,7 @@ class Var {
   static const gallery = "GALLERY";
   static const imagesRef = "IMAGES/";
   static const permitRef = "PERMIT/";
-  static const uploadingIs = "Upload is";
+  static const uploading = "Uploading ";
   static const uploadingPaused = "Upload is paused.";
   static const uploadingCanceled = "Upload was canceled.";
   static const uploadingError = "Uploading file error.";
@@ -26,6 +26,11 @@ class Var {
   static const complete = "complete.";
   static const users = "users";
   static const jpeg = ".jpeg";
+  static const uploadFromGallery = "Upload Image from Gallery";
+  static const permit = "PERMIT";
+  static const license = "LICENSE";
+  static const dti = "DTI";
+  static const sec = "SEC";
   // static const aaa = "aaa";
 
   static charRandomizer() {

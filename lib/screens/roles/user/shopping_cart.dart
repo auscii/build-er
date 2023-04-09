@@ -1,7 +1,6 @@
-library shopping_cart;
+// library shopping_cart;
 import 'package:flutter/material.dart';
 import '../../../styles/icons/builder_icons.dart';
-export '../../../core/providers/cart.dart';
 export '../../../core/providers/item_models.dart';
 import '../../../router/navigator/roles.dart';
 

@@ -53,6 +53,9 @@ class UserModel {
   String? uid;
   String? userCompanyName;
   String? userPermit;
+  String? userLicense;
+  String? userDTI;
+  String? userSec;
 
   UserModel({
     required this.name,
@@ -66,6 +69,9 @@ class UserModel {
     String? userInfo,
     String? companyName,
     String? permit,
+    String? license,
+    String? dti,
+    String? sec,
   }) : firebaseUser = FirebaseAuth.instance.currentUser,
         uid = uid ?? FirebaseAuth.instance.currentUser?.uid,
         description = userInfo ??
@@ -73,7 +79,10 @@ class UserModel {
         profilePhoto = profileShot ??
           "https://avatars.dicebear.com/api/adventurer/$name\.svg",
         userCompanyName = companyName,
-        userPermit = permit;
+        userPermit = permit,
+        userLicense = license,
+        userDTI = dti,
+        userSec = sec;
 
   createProfilePic() {
     String profileColor = Colors
@@ -93,7 +102,10 @@ class UserModel {
       address: Client.sample().address,
       roles: "roles", // [Roles.error],
       companyName: "companyName",
-      permit: "permit"
+      permit: "permit",
+      license: "license",
+      dti: "dti",
+      sec: "sec",
     );
   }
 
@@ -111,6 +123,9 @@ class UserModel {
       profileShot: data["profilePhoto"],
       companyName: data["companyName"],
       permit: data["permit"],
+      license: data["license"],
+      dti: data["dti"],
+      sec: data["sec"],
       roles: data["roles"],
       // roles: toRoles(
       //   List<String>.from(
@@ -133,6 +148,9 @@ class UserModel {
       "roles": roles, //roles.toRolesString(),
       "companyName": userCompanyName,
       "permit": userPermit,
+      "license": userLicense,
+      "dti": userDTI,
+      "sec": userSec,
       "description": description,
       "uid": uid,
     };

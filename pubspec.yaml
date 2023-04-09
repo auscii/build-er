@@ -29,13 +29,14 @@ dependencies:
   shared_preferences: ^2.0.15
   http: ^0.13.4
   latlong2: ^0.8.1
-  shopping_cart: 0.0.2
+  # shopping_cart: 0.0.2
   overlay_loading_progress: 1.0.1
   # image_pickers: 2.0.3+1
   fluttertoast: ^8.1.1
   image_picker: 0.8.7+1
   permission_handler: 10.2.0
   device_info: ^2.0.3
+  responsive_sizer: ^3.0.8
 
 dev_dependencies:
   flutter_test:

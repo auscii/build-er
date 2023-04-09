@@ -20,7 +20,6 @@ import '../../styles/icons/builder_icons.dart';
 import '../../styles/ui/colors.dart';
 import '../roles/admin/items.dart';
 import 'login.dart';
-import 'package:device_info/device_info.dart';
 
 class ContractorRegister extends StatefulWidget {
   static const id = "Contractor Register";
@@ -47,13 +46,23 @@ class _ContractorRegisterState extends State<ContractorRegister> {
   final FocusNode _phoneFocusNode = FocusNode();
   final FocusNode _companyNameFocusNode = FocusNode();
   final FocusNode _addressFocusNode = FocusNode();
+  final _firebaseStorage = FirebaseStorage.instance;
+  final _imagePicker = ImagePicker();
 
   String permitImagePath = Var.noImageAvailable;
-  bool isloaded = false;
+  String licenseImagePath = Var.noImageAvailable;
+  String dtiImagePath = Var.noImageAvailable;
+  String secImagePath = Var.noImageAvailable;
 
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    clearInputs();
+    super.dispose();
   }
 
   @override
@@ -209,9 +218,9 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                         size: 15,
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 40),
                     const Text(
-                      "PERMIT",
+                      Var.permit,
                       style: TextStyle(
                         fontFamily: Var.defaultFont,
                         fontSize: 16,
@@ -227,58 +236,125 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Image.network(permitImagePath)
-                          // child: !isloaded
-                          //   ? Image.network(Var.noImageAvailable)
-                          //   : Image.network(permitImagePath)
                         ),
                     ),
                     const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 65),
+                    ElevatedButton(
+                      onPressed: () => imageUpload(Var.permit),
                       child:
-                        Row(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.zero,
-                              height: 40,
-                              width: 125,
-                              child:
-                                ElevatedButton(
-                                  onPressed: () => imageUpload(),
-                                  child:
-                                    const Text(
-                                      "Choose Image from Gallery",
-                                      style: TextStyle(
-                                        fontFamily: Var.defaultFont,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                ),
-                            ),
-                            const SizedBox(width: 10),
-                            Container(
-                              margin: EdgeInsets.zero,
-                              height: 40,
-                              width: 125,
-                              child: 
-                                ElevatedButton(
-                                  onPressed: () => imageUpload(),
-                                  child:
-                                    const Text(
-                                      "Upload image from Camera",
-                                      style: TextStyle(
-                                        fontFamily: Var.defaultFont,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                ),
-                            ),
-                          ]
+                        const Text(
+                          Var.uploadFromGallery,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: Var.defaultFont,
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal,
+                          ),
                         ),
                     ),
-                    const SizedBox(height: 50),
+                    const SizedBox(height: 40),
+                    const Text(
+                      Var.license,
+                      style: TextStyle(
+                        fontFamily: Var.defaultFont,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      margin: EdgeInsets.zero,
+                      height: 150,
+                      width: 150,
+                      child: 
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.network(licenseImagePath)
+                        ),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () => imageUpload(Var.license),
+                      child:
+                        const Text(
+                          Var.uploadFromGallery,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: Var.defaultFont,
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                    ),
+                    const SizedBox(height: 40),
+                    const Text(
+                      Var.dti,
+                      style: TextStyle(
+                        fontFamily: Var.defaultFont,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      margin: EdgeInsets.zero,
+                      height: 150,
+                      width: 150,
+                      child: 
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.network(dtiImagePath)
+                        ),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () => imageUpload(Var.dti),
+                      child:
+                        const Text(
+                          Var.uploadFromGallery,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: Var.defaultFont,
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                    ),
+                    const SizedBox(height: 40),
+                    const Text(
+                      Var.sec,
+                      style: TextStyle(
+                        fontFamily: Var.defaultFont,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      margin: EdgeInsets.zero,
+                      height: 150,
+                      width: 150,
+                      child: 
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.network(secImagePath)
+                        ),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () => imageUpload(Var.sec),
+                      child:
+                        const Text(
+                          Var.uploadFromGallery,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: Var.defaultFont,
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                    ),
+                    const SizedBox(height: 60),
                     SizedBox(
                       height: kIsWeb ? 50 : null,
                       child: ElevatedButton(
@@ -293,14 +369,18 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                               address: _addressController.value!,
                               role: Contractor.role,
                               companyName: _companyNameController.text,
-                              permit: permitImageFile,
+                              permit: permitImagePath,
+                              license: licenseImagePath,
+                              dti: dtiImagePath,
+                              sec: secImagePath,
                             );
+                            clearInputs();
                           }
                         },
                         style: ElevatedButton.styleFrom(
                           primary: AppColors.primary,
                           padding: const EdgeInsets.symmetric(
-                              vertical: 17, horizontal: 124),
+                              vertical: 17, horizontal: 100),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
@@ -335,9 +415,11 @@ class _ContractorRegisterState extends State<ContractorRegister> {
     required Address address,
     required String role,
     required String companyName,
-    required File permit,
+    required String permit,
+    required String license,
+    required String dti,
+    required String sec,
   }) {
-    print("_userRegister _companyNameController.text -> ${_companyNameController.text} |  permitImageFile -> $permitImageFile");
     Provider.of<UserProvider>(context, listen: false).createUser(
       context: context,
       signInMethods: SignInMethods.email,
@@ -350,15 +432,14 @@ class _ContractorRegisterState extends State<ContractorRegister> {
         roles: role, //[Roles.user],
         companyName: companyName,
         permit: permit,
+        license: license,
+        dti: dti,
+        sec: sec,
       )
     );
   }
 
-  imageUpload() async {
-    final _firebaseStorage = FirebaseStorage.instance;
-    final _imagePicker = ImagePicker();
-    var downloadURL;
-
+  imageUpload(String activeUpload) async {
     PickedFile? image;
     // ignore: use_build_context_synchronously
     FocusScope.of(context).requestFocus(FocusNode());
@@ -381,16 +462,21 @@ class _ContractorRegisterState extends State<ContractorRegister> {
             case TaskState.running:
               final progress =
                   100.0 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
-              Toast.show("${Var.uploadingIs} $progress% ${Var.complete}");
+              Toast.show("${Var.uploading} $progress%");
               break;
             case TaskState.success:
               Toast.show(Var.uploadingCompleted);
-              downloadURL = await taskSnapshot.ref.getDownloadURL();
-              // Toast.show(downloadURL);
+              String downloadURL = await taskSnapshot.ref.getDownloadURL();
               setState(() {
-                permitImagePath = downloadURL;
-                // permitImageFile = File("${media.galleryMode}");
-                isloaded = true;
+                if (activeUpload == Var.permit) {
+                  permitImagePath = downloadURL;
+                } else if (activeUpload == Var.license) {
+                  licenseImagePath = downloadURL;
+                } else if (activeUpload == Var.dti) {
+                  dtiImagePath = downloadURL;
+                } else if (activeUpload == Var.sec) {
+                  secImagePath = downloadURL;
+                }
               });
               break;
             case TaskState.paused:
@@ -404,121 +490,30 @@ class _ContractorRegisterState extends State<ContractorRegister> {
               break;
           }
         });
-      // uploadPermit.snapshotEvents.listen((TaskSnapshot taskSnapshot) async {
-      //   switch (taskSnapshot.state) {
-      //     case TaskState.running:
-        //     final progress =
-        //         100.0 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
-        //     Toast.show("${Var.uploadingIs} $progress% ${Var.complete}");
-        //     break;
-        //   case TaskState.paused:
-        //     Toast.show(Var.uploadingPaused);
-        //     break;
-        //   case TaskState.canceled:
-        //     Toast.show(Var.uploadingCanceled);
-        //     break;
-        //   case TaskState.error:
-        //     Toast.show(Var.uploadingError);
-        //     break;
-        //   case TaskState.success:
-        //     Toast.show(Var.uploadingCompleted);
-        //     var permitURL = await taskSnapshot.ref.getDownloadURL();
-        //     storeNewUser(
-        //       credentials.user!.uid,
-        //       payload.email,
-        //       payload.password,
-        //       payload.name,
-        //       payload.phone,
-        //       payload.address,
-        //       payload.roles,
-        //       payload.userCompanyName,
-        //       permitURL,
-        //     );
-        //     break;
-        // }
-      // });
     } else {
       Toast.show('No Image Path Received');
     }
   }
 
-  // Future<void> pickImageFromCameraGallery(String imageMode) async {
-  //   if (imageMode == Var.camera) {
-  //     ImagePickers.openCamera().then((Media? media) {
-  //       if (media != null){
-  //         setState(() {
-  //           permitImagePath = File("${media.path}");
-  //           permitImageFile = File("${media.galleryMode}");
-  //           isloaded = true;
-  //         });
-  //       } else {
-  //         setState(() => isloaded = false);
-  //       }
-  //     });
-  //     return;
-  //   }
-    
-  //   List<Media> medias = await ImagePickers.pickerPaths(
-  //     galleryMode: GalleryMode.image,
-  //     selectCount: 2,
-  //     showGif: false,
-  //     showCamera: true,
-  //     compressSize: 500,
-  //     uiConfig: UIConfig(uiThemeColor: Colors.black),
-  //     cropConfig: CropConfig(enableCrop: false, width: 2, height: 1)
-  //   );
-  //   if (medias.isNotEmpty) {
-  //     setState(() {
-  //       permitImagePath = File("${medias[0].path}");
-  //       permitImageFile = File("${medias[0].galleryMode}");
-  //       print("imagePicker chooseGallery media -> $permitImageFile");
-  //       isloaded = true;
-  //     });
-  //   } else {
-  //     setState(() => isloaded = false);
-  //   }
-  // }
-
-  // static Future<bool> checkPermission(
-  //   BuildContext context,
-  //   String permissionName
-  // ) async {
-  //   if (Platform.isAndroid) {
-  //     final androidInfo = await DeviceInfoPlugin().androidInfo;
-  //     final sdkInt = androidInfo.version.sdkInt;
-  //     if (sdkInt < 33 && permissionName == 'gallery') {
-  //       return true;
-  //     }
-  //   }
-  //   FocusScope.of(context).requestFocus(FocusNode());
-  //   Map<Permission, PermissionStatus> statues;
-  //   switch (permissionName) {
-  //     case 'camera': {
-  //       statues = await [Permission.camera].request();
-  //       PermissionStatus? statusCamera = statues[Permission.camera];
-  //       if (statusCamera == PermissionStatus.granted) {
-  //         return true;
-  //       } else if (statusCamera == PermissionStatus.permanentlyDenied) {
-  //         return false;
-  //       } else {
-  //         return false;
-  //       }
-  //     }
-  //     case 'gallery': {
-  //       statues = await [Permission.photos].request();
-  //       PermissionStatus? statusPhotos = statues[Permission.photos];
-  //       if (statusPhotos == PermissionStatus.granted) {
-  //         return true;
-  //       } else if (statusPhotos == PermissionStatus.permanentlyDenied) {
-  //         return false;
-  //       } else if (statusPhotos == PermissionStatus.limited) {
-  //         return false;
-  //       } else {
-  //         return false;
-  //       }
-  //     }
-  //   }
-  //   return false;
-  // }
+  clearInputs() {
+    _nameController.clear();
+    _emailController.clear();
+    _passwordController.clear();
+    _phoneController.clear();
+    _companyNameController.clear();
+    _addressTextController.clear();
+    _addressController.removeListener(() {});
+    _nameFocusNode.removeListener(() {});
+    _emailFocusNode.removeListener(() {});
+    _passwordFocusNode.removeListener(() {});
+    _confirmPasswordFocusNode.removeListener(() {});
+    _phoneFocusNode.removeListener(() {});
+    _companyNameFocusNode.removeListener(() {});
+    _addressFocusNode.removeListener(() {});
+    permitImagePath = Var.noImageAvailable;
+    licenseImagePath = Var.noImageAvailable;
+    dtiImagePath = Var.noImageAvailable;
+    secImagePath = Var.noImageAvailable;
+  }
 
 }

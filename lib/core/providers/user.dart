@@ -118,87 +118,6 @@ class UserProvider extends ChangeNotifier {
         .then((credentials) async {
           credentials.user!.updateDisplayName(payload.name);
           credentials.user!.updatePhotoURL(payload.profilePhoto);
-          print("payload userCompanyName ->${payload.userCompanyName}");
-          print("payload userPermit ->${payload.userPermit}");
-
-          // final appDocDir = await getApplicationDocumentsDirectory();
-          // final filePath = "${appDocDir.absolute}/path/to/mountains.jpg";
-          // final file = File(filePath);
-
-          if (payload.userPermit != null) {
-          }
-            
-            // final _firebaseStorage = FirebaseStorage.instance;
-            // final _imagePicker = ImagePicker();
-            // PickedFile image;
-            // //Check Permissions
-            // await Permission.photos.request();
-
-
-            // image = await _imagePicker.getImage(source: ImageSource.gallery);
-            // var file = File(image.path);
-
-            // if (image != null) {
-            //   //Upload to Firebase
-            //   var snapshot = await _firebaseStorage.ref()
-            //   .child('images/imageName')
-            //   .putFile(file).whenComplete((doc) async {
-            //     // var permitURL =
-                
-            //   });
-            // } else {
-            //   print('No Image Path Received');
-            // }
-
-
-
-
-            /*
-            final metadata = SettableMetadata(contentType: "image/jpeg");
-            final storageRef = FirebaseStorage.instance.ref();
-            String permitName = basename(payload.userPermit?.path ?? Var.noImageAvailable);
-
-            final uploadPermit = storageRef
-              .child("${Var.imagesRef}${Var.permitRef}$permitName")
-              .putFile(payload.userPermit ?? File(Var.noImageAvailable), metadata);
-
-            // var dowurl = await (await uploadPermit.whenComplete(() => null)).ref.getDownloadURL();
-
-            uploadPermit.snapshotEvents.listen((TaskSnapshot taskSnapshot) async {
-              switch (taskSnapshot.state) {
-                case TaskState.running:
-                  final progress =
-                      100.0 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
-                  Toast.show("${Var.uploadingIs} $progress% ${Var.complete}");
-                  break;
-                case TaskState.paused:
-                  Toast.show(Var.uploadingPaused);
-                  break;
-                case TaskState.canceled:
-                  Toast.show(Var.uploadingCanceled);
-                  break;
-                case TaskState.error:
-                  Toast.show(Var.uploadingError);
-                  break;
-                case TaskState.success:
-                  Toast.show(Var.uploadingCompleted);
-                  var permitURL = await taskSnapshot.ref.getDownloadURL();
-                  storeNewUser(
-                    credentials.user!.uid,
-                    payload.email,
-                    payload.password,
-                    payload.name,
-                    payload.phone,
-                    payload.address,
-                    payload.roles,
-                    payload.userCompanyName,
-                    permitURL,
-                  );
-                  break;
-              }
-            });
-          }
-          */
           storeNewUser(
             credentials.user!.uid,
             payload.email,
@@ -209,11 +128,15 @@ class UserProvider extends ChangeNotifier {
             payload.roles,
             payload.userCompanyName,
             payload.userPermit,
+            payload.userLicense,
+            payload.userDTI,
+            payload.userSec,
           );
         })
         .then((_) => init())
-        .then((_) => GlobalNavigator.router.currentState!
-            .pushReplacementNamed(AuthRoutes.login))
+        // .whenComplete(() 
+        //   => GlobalNavigator.router.currentState!
+        //     .pushReplacementNamed(AuthRoutes.login))
         .onError((FirebaseAuthException error, stackTrace) {
           _resolveAuthError(
             error: error,
@@ -221,7 +144,7 @@ class UserProvider extends ChangeNotifier {
             signInMethods: SignInMethods.email,
           );
           return;
-      });
+        });
     } else {
       FirebaseFirestore.instance
           .collection("users")
@@ -429,7 +352,10 @@ class UserProvider extends ChangeNotifier {
     address,
     role,
     companyName,
-    permit
+    permit,
+    license,
+    dti,
+    sec
   ) async {
     await FirebaseFirestore.instance
       .collection(Var.users)
@@ -449,10 +375,14 @@ class UserProvider extends ChangeNotifier {
           roles: role,
           companyName: companyName,
           permit: permit,
+          license: license,
+          dti: dti,
+          sec: sec
         ),
       );
-    print("payload Successfully Registered new user!");
     Toast.show("Successfully Registered new user!");
+    AuthRouter.router.currentState!
+      .popAndPushNamed(AuthRoutes.onboarding);
   }
 
 }
