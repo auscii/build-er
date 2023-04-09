@@ -51,30 +51,30 @@ class PageNavigator extends StatelessWidget {
   }
 
   Drawer customDrawer(BuildContext context) {
-    Widget logoutButton() {
-      return SizedBox(
-        height: kIsWeb ? 50 : null,
-        child: ElevatedButton(
-          onPressed: () 
-            => Provider.of<UserProvider>(context, listen: false).signOut(context),
-          style: ElevatedButton.styleFrom(
-            primary: AppColors.primary,
-            padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 40),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-          ),
-          child: const Text(
-            Var.logout,
-            style: TextStyle(
-              fontFamily: Var.defaultFont,
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ),
-      );
-    }
+    // Widget logoutButton() {
+    //   return SizedBox(
+    //     height: kIsWeb ? 50 : null,
+    //     child: ElevatedButton(
+    //       onPressed: () 
+    //         => Provider.of<UserProvider>(context, listen: false).signOut(context),
+    //       style: ElevatedButton.styleFrom(
+    //         primary: AppColors.primary,
+    //         padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 40),
+    //         shape: RoundedRectangleBorder(
+    //           borderRadius: BorderRadius.circular(16),
+    //         ),
+    //       ),
+    //       child: const Text(
+    //         Var.logout,
+    //         style: TextStyle(
+    //           fontFamily: Var.defaultFont,
+    //           fontSize: 20,
+    //           fontWeight: FontWeight.w700,
+    //         ),
+    //       ),
+    //     ),
+    //   );
+    // }
 
     Widget profile() {
       return GestureDetector(
@@ -101,7 +101,7 @@ class PageNavigator extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Text(
-              "NAME: \n ${Provider.of<UserProvider>(context).user.name}",
+              "${Provider.of<UserProvider>(context).user.name}",
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 24,
@@ -114,7 +114,7 @@ class PageNavigator extends StatelessWidget {
       );
     }
 
-    buildRoles(BuildContext context) {
+    /* buildRoles(BuildContext context) {
       void navToRole(Roles role) {
         String route;
 
@@ -186,7 +186,7 @@ class PageNavigator extends StatelessWidget {
                   .pushReplacementNamed(SharedRoutes.profile);
             });
       }
-    }
+    } */
 
     return Drawer(
       width: 260,
@@ -204,10 +204,10 @@ class PageNavigator extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      buildRoles(context),
+                      // buildRoles(context),
                       navLink(
                         icon: ProjectBuilder.user,
-                        label: "Profile",
+                        label: Var.profile,
                         onPressed: () {
                           Provider.of<AppData>(context, listen: false)
                               .changeRoute(SharedRoutes.profile);
@@ -216,18 +216,8 @@ class PageNavigator extends StatelessWidget {
                         },
                       ),
                       navLink(
-                        icon: Icons.settings,
-                        label: "Settings",
-                        onPressed: () {
-                          Provider.of<AppData>(context, listen: false)
-                              .changeRoute(SharedRoutes.settings);
-                          PageRouter.router.currentState!
-                              .pushReplacementNamed(SharedRoutes.settings);
-                        },
-                      ),
-                      navLink(
                         icon: ProjectBuilder.info,
-                        label: "About",
+                        label: Var.about,
                         onPressed: () {
                           Provider.of<AppData>(context, listen: false)
                               .changeRoute(SharedRoutes.about);
@@ -237,7 +227,7 @@ class PageNavigator extends StatelessWidget {
                       ),
                       navLink(
                         icon: ProjectBuilder.products,
-                        label: "Products",
+                        label: Var.ecommerce,
                         onPressed: () {
                           Provider.of<AppData>(context, listen: false)
                               .changeRoute(SharedRoutes.shoppingCart);
@@ -245,10 +235,15 @@ class PageNavigator extends StatelessWidget {
                               .pushReplacementNamed(SharedRoutes.shoppingCart);
                         },
                       ),
+                      navLink(
+                        icon: ProjectBuilder.products,
+                        label: Var.logout,
+                        onPressed: ()
+                        => Provider.of<UserProvider>(context, listen: false)
+                          .signOut(context),
+                      ),
                     ]
                   ),
-                  const SizedBox(height: 40),
-                  logoutButton(),
                 ],
               ),
           )

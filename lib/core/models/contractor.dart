@@ -5,12 +5,12 @@ import 'package:latlong2/latlong.dart';
 import 'user.dart';
 import 'address.dart';
 
-class Client {
-  static const role = "client";
+class Contractor {
+  static const role = "Contractor";
   String name, description, image, userUid;
   Address address;
 
-  Client({
+  Contractor({
     required this.name,
     required this.address,
     required this.description,
@@ -18,9 +18,9 @@ class Client {
     required this.userUid,
   }) : image = image ?? createProfilePic(name: name);
 
-  factory Client.sample({String? name, Address? address, String? description}) {
-    return Client(
-      name: name ?? "Client Name ⚠️",
+  factory Contractor.sample({String? name, Address? address, String? description}) {
+    return Contractor(
+      name: name ?? "Contractor Name ⚠️",
       address: address ??
           Address(name: "address", position: LatLng(-0.303099, 36.080025)),
       description: "description",
@@ -28,12 +28,12 @@ class Client {
     );
   }
 
-  factory Client.fromFirestore(
+  factory Contractor.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
   ) {
     final data = snapshot.data();
-    return Client(
+    return Contractor(
       name: data!["name"],
       description: data['description'],
       image: data['image'],
@@ -63,11 +63,11 @@ String createProfilePic({required String name}) {
 
 class ServiceRequest {
   String userId;
-  String clientId;
+  String ContractorId;
   bool completed;
 
   ServiceRequest(
-      {required this.userId, required this.completed, required this.clientId});
+      {required this.userId, required this.completed, required this.ContractorId});
 
   factory ServiceRequest.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -76,13 +76,13 @@ class ServiceRequest {
     final data = snapshot.data();
     return ServiceRequest(
       userId: data!['user'],
-      clientId: data['clientId'],
+      ContractorId: data['ContractorId'],
       completed: data['status'],
     );
   }
 
   Map<String, dynamic> toFirestore() {
-    return {'user': userId, 'clientId': clientId, 'status': completed};
+    return {'user': userId, 'ContractorId': ContractorId, 'status': completed};
   }
 }
 

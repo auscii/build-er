@@ -1,4 +1,5 @@
 import '../models/client.dart';
+import '../../core/models/address.dart';
 
 /// ### `📖` About this validator
 /// This is a validator class responsible for all validation

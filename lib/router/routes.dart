@@ -1,12 +1,13 @@
 
 // 🏘️ Local imports
+import '../screens/auth/contractor_register.dart';
 import '../screens/auth/resetPassword.dart';
 import '../screens/roles/user/shopping_cart.dart';
 import 'navigator/auth.dart';
 import 'navigator/roles.dart';
 import '../../screens/auth/login.dart';
 import '../../screens/auth/onboarding.dart';
-import '../../screens/auth/register.dart';
+import '../screens/auth/client_register.dart';
 import '../../screens/roles/admin/home.dart';
 import '../../screens/roles/client/home.dart';
 import '../../screens/roles/switch_roles.dart';
@@ -23,7 +24,8 @@ class AuthRoutes {
   static const String splash = Splash.id;
   static const String onboarding = Onboarding.id;
   static const String login = Login.id;
-  static const String register = Register.id;
+  static const String clientRegister = ClientRegister.id;
+  static const String contractorRegister = ContractorRegister.id;
   static const String resetPassword = ResetPassword.id;
 }
 

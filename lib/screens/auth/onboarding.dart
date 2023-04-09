@@ -189,18 +189,15 @@ Container createAccountShortcut() {
         top: BorderSide(color: AppColors.primary, width: 2),
       ),
     ),
-    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-    // child: 
-    // TextButton(
-    //   onPressed: () => AuthRouter.router.currentState!
-    //       .pushReplacementNamed(AuthRoutes.register),
+    padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
     child: Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GestureDetector(
-          onTap: () => 
-            print("sign up as CLIENT"),
+          onTap: ()
+          => AuthRouter.router.currentState!
+            .pushReplacementNamed(AuthRoutes.clientRegister),
           child:
             const Text(
               "Sign up as Client",
@@ -215,10 +212,9 @@ Container createAccountShortcut() {
         ),
         const SizedBox(width: 40),
         GestureDetector(
-          onTap: () => 
-            print("sign up as CONTRACTOR"),
-  //   onPressed: () => AuthRouter.router.currentState!
-  //       .pushReplacementNamed(AuthRoutes.register),
+          onTap: ()
+          => AuthRouter.router.currentState!
+            .pushReplacementNamed(AuthRoutes.contractorRegister),
           child:
             const Text(
               "Sign up as Contractor",

@@ -1,3 +1,4 @@
+import 'package:client/screens/auth/contractor_register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../screens/auth/resetPassword.dart';
@@ -7,7 +8,7 @@ import 'navigator/auth.dart';
 import 'navigator/roles.dart';
 import '../../screens/auth/login.dart';
 import '../../screens/auth/onboarding.dart';
-import '../../screens/auth/register.dart';
+import '../screens/auth/client_register.dart';
 import '../../screens/roles/admin/home.dart';
 import '../../screens/roles/client/home.dart';
 import '../../screens/roles/switch_roles.dart';
@@ -67,9 +68,11 @@ class AuthRouter {
         return PageRouteBuilder(
             pageBuilder: (_, __, ___) => const Onboarding());
       case AuthRoutes.login:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => Login());
-      case AuthRoutes.register:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => Register());
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => const Login());
+      case AuthRoutes.clientRegister:
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => ClientRegister());
+      case AuthRoutes.contractorRegister:
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => ContractorRegister());
       case AuthRoutes.resetPassword:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => ResetPassword());
       default:

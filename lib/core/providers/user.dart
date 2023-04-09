@@ -1,15 +1,22 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-// 🏘️ Local imports
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
+import '../../core/models/address.dart';
 import '../models/client.dart';
 import '../models/user.dart';
 import '../../screens/auth/onboarding.dart';
 import '../../router/router.dart';
 import '../../router/routes.dart';
+import '../utils/global.dart';
 import '../utils/loader.dart';
+import '../utils/toast.dart';
+import 'package:path/path.dart';
 
 class UserProvider extends ChangeNotifier {
   late UserModel _user = UserModel.clear();
@@ -106,41 +113,115 @@ class UserProvider extends ChangeNotifier {
   }) {
     if (signInMethods == SignInMethods.email) {
       FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: payload.email, password: payload.password)
-          .then((credentials) {
-            credentials.user!.updateDisplayName(payload.name);
-            credentials.user!.updatePhotoURL(payload.profilePhoto);
-            FirebaseFirestore.instance
-                .collection("users")
-                .doc(credentials.user!.uid)
-                .withConverter(
-                    fromFirestore: UserModel.fromFirestore,
-                    toFirestore: (UserModel userModel, _) =>
-                        userModel.toFirestore())
-                .set(
-                  UserModel(
-                    uid: credentials.user!.uid,
-                    email: payload.email,
-                    password: payload.password,
-                    name: payload.name,
-                    phone: payload.phone,
-                    address: payload.address,
-                    roles: payload.roles,
-                  ),
-                );
-          })
-          .then((_) => init())
-          .then((_) => GlobalNavigator.router.currentState!
-              .pushReplacementNamed(GlobalRoutes.switchRoles))
-          .onError((FirebaseAuthException error, stackTrace) {
-            _resolveAuthError(
-              error: error,
-              context: context,
-              signInMethods: SignInMethods.email,
-            );
-            return;
-          });
+        .createUserWithEmailAndPassword(
+            email: payload.email, password: payload.password)
+        .then((credentials) async {
+          credentials.user!.updateDisplayName(payload.name);
+          credentials.user!.updatePhotoURL(payload.profilePhoto);
+          print("payload userCompanyName ->${payload.userCompanyName}");
+          print("payload userPermit ->${payload.userPermit}");
+
+          // final appDocDir = await getApplicationDocumentsDirectory();
+          // final filePath = "${appDocDir.absolute}/path/to/mountains.jpg";
+          // final file = File(filePath);
+
+          if (payload.userPermit != null) {
+          }
+            
+            // final _firebaseStorage = FirebaseStorage.instance;
+            // final _imagePicker = ImagePicker();
+            // PickedFile image;
+            // //Check Permissions
+            // await Permission.photos.request();
+
+
+            // image = await _imagePicker.getImage(source: ImageSource.gallery);
+            // var file = File(image.path);
+
+            // if (image != null) {
+            //   //Upload to Firebase
+            //   var snapshot = await _firebaseStorage.ref()
+            //   .child('images/imageName')
+            //   .putFile(file).whenComplete((doc) async {
+            //     // var permitURL =
+                
+            //   });
+            // } else {
+            //   print('No Image Path Received');
+            // }
+
+
+
+
+            /*
+            final metadata = SettableMetadata(contentType: "image/jpeg");
+            final storageRef = FirebaseStorage.instance.ref();
+            String permitName = basename(payload.userPermit?.path ?? Var.noImageAvailable);
+
+            final uploadPermit = storageRef
+              .child("${Var.imagesRef}${Var.permitRef}$permitName")
+              .putFile(payload.userPermit ?? File(Var.noImageAvailable), metadata);
+
+            // var dowurl = await (await uploadPermit.whenComplete(() => null)).ref.getDownloadURL();
+
+            uploadPermit.snapshotEvents.listen((TaskSnapshot taskSnapshot) async {
+              switch (taskSnapshot.state) {
+                case TaskState.running:
+                  final progress =
+                      100.0 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
+                  Toast.show("${Var.uploadingIs} $progress% ${Var.complete}");
+                  break;
+                case TaskState.paused:
+                  Toast.show(Var.uploadingPaused);
+                  break;
+                case TaskState.canceled:
+                  Toast.show(Var.uploadingCanceled);
+                  break;
+                case TaskState.error:
+                  Toast.show(Var.uploadingError);
+                  break;
+                case TaskState.success:
+                  Toast.show(Var.uploadingCompleted);
+                  var permitURL = await taskSnapshot.ref.getDownloadURL();
+                  storeNewUser(
+                    credentials.user!.uid,
+                    payload.email,
+                    payload.password,
+                    payload.name,
+                    payload.phone,
+                    payload.address,
+                    payload.roles,
+                    payload.userCompanyName,
+                    permitURL,
+                  );
+                  break;
+              }
+            });
+          }
+          */
+          storeNewUser(
+            credentials.user!.uid,
+            payload.email,
+            payload.password,
+            payload.name,
+            payload.phone,
+            payload.address,
+            payload.roles,
+            payload.userCompanyName,
+            payload.userPermit,
+          );
+        })
+        .then((_) => init())
+        .then((_) => GlobalNavigator.router.currentState!
+            .pushReplacementNamed(AuthRoutes.login))
+        .onError((FirebaseAuthException error, stackTrace) {
+          _resolveAuthError(
+            error: error,
+            context: context,
+            signInMethods: SignInMethods.email,
+          );
+          return;
+      });
     } else {
       FirebaseFirestore.instance
           .collection("users")
@@ -167,8 +248,8 @@ class UserProvider extends ChangeNotifier {
           if (doc.exists == false) {
             if (credentials.user!.photoURL == null) {
               credentials.user!.updatePhotoURL(
-                  UserModel.clear(customName: credentials.user!.displayName!)
-                      .profilePhoto);
+                UserModel.clear(customName: credentials.user!.displayName!)
+                    .profilePhoto);
             }
             createUser(
               context: context,
@@ -180,7 +261,7 @@ class UserProvider extends ChangeNotifier {
                 phone: "No Phone Number",
                 address: Client.sample().address,
                 profileShot: credentials.user!.photoURL,
-                roles: [Roles.user],
+                roles: "",
               ),
               signInMethods: auth,
             );
@@ -338,4 +419,40 @@ class UserProvider extends ChangeNotifier {
         .then((value) => AuthRouter.router.currentState
             ?.pushReplacementNamed(AuthRoutes.splash));
   }
+
+  void storeNewUser(
+    uid,
+    email,
+    password,
+    name,
+    phone,
+    address,
+    role,
+    companyName,
+    permit
+  ) async {
+    await FirebaseFirestore.instance
+      .collection(Var.users)
+      .doc(uid)
+      .withConverter(
+        fromFirestore: UserModel.fromFirestore,
+        toFirestore: (UserModel userModel, _) =>
+            userModel.toFirestore())
+      .set(
+        UserModel(
+          uid: uid,
+          email: email,
+          password: password,
+          name: name,
+          phone: phone,
+          address: address,
+          roles: role,
+          companyName: companyName,
+          permit: permit,
+        ),
+      );
+    print("payload Successfully Registered new user!");
+    Toast.show("Successfully Registered new user!");
+  }
+
 }

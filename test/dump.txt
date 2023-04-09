@@ -1,0 +1,7 @@
+_confirmPasswordController
+_companyNameController
+permitImageFile
+
+_confirmPasswordFocusNode
+_companyNameFocusNode
+

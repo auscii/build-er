@@ -1,11 +1,10 @@
+import 'dart:io';
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-// 🏘️ Local imports
 import 'client.dart';
+import '../../core/models/address.dart';
 
 enum Roles { user, client, admin, error }
 
@@ -35,7 +34,6 @@ extension AuthMethods on SignInMethods {
 extension StringCasingExtension on String {
   String toCapitalized() =>
       length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
-
   String toTitleCase() => replaceAll(RegExp(' +'), ' ')
       .split(' ')
       .map((str) => str.toCapitalized())
@@ -43,11 +41,18 @@ extension StringCasingExtension on String {
 }
 
 class UserModel {
-  String name, email, phone, profilePhoto, description, password;
+  String name;
+  String email;
+  String phone;
+  String profilePhoto;
+  String description;
+  String password;
   Address address;
-  List<Roles> roles;
+  String roles; // List<Roles> roles;
   User? firebaseUser;
   String? uid;
+  String? userCompanyName;
+  String? userPermit;
 
   UserModel({
     required this.name,
@@ -59,12 +64,16 @@ class UserModel {
     String? uid,
     required this.roles,
     String? userInfo,
-  })  : firebaseUser = FirebaseAuth.instance.currentUser,
+    String? companyName,
+    String? permit,
+  }) : firebaseUser = FirebaseAuth.instance.currentUser,
         uid = uid ?? FirebaseAuth.instance.currentUser?.uid,
         description = userInfo ??
-            "Currently you have no description about you, add your description about you so that other people can know about you",
+          "Currently you have no description about you, add your description about you so that other people can know about you",
         profilePhoto = profileShot ??
-            "https://avatars.dicebear.com/api/adventurer/$name\.svg";
+          "https://avatars.dicebear.com/api/adventurer/$name\.svg",
+        userCompanyName = companyName,
+        userPermit = permit;
 
   createProfilePic() {
     String profileColor = Colors
@@ -82,7 +91,9 @@ class UserModel {
       password: "password",
       phone: "phone",
       address: Client.sample().address,
-      roles: [Roles.error],
+      roles: "roles", // [Roles.error],
+      companyName: "companyName",
+      permit: "permit"
     );
   }
 
@@ -98,11 +109,14 @@ class UserModel {
       phone: data["phone"],
       address: Address.fromFirestore(data["address"]),
       profileShot: data["profilePhoto"],
-      roles: toRoles(
-        List<String>.from(
-          data["roles"],
-        ),
-      ),
+      companyName: data["companyName"],
+      permit: data["permit"],
+      roles: data["roles"],
+      // roles: toRoles(
+      //   List<String>.from(
+      //     data["roles"],
+      //   ),
+      // ),
       uid: data['uid'],
       userInfo: data["description"],
     );
@@ -116,9 +130,12 @@ class UserModel {
       "phone": phone,
       "address": address.toFirestore(),
       "profilePhoto": profilePhoto,
-      "roles": roles.toRolesString(),
+      "roles": roles, //roles.toRolesString(),
+      "companyName": userCompanyName,
+      "permit": userPermit,
       "description": description,
       "uid": uid,
     };
   }
+
 }

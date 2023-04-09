@@ -237,13 +237,13 @@ Future<void> updateUserDetails(
           toFirestore: (UserModel userModel, _) => userModel.toFirestore())
       .doc(userId);
 
-  List<Roles> doc = [];
+  Roles? roles;//List<Roles> doc = [];
   instance.get().then((value) {
-    doc = value.data()!.roles;
-    doc.add(role);
+    roles = value.data()?.roles as Roles?;
+    // roles.add(role);
   }).then((_) => {
-        instance.update({'roles': doc.toRolesString()})
-      });
+    instance.update({'roles': roles.toString()})
+  });
 }
 
 class AdminRequests extends StatelessWidget {

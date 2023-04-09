@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 import 'package:provider/provider.dart';
-
+import '../../core/models/address.dart';
 import '../../core/models/client.dart';
-// 🏘️ Local imports
 import '../../core/models/user.dart';
 import '../../core/providers/user.dart';
 import '../../core/utils/global.dart';
@@ -17,10 +16,10 @@ import '../../styles/ui/colors.dart';
 import '../roles/admin/items.dart';
 import 'login.dart';
 
-class Register extends StatelessWidget {
-  Register({Key? key}) : super(key: key);
+class ClientRegister extends StatelessWidget {
+  ClientRegister({Key? key}) : super(key: key);
 
-  static const id = "register";
+  static const id = "Client Register";
 
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
@@ -174,6 +173,7 @@ class Register extends StatelessWidget {
                               password: _passwordController.text,
                               phone: _phoneController.text,
                               address: _addressController.value!,
+                              role: Client.role,
                             );
                           }
                         },
@@ -212,6 +212,7 @@ class Register extends StatelessWidget {
     required String password,
     required String phone,
     required Address address,
+    required String role,
   }) {
     Provider.of<UserProvider>(context, listen: false).createUser(
         context: context,
@@ -222,7 +223,7 @@ class Register extends StatelessWidget {
           password: password,
           phone: phone,
           address: address,
-          roles: [Roles.user],
+          roles: Client.role, //[Roles.user],
         ));
   }
 }

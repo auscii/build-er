@@ -1,13 +1,10 @@
-import 'package:client/core/providers/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../core/models/user.dart';
 import '../../router/router.dart';
 import '../../router/routes.dart';
 import '../../router/navigator/roles.dart';
 import '../../styles/icons/builder_icons.dart';
-import '../../styles/ui/colors.dart';
 
 class SwitchRoles extends StatefulWidget {
   static const String id = "switch_roles";
@@ -62,7 +59,7 @@ class _SwitchRolesState extends State<SwitchRoles> {
     }
   }
 
-  Widget _generateRoles(BuildContext context) {
+  /* Widget _generateRoles(BuildContext context) {
     Widget roleItem(Roles role) => ElevatedButton(
           onPressed: () => _navToRole(role),
           style: ElevatedButton.styleFrom(
@@ -95,7 +92,7 @@ class _SwitchRolesState extends State<SwitchRoles> {
     } catch (e) {
       return const Center(child: Text("Unable to fetch Roles"));
     }
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {

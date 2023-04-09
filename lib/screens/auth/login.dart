@@ -30,8 +30,8 @@ class _LoginState extends State<Login> {
 
   @override
   void initState() {
-    _emailController.text = "sean@gmail.com";
-    _passwordController.text = "123qwe";
+    // _emailController.text = "sean@gmail.com";
+    // _passwordController.text = "123qwe";
     super.initState();
   }
   
@@ -191,7 +191,7 @@ Widget authInput({
       obscureText: private,
       keyboardType: inputType,
       style: const TextStyle(
-        fontFamily: "SF Pro Rounded",
+        fontFamily: Var.defaultFont,
         fontSize: 15,
         fontWeight: FontWeight.w600,
         letterSpacing: 0.6,
@@ -210,7 +210,7 @@ Widget authInput({
         hintText: hint,
         helperText: errorMessage,
         helperStyle: const TextStyle(
-          fontFamily: "SF Pro Rounded",
+          fontFamily: Var.defaultFont,
           fontSize: 10,
           color: AppColors.error,
           fontWeight: FontWeight.w600,
