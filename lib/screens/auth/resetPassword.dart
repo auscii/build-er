@@ -33,57 +33,59 @@ class ResetPassword extends StatelessWidget {
               .popAndPushNamed(AuthRoutes.onboarding),
         ),
       ),
-      body: SafeArea(
+      body: Container(
+        margin: EdgeInsets.zero,
+        height: 800,
         child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              buildBranding(context),
-              const SizedBox(height: 40),
-              Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    authInput(
-                        controller: _emailController,
-                        focusNode: _emailFocusNode,
-                        inputType: TextInputType.emailAddress,
-                        hint: "Enter Email Address to reset"),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    SizedBox(
-                      height: kIsWeb ? 50 : null,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            _resetEmail(
-                                email: _emailController.text, context: context);
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: AppColors.primary,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 17, horizontal: 80),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                buildBranding(context),
+                const SizedBox(height: 40),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      authInput(
+                          controller: _emailController,
+                          focusNode: _emailFocusNode,
+                          inputType: TextInputType.emailAddress,
+                          hint: "Enter Email Address to reset"),
+                      const SizedBox(height: 20),
+                      SizedBox(
+                        height: kIsWeb ? 50 : null,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              _resetEmail(
+                                  email: _emailController.text, context: context);
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: AppColors.primary,
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 17, horizontal: 80),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
                           ),
-                        ),
-                        child: const Text(
-                          "RESET PASSWORD",
-                          style: TextStyle(
-                            fontFamily: Var.defaultFont,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
+                          child: const Text(
+                            "RESET PASSWORD",
+                            style: TextStyle(
+                              fontFamily: Var.defaultFont,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              )
-            ],
+                      const SizedBox(height: 60),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

@@ -70,9 +70,9 @@ class AuthRouter {
       case AuthRoutes.login:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const Login());
       case AuthRoutes.clientRegister:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => ClientRegister());
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => const ClientRegister());
       case AuthRoutes.contractorRegister:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => ContractorRegister());
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => const ContractorRegister());
       case AuthRoutes.resetPassword:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => ResetPassword());
       default:

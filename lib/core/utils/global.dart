@@ -41,7 +41,7 @@ class Var {
   static const enterPhone = "Enter your Phone Number";
   static const enterCompany = "Enter your Company Name";
   static const enterAddress = "Enter your Address";
-  static const selectLocation = "Select your Location";
+  static const selectLocation = "SELECT YOUR LOCATION";
   static const register = "REGISTER";
   static const validID = "Valid ID";
   static const noImageReceived = "No Image Received!";
