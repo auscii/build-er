@@ -54,4 +54,6 @@ class ProjectBuilder {
       IconData(0xec91, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData addCart =
       IconData(0xe05a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData lock =
+      IconData(0xe3ae, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

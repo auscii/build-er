@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // 🏘️ Local imports
-import '../../router/navigator/roles.dart';
+import '../../router/navigator/navigation_menu.dart';
 import '../../styles/icons/builder_icons.dart';
 
 class AboutPage extends StatelessWidget {

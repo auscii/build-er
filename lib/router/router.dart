@@ -5,7 +5,7 @@ import '../screens/auth/resetPassword.dart';
 import '../screens/roles/user/shopping_cart.dart';
 import '../screens/shared/about.dart';
 import 'navigator/auth.dart';
-import 'navigator/roles.dart';
+import 'navigator/navigation_menu.dart';
 import '../../screens/auth/login.dart';
 import '../../screens/auth/onboarding.dart';
 import '../screens/auth/client_register.dart';

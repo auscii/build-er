@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import '../../core/providers/user.dart';
 import '../../core/utils/global.dart';
 import '../../styles/ui/colors.dart';
-import '../../router/navigator/roles.dart';
+import '../../router/navigator/navigation_menu.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({Key? key}) : super(key: key);

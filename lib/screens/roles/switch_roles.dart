@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../../core/models/user.dart';
 import '../../router/router.dart';
 import '../../router/routes.dart';
-import '../../router/navigator/roles.dart';
+import '../../router/navigator/navigation_menu.dart';
 import '../../styles/icons/builder_icons.dart';
 
 class SwitchRoles extends StatefulWidget {

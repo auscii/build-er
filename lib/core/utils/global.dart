@@ -52,6 +52,7 @@ class Var {
   static const admin = "admin";
   static const client = "client";
   static const contractor = "Contractor";
+  static const capsContractor = "CONTRACTOR";
   static const home = "HOME";
   static const aboutBuilder = "Build-er is a smartphone application that connects you with nearby, reputable, and reliable contractors in any field to help build your ideas and visions turn into reality. Its purpose is to eliminate fraud and assure the legitimacy of your chosen contractor. Build-er also provides the client with a free online consultation and price estimation. Aside from that, Build-er offers affordable construction tools, equipment, and materials through its e-commerce shopping feature.";
   static const services = "OUR SERVICES";
@@ -78,6 +79,14 @@ class Var {
   static const datem = "DATEM Incorporated";
   static const ffCruz = "F.F. Cruz Co., Inc.";
   static const monolithConstruction = "Monolith Construction Development Corporation";
+  static const portfolio = "PORTFOLIO";
+  static const user = "USERS";
+  static const products = "PRODUCTS";
+  static const materialIcons = "MaterialIcons";
+  static const faq = "FAQ";
+  static const privacyPolicy = "PRIVACY POLICY";
+  static const copyright = "2023 BUILD-er.\nALL RIGHTS RESERVED.";
+  static const welcome = "Welcome, ";
   // static const aaa = "aaa";
   
   static var activeUserRole = "";

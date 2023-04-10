@@ -5,11 +5,9 @@ import 'package:client/styles/ui/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import '../../../router/navigator/roles.dart';
+import '../../../router/navigator/navigation_menu.dart';
 import '../../../styles/icons/builder_icons.dart';
-import '../admin/home.dart';
 import '../admin/items.dart';
-import '../user/home.dart';
 
 class ClientHome extends StatefulWidget {
   static const String id = "client";
@@ -23,7 +21,6 @@ class _ClientHomeState extends State<ClientHome> {
 
   @override
   void initState() {
-    print("initstate on home client page.");
     super.initState();
   }
 
@@ -112,7 +109,7 @@ class _ClientHomeState extends State<ClientHome> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      minimum: const EdgeInsets.only(top: 130, left: 36, right: 36),
+      minimum: const EdgeInsets.only(top: 30, left: 36, right: 36),
       maintainBottomViewPadding: false,
       child: Center(
         child: ConstrainedBox(
