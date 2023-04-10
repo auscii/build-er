@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -56,6 +55,7 @@ class UserModel {
   String? userLicense;
   String? userDTI;
   String? userSec;
+  String? userValidID;
 
   UserModel({
     required this.name,
@@ -72,6 +72,7 @@ class UserModel {
     String? license,
     String? dti,
     String? sec,
+    String? validID,
   }) : firebaseUser = FirebaseAuth.instance.currentUser,
         uid = uid ?? FirebaseAuth.instance.currentUser?.uid,
         description = userInfo ??
@@ -82,7 +83,8 @@ class UserModel {
         userPermit = permit,
         userLicense = license,
         userDTI = dti,
-        userSec = sec;
+        userSec = sec,
+        userValidID = validID;
 
   createProfilePic() {
     String profileColor = Colors
@@ -106,6 +108,7 @@ class UserModel {
       license: "license",
       dti: "dti",
       sec: "sec",
+      validID: "validID",
     );
   }
 
@@ -127,6 +130,7 @@ class UserModel {
       dti: data["dti"],
       sec: data["sec"],
       roles: data["roles"],
+      validID: data["validID"],
       // roles: toRoles(
       //   List<String>.from(
       //     data["roles"],
@@ -151,6 +155,7 @@ class UserModel {
       "license": userLicense,
       "dti": userDTI,
       "sec": userSec,
+      "validID": userValidID,
       "description": description,
       "uid": uid,
     };

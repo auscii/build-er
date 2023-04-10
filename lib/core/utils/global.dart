@@ -31,6 +31,21 @@ class Var {
   static const license = "LICENSE";
   static const dti = "DTI";
   static const sec = "SEC";
+  static const upload = "Upload";
+  static const createClientAccount = "Create New Client Account";
+  static const createContractorAccount = "Create New Contractor Account";
+  static const enterName = "Enter your Name";
+  static const enterEmail = "Enter your Email";
+  static const enterPassword = "Enter your Password";
+  static const confirmPassword = "Confirm your Password";
+  static const enterPhone = "Enter your Phone Number";
+  static const enterCompany = "Enter your Company Name";
+  static const enterAddress = "Enter your Address";
+  static const selectLocation = "Select your Location";
+  static const register = "REGISTER";
+  static const validID = "Valid ID";
+  static const noImageReceived = "No Image Received!";
+  static const passwordMismatched = "Password Mismatched! Please re-enter your password correctly.";
   // static const aaa = "aaa";
 
   static charRandomizer() {

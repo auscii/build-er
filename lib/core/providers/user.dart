@@ -1,12 +1,8 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 import '../../core/models/address.dart';
 import '../models/client.dart';
 import '../models/user.dart';
@@ -16,7 +12,6 @@ import '../../router/routes.dart';
 import '../utils/global.dart';
 import '../utils/loader.dart';
 import '../utils/toast.dart';
-import 'package:path/path.dart';
 
 class UserProvider extends ChangeNotifier {
   late UserModel _user = UserModel.clear();
@@ -24,7 +19,7 @@ class UserProvider extends ChangeNotifier {
   init() {
     if (FirebaseAuth.instance.currentUser != null) {
       FirebaseFirestore.instance
-          .collection("users")
+          .collection(Var.users)
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .withConverter(
               fromFirestore: UserModel.fromFirestore,
@@ -63,7 +58,7 @@ class UserProvider extends ChangeNotifier {
     if (_user != UserModel.clear() &&
         FirebaseAuth.instance.currentUser != null) {
       FirebaseFirestore.instance
-          .collection("users")
+          .collection(Var.users)
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update({
         "name": name.isEmpty ? _user.name : name,
@@ -79,7 +74,7 @@ class UserProvider extends ChangeNotifier {
         currentDetails?.updateEmail(email.isEmpty ? _user.email : email);
       }).then((value) {
         FirebaseFirestore.instance
-            .collection("users")
+            .collection(Var.users)
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .withConverter(
                 fromFirestore: UserModel.fromFirestore,
@@ -98,10 +93,11 @@ class UserProvider extends ChangeNotifier {
       {required FirebaseAuthException error,
       required BuildContext context,
       required SignInMethods signInMethods}) {
+    Loader.stop();
     ScaffoldMessenger.of(context).showSnackBar(
       alertSnackBar(
         message:
-            "${signInMethods.toName()} Authentication Failed 😢 \n \n ${error.message}",
+          "${signInMethods.toName()} Authentication Failed 😢 \n \n ${error.message}",
       ),
     );
   }
@@ -131,12 +127,10 @@ class UserProvider extends ChangeNotifier {
             payload.userLicense,
             payload.userDTI,
             payload.userSec,
+            payload.userValidID,
           );
         })
         .then((_) => init())
-        // .whenComplete(() 
-        //   => GlobalNavigator.router.currentState!
-        //     .pushReplacementNamed(AuthRoutes.login))
         .onError((FirebaseAuthException error, stackTrace) {
           _resolveAuthError(
             error: error,
@@ -145,14 +139,16 @@ class UserProvider extends ChangeNotifier {
           );
           return;
         });
+        Loader.stop();
     } else {
       FirebaseFirestore.instance
-          .collection("users")
+          .collection(Var.users)
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .withConverter(
               fromFirestore: UserModel.fromFirestore,
               toFirestore: (UserModel userModel, _) => userModel.toFirestore())
           .set(payload);
+      Loader.stop();
     }
   }
 
@@ -161,7 +157,7 @@ class UserProvider extends ChangeNotifier {
       required UserCredential credentials,
       required BuildContext context}) {
     FirebaseFirestore.instance
-        .collection("users")
+        .collection(Var.users)
         .doc(credentials.user!.uid)
         .withConverter(
             fromFirestore: UserModel.fromFirestore,
@@ -207,33 +203,33 @@ class UserProvider extends ChangeNotifier {
   void googleSignIn(BuildContext context) {
     if (kIsWeb) {
       FirebaseAuth.instance
-          .signInWithPopup(GoogleAuthProvider())
-          .then(
-            (credentials) => socialAuth(
-                auth: SignInMethods.google,
-                credentials: credentials,
-                context: context),
-          )
-          .onError(
-            (FirebaseAuthException error, stackTrace) => _resolveAuthError(
-              error: error,
-              context: context,
-              signInMethods: SignInMethods.google,
-            ),
-          );
-    } else {
-      signInWithGoogle()
-          .then((credentials) => socialAuth(
+        .signInWithPopup(GoogleAuthProvider())
+        .then(
+          (credentials) => socialAuth(
               auth: SignInMethods.google,
               credentials: credentials,
-              context: context))
-          .onError(
-            (FirebaseAuthException error, stackTrace) => _resolveAuthError(
-              error: error,
-              context: context,
-              signInMethods: SignInMethods.google,
-            ),
-          );
+              context: context),
+        )
+        .onError(
+          (FirebaseAuthException error, stackTrace) => _resolveAuthError(
+            error: error,
+            context: context,
+            signInMethods: SignInMethods.google,
+          ),
+        );
+    } else {
+      signInWithGoogle()
+        .then((credentials) => socialAuth(
+            auth: SignInMethods.google,
+            credentials: credentials,
+            context: context))
+        .onError(
+          (FirebaseAuthException error, stackTrace) => _resolveAuthError(
+            error: error,
+            context: context,
+            signInMethods: SignInMethods.google,
+          ),
+        );
     }
   }
 
@@ -247,33 +243,33 @@ class UserProvider extends ChangeNotifier {
   void githubSignIn(BuildContext context) {
     if (kIsWeb) {
       FirebaseAuth.instance
-          .signInWithPopup(GithubAuthProvider())
-          .then(
-            (credentials) => socialAuth(
-                auth: SignInMethods.github,
-                credentials: credentials,
-                context: context),
-          )
-          .onError(
-            (FirebaseAuthException error, stackTrace) => _resolveAuthError(
-              error: error,
-              context: context,
-              signInMethods: SignInMethods.github,
-            ),
-          );
-    } else {
-      signInWithGitHub()
-          .then((credentials) => socialAuth(
+        .signInWithPopup(GithubAuthProvider())
+        .then(
+          (credentials) => socialAuth(
               auth: SignInMethods.github,
               credentials: credentials,
-              context: context))
-          .onError(
-            (FirebaseAuthException error, stackTrace) => _resolveAuthError(
-              error: error,
-              context: context,
-              signInMethods: SignInMethods.google,
-            ),
-          );
+              context: context),
+        )
+        .onError(
+          (FirebaseAuthException error, stackTrace) => _resolveAuthError(
+            error: error,
+            context: context,
+            signInMethods: SignInMethods.github,
+          ),
+        );
+    } else {
+      signInWithGitHub()
+        .then((credentials) => socialAuth(
+            auth: SignInMethods.github,
+            credentials: credentials,
+            context: context))
+        .onError(
+          (FirebaseAuthException error, stackTrace) => _resolveAuthError(
+            error: error,
+            context: context,
+            signInMethods: SignInMethods.google,
+          ),
+        );
     }
   }
 
@@ -355,7 +351,8 @@ class UserProvider extends ChangeNotifier {
     permit,
     license,
     dti,
-    sec
+    sec,
+    validID
   ) async {
     await FirebaseFirestore.instance
       .collection(Var.users)
@@ -377,12 +374,49 @@ class UserProvider extends ChangeNotifier {
           permit: permit,
           license: license,
           dti: dti,
-          sec: sec
+          sec: sec,
+          validID: validID
         ),
       );
     Toast.show("Successfully Registered new user!");
     AuthRouter.router.currentState!
       .popAndPushNamed(AuthRoutes.onboarding);
+  }
+
+  static void userRegister({
+    required String username,
+    required BuildContext context,
+    required String email,
+    required String password,
+    required String phone,
+    required Address address,
+    required String role,
+    required String companyName,
+    String? permit,
+    String? license,
+    String? dti,
+    String? sec,
+    String? validID
+  }) {
+    Loader.show(context, 0);
+    Provider.of<UserProvider>(context, listen: false).createUser(
+      context: context,
+      signInMethods: SignInMethods.email,
+      payload: UserModel(
+        name: username,
+        email: email,
+        password: password,
+        phone: phone,
+        address: address,
+        roles: role, //[Roles.user],
+        companyName: companyName,
+        permit: permit,
+        license: license,
+        dti: dti,
+        sec: sec,
+        validID: validID
+      )
+    );
   }
 
 }

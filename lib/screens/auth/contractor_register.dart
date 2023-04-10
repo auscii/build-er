@@ -12,6 +12,7 @@ import '../../core/models/user.dart';
 import '../../core/models/address.dart';
 import '../../core/providers/user.dart';
 import '../../core/utils/global.dart';
+import '../../core/utils/loader.dart';
 import '../../core/utils/toast.dart';
 import '../../core/utils/validator.dart';
 import '../../router/router.dart';
@@ -86,7 +87,7 @@ class _ContractorRegisterState extends State<ContractorRegister> {
               children: [
                 const SizedBox(height: 40),
                 const Text(
-                  "Create your Account",
+                  Var.createContractorAccount,
                   style: TextStyle(
                     fontFamily: Var.defaultFont,
                     fontWeight: FontWeight.w700,
@@ -98,7 +99,7 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                   key: _formKey,
                   child: Column(mainAxisSize: MainAxisSize.min, children: [
                     authInput(
-                      hint: "Name",
+                      hint: Var.enterName,
                       controller: _nameController,
                       focusNode: _nameFocusNode,
                       inputType: TextInputType.name,
@@ -111,7 +112,7 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                     ),
                     const SizedBox(height: 15),
                     authInput(
-                      hint: "Enter your Email",
+                      hint: Var.enterEmail,
                       controller: _emailController,
                       focusNode: _emailFocusNode,
                       inputType: TextInputType.emailAddress,
@@ -124,7 +125,7 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                     ),
                     const SizedBox(height: 15),
                     authInput(
-                      hint: "Enter your Password",
+                      hint: Var.enterPassword,
                       controller: _passwordController,
                       focusNode: _passwordFocusNode,
                       validator: (value) =>
@@ -138,7 +139,7 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                     ),
                     const SizedBox(height: 15),
                     authInput(
-                      hint: "Confirm your Password",
+                      hint: Var.confirmPassword,
                       controller: _confirmPasswordController,
                       focusNode: _confirmPasswordFocusNode,
                       validator: (value) =>
@@ -152,7 +153,7 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                     ),
                     const SizedBox(height: 15),
                     authInput(
-                      hint: "Enter your Phone Number",
+                      hint: Var.enterPhone,
                       controller: _phoneController,
                       focusNode: _phoneFocusNode,
                       inputType: TextInputType.phone, //TextInputType.phone,
@@ -165,7 +166,7 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                     ),
                     const SizedBox(height: 15),
                     authInput(
-                      hint: "Company Name",
+                      hint: Var.enterCompany,
                       controller: _companyNameController,
                       focusNode: _companyNameFocusNode,
                       inputType: TextInputType.name,
@@ -178,7 +179,7 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                     ),
                     const SizedBox(height: 15),
                     authInput(
-                      hint: "Enter your Address",
+                      hint: Var.enterAddress,
                       controller: _addressTextController,
                       focusNode: _addressFocusNode,
                       inputType: TextInputType.streetAddress,
@@ -190,7 +191,7 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                             minZoomLevel: 5,
                             maxZoomLevel: 16,
                             trackMyPosition: true,
-                            selectLocationButtonText: 'Select Contractor Location',
+                            selectLocationButtonText: Var.selectLocation,
                             selectLocationButtonStyle: ButtonStyle(
                               backgroundColor:
                                   MaterialStateProperty.all(AppColors.primary),
@@ -359,8 +360,14 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                       height: kIsWeb ? 50 : null,
                       child: ElevatedButton(
                         onPressed: () {
+                          var password = _passwordController.text;
+                          var confirmPassword = _confirmPasswordController.text;
                           if (_formKey.currentState!.validate()) {
-                            _userRegister(
+                            if (password != confirmPassword) {
+                              Toast.show(Var.passwordMismatched);
+                              return;
+                            }
+                            UserProvider.userRegister(
                               context: context,
                               username: _nameController.text,
                               email: _emailController.text,
@@ -386,7 +393,7 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                           ),
                         ),
                         child: const Text(
-                          "REGISTER",
+                          Var.register,
                           style: TextStyle(
                             fontFamily: Var.defaultFont,
                             fontSize: 20,
@@ -403,39 +410,6 @@ class _ContractorRegisterState extends State<ContractorRegister> {
           ),
         ),
       ),
-    );
-  }
-
-  void _userRegister({
-    required String username,
-    required BuildContext context,
-    required String email,
-    required String password,
-    required String phone,
-    required Address address,
-    required String role,
-    required String companyName,
-    required String permit,
-    required String license,
-    required String dti,
-    required String sec,
-  }) {
-    Provider.of<UserProvider>(context, listen: false).createUser(
-      context: context,
-      signInMethods: SignInMethods.email,
-      payload: UserModel(
-        name: username,
-        email: email,
-        password: password,
-        phone: phone,
-        address: address,
-        roles: role, //[Roles.user],
-        companyName: companyName,
-        permit: permit,
-        license: license,
-        dti: dti,
-        sec: sec,
-      )
     );
   }
 
@@ -463,6 +437,7 @@ class _ContractorRegisterState extends State<ContractorRegister> {
               final progress =
                   100.0 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
               Toast.show("${Var.uploading} $progress%");
+              Loader.show(context, 0);
               break;
             case TaskState.success:
               Toast.show(Var.uploadingCompleted);
@@ -478,20 +453,24 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                   secImagePath = downloadURL;
                 }
               });
+              Loader.stop();
               break;
             case TaskState.paused:
               Toast.show(Var.uploadingPaused);
+              Loader.stop();
               break;
             case TaskState.canceled:
               Toast.show(Var.uploadingCanceled);
+              Loader.stop();
               break;
             case TaskState.error:
               Toast.show(Var.uploadingError);
+              Loader.stop();
               break;
           }
         });
     } else {
-      Toast.show('No Image Path Received');
+      Toast.show(Var.noImageReceived);
     }
   }
 
@@ -499,6 +478,7 @@ class _ContractorRegisterState extends State<ContractorRegister> {
     _nameController.clear();
     _emailController.clear();
     _passwordController.clear();
+    _confirmPasswordController.clear();
     _phoneController.clear();
     _companyNameController.clear();
     _addressTextController.clear();
