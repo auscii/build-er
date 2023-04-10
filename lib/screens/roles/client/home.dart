@@ -11,15 +11,32 @@ import '../admin/home.dart';
 import '../admin/items.dart';
 import '../user/home.dart';
 
-class ClientHome extends StatelessWidget {
+class ClientHome extends StatefulWidget {
+  static const String id = "client";
   const ClientHome({Key? key}) : super(key: key);
 
-  static const String id = "client";
+  @override
+  State<ClientHome> createState() => _ClientHomeState();
+}
+
+class _ClientHomeState extends State<ClientHome> {
+
+  @override
+  void initState() {
+    print("initstate on home client page.");
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 
   Widget _buildStats({
     required BuildContext context,
     required String label,
-    required VoidCallback onPressed,
+    // required VoidCallback onPressed,
     required double cummulative,
   }) {
     return Expanded(
@@ -100,77 +117,342 @@ class ClientHome extends StatelessWidget {
       child: Center(
         child: ConstrainedBox(
           constraints: pageConstraints,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                flex: 2,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Earnings Stats",
-                      style: TextStyle(
-                        fontFamily: Var.defaultFont,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _buildStats(
-                          context: context,
-                          label: "Daily",
-                          cummulative: -5.23,
-                          onPressed: () => showDialog(
-                            context: context,
-                            builder: (context) => const SearchOverlay(),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        _buildStats(
-                          context: context,
-                          label: "Weekly",
-                          cummulative: 39.69,
-                          onPressed: () => showDialog(
-                            context: context,
-                            builder: (context) => const SearchOverlay(),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Image.asset(
+                  Var.appLogo,
+                  width: 150,
+                  height: 150,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                  filterQuality: FilterQuality.high,
                 ),
-              ),
-              const SizedBox(height: 20),
-              Expanded(
-                flex: 6,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      "Service Requests",
-                      style: TextStyle(
-                        fontFamily: Var.defaultFont,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(height: 27),
-                    Expanded(
-                      child: TabbedLayout(
-                        tabLabel: ["New Requests", "Completed"],
-                        tabs: [NewRequests(), CompletedRequests()],
-                      ),
-                    )
-                  ],
+                const SizedBox(height: 15),
+                const Text(
+                  Var.builder,
+                  style: TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 10),
+                Container(
+                  margin: EdgeInsets.zero,
+                  width: 350,
+                  child: Column(
+                    children: const <Widget>[
+                      Text(
+                        Var.aboutBuilder,
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        )
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 25),
+                const Divider(color: Colors.black, thickness: 1, height: 1),
+                const SizedBox(height: 25),
+                const Text(
+                  Var.services,
+                  style: TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  margin: EdgeInsets.zero,
+                  width: 350,
+                  child: Column(
+                    children: const <Widget>[
+                      Text(
+                        Var.servicesInfo,
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                        )
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Image.asset(
+                  Var.stanleyLogo,
+                  width: 350,
+                  height: 150,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                  filterQuality: FilterQuality.high,
+                ),
+                const SizedBox(height: 15),
+                Image.asset(
+                  Var.dewaltLogo,
+                  width: 350,
+                  height: 150,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                  filterQuality: FilterQuality.high,
+                ),
+                const SizedBox(height: 15),
+                Image.asset(
+                  Var.makitaLogo,
+                  width: 350,
+                  height: 150,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                  filterQuality: FilterQuality.high,
+                ),
+                const SizedBox(height: 25),
+                const Divider(color: Colors.black, thickness: 1, height: 1),
+                const SizedBox(height: 25),
+                const Text(
+                  Var.partners,
+                  style: TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+                const SizedBox(height: 35),
+                const Text(
+                  Var.asec,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(height: 15),
+                Image.asset(
+                  Var.asecLogo,
+                  width: 350,
+                  height: 150,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                  filterQuality: FilterQuality.high,
+                ),
+                const SizedBox(height: 15),
+                Image.asset(
+                  Var.asecBuilding,
+                  width: 350,
+                  height: 150,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                  filterQuality: FilterQuality.high,
+                ),
+                const SizedBox(height: 35),
+                const Text(
+                  Var.asdec,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(height: 15),
+                Image.asset(
+                  Var.asdecLogo,
+                  width: 350,
+                  height: 150,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                  filterQuality: FilterQuality.high,
+                ),
+                const SizedBox(height: 15),
+                Image.asset(
+                  Var.asdecSmCoast,
+                  width: 350,
+                  height: 150,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                  filterQuality: FilterQuality.high,
+                ),
+                const SizedBox(height: 35),
+                const Text(
+                  Var.cki,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(height: 15),
+                Image.asset(
+                  Var.ckiLogo,
+                  width: 350,
+                  height: 250,
+                  fit: BoxFit.fill,
+                  alignment: Alignment.center,
+                  filterQuality: FilterQuality.high,
+                ),
+                const SizedBox(height: 15),
+                Image.asset(
+                  Var.ckiRestau,
+                  width: 350,
+                  height: 150,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                  filterQuality: FilterQuality.high,
+                ),
+                const SizedBox(height: 35),
+                const Text(
+                  Var.datem,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(height: 15),
+                Image.asset(
+                  Var.datemLogo,
+                  width: 350,
+                  height: 150,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                  filterQuality: FilterQuality.high,
+                ),
+                const SizedBox(height: 15),
+                Image.asset(
+                  Var.datemBuilding,
+                  width: 350,
+                  height: 150,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                  filterQuality: FilterQuality.high,
+                ),
+                const SizedBox(height: 35),
+                const Text(
+                  Var.ffCruz,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(height: 15),
+                Image.asset(
+                  Var.ffLogo,
+                  width: 350,
+                  height: 150,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                  filterQuality: FilterQuality.high,
+                ),
+                const SizedBox(height: 15),
+                Image.asset(
+                  Var.ffFishport,
+                  width: 350,
+                  height: 150,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                  filterQuality: FilterQuality.high,
+                ),
+                const SizedBox(height: 35),
+                const Text(
+                  Var.monolithConstruction,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                Image.asset(
+                  Var.monolithLogo,
+                  width: 350,
+                  height: 150,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                  filterQuality: FilterQuality.high,
+                ),
+                const SizedBox(height: 15),
+                Image.asset(
+                  Var.monolithMoaArena,
+                  width: 350,
+                  height: 150,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                  filterQuality: FilterQuality.high,
+                ),
+                const SizedBox(height: 35),
+                /*
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _buildStats(
+                            context: context,
+                            label: "Daily",
+                            cummulative: -5.23,
+                            // onPressed: () => showDialog(
+                            //   context: context,
+                            //   builder: (context) => const SearchOverlay(),
+                            // ),
+                          ),
+                          const SizedBox(width: 10),
+                          _buildStats(
+                            context: context,
+                            label: "Weekly",
+                            cummulative: 39.69,
+                            // onPressed: () => showDialog(
+                            //   context: context,
+                            //   builder: (context) => const SearchOverlay(),
+                            // ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                */
+                const SizedBox(height: 20),
+                /*
+                Expanded(
+                  flex: 6,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        "Service Requests",
+                        style: TextStyle(
+                          fontFamily: Var.defaultFont,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(height: 27),
+                      Expanded(
+                        child: TabbedLayout(
+                          tabLabel: ["New Requests", "Completed"],
+                          tabs: [NewRequests(), CompletedRequests()],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                */
+              ],
+            ),
           ),
         ),
       ),

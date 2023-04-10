@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:client/core/utils/global.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class AppData extends ChangeNotifier {
   late StreamSubscription<QuerySnapshot<AdminRequests>> adminRequestListener;
   late StreamSubscription<QuerySnapshot<ServiceRequest>> serviceListener;
 
-  String _currentRoute = 'BUILD-er';
+  String _currentRoute = Var.home;
 
   String get currentRoute {
     return _currentRoute[0].toUpperCase() + _currentRoute.substring(1);

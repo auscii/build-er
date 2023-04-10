@@ -52,9 +52,35 @@ class Var {
   static const admin = "admin";
   static const client = "client";
   static const contractor = "Contractor";
+  static const home = "HOME";
+  static const aboutBuilder = "Build-er is a smartphone application that connects you with nearby, reputable, and reliable contractors in any field to help build your ideas and visions turn into reality. Its purpose is to eliminate fraud and assure the legitimacy of your chosen contractor. Build-er also provides the client with a free online consultation and price estimation. Aside from that, Build-er offers affordable construction tools, equipment, and materials through its e-commerce shopping feature.";
+  static const services = "OUR SERVICES";
+  static const servicesInfo = "Offers construction tools, equipment, and materials for users to select and buy their desired products; this also offers service - deep-cleaning and plumbing services. This application ensures the authenticity of the users' reviews, contractors and/or suppliers in order to prevent fraudulent circumstances.";
+  static const stanleyLogo = "assets/images/res/stanley-logo.png";
+  static const dewaltLogo = "assets/images/res/dewalt-logo.png";
+  static const makitaLogo = "assets/images/res/makita-logo.jpg";
+  static const partners = "OUR PARTNERS";
+  static const asecLogo = "assets/images/res/asec-logo.jpg";
+  static const asecBuilding = "assets/images/res/asec-building.jpg";
+  static const ckiLogo = "assets/images/res/cki-logo.jpg";
+  static const ckiRestau = "assets/images/res/cki-restaurants.jpg";
+  static const datemLogo = "assets/images/res/datem-logo.jpg";
+  static const datemBuilding = "assets/images/res/datem-buildings.png";
+  static const ffLogo = "assets/images/res/ff-logo.png";
+  static const ffFishport = "assets/images/res/ff-fishport.jpg";
+  static const asdecLogo = "assets/images/res/asdec-logo.png";
+  static const asdecSmCoast = "assets/images/res/asdec-sm-coast.png";
+  static const monolithLogo = "assets/images/res/monolith-logo.png";
+  static const monolithMoaArena = "assets/images/res/monolith-moa-arena.jpg";
+  static const asdec = "Asdec Builders Corporation";
+  static const asec = "Asec Development and Construction Corporation";
+  static const cki = "CKI Builders Engineering Services";
+  static const datem = "DATEM Incorporated";
+  static const ffCruz = "F.F. Cruz Co., Inc.";
+  static const monolithConstruction = "Monolith Construction Development Corporation";
+  // static const aaa = "aaa";
   
   static var activeUserRole = "";
-  // static const aaa = "aaa";
 
   static charRandomizer() {
     final now = DateTime.now();
