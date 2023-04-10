@@ -1,11 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-// 🏘️ Local imports
-import '../../core/models/user.dart';
 import '../../core/providers/appdata.dart';
 import '../../core/providers/user.dart';
 import '../../core/utils/global.dart';
@@ -19,7 +15,6 @@ BoxConstraints pageConstraints =
 
 class PageNavigator extends StatelessWidget {
   PageNavigator({
-    ///* Auto Navigates to a given Page
     this.routeToNavigate = PageRouter.initialRoute,
     Key? key,
   }) : super(key: key);

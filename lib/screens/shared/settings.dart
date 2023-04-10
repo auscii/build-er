@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../../core/providers/appdata.dart';
 import '../../core/models/address.dart';
 import '../../core/providers/user.dart';
+import '../../core/utils/global.dart';
 import '../../core/utils/validator.dart';
 import '../../router/navigator/roles.dart';
 import '../../styles/icons/builder_icons.dart';
@@ -40,7 +41,7 @@ class SettingsPage extends StatelessWidget {
                     maxRadius: 60,
                     backgroundColor: AppColors.input,
                     backgroundImage: NetworkImage(
-                      Provider.of<UserProvider>(context).user.profilePhoto,
+                    Provider.of<UserProvider>(context).user.profilePhoto ?? Var.noImageAvailable,
                     ),
                   ),
                 ),
@@ -55,7 +56,7 @@ class SettingsPage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        Provider.of<UserProvider>(context).user.name,
+                        Provider.of<UserProvider>(context).user.name ?? Var.na,
                         softWrap: true,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
@@ -67,7 +68,7 @@ class SettingsPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        Provider.of<UserProvider>(context).user.description,
+                  Provider.of<UserProvider>(context).user.description ?? Var.na,
                         softWrap: true,
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
@@ -198,7 +199,7 @@ class SettingsPage extends StatelessWidget {
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 30,
-                fontFamily: "SF Pro Rounded",
+                fontFamily: Var.defaultFont,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -210,7 +211,7 @@ class SettingsPage extends StatelessWidget {
                   minRadius: 30,
                   maxRadius: 60,
                   backgroundImage: NetworkImage(
-                    Provider.of<UserProvider>(context).user.profilePhoto,
+                    Provider.of<UserProvider>(context).user.profilePhoto ?? Var.noImageAvailable,
                   ),
                 ),
               ],
@@ -221,7 +222,7 @@ class SettingsPage extends StatelessWidget {
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 18,
-                fontFamily: "SF Pro Rounded",
+                fontFamily: Var.defaultFont,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -229,7 +230,7 @@ class SettingsPage extends StatelessWidget {
             TextFormField(
               validator: (value) => InputValidator.validateName(name: value!),
               style: const TextStyle(
-                fontFamily: "SF Pro Rounded",
+                fontFamily: Var.defaultFont,
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0.6,
@@ -247,7 +248,7 @@ class SettingsPage extends StatelessWidget {
                   borderSide: BorderSide.none,
                 ),
                 helperStyle: const TextStyle(
-                  fontFamily: "SF Pro Rounded",
+                  fontFamily: Var.defaultFont,
                   fontSize: 10,
                   color: AppColors.error,
                   fontWeight: FontWeight.w600,
@@ -272,7 +273,7 @@ class SettingsPage extends StatelessWidget {
                   child: const Text(
                     "Update Profile Pic",
                     style: TextStyle(
-                      fontFamily: "SF Pro Rounded",
+                      fontFamily: Var.defaultFont,
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
                     ),
@@ -309,7 +310,7 @@ class RequestAdminAccess extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 30,
-                  fontFamily: "SF Pro Rounded",
+                  fontFamily: Var.defaultFont,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -319,7 +320,7 @@ class RequestAdminAccess extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 18,
-                  fontFamily: "SF Pro Rounded",
+                  fontFamily: Var.defaultFont,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -330,7 +331,7 @@ class RequestAdminAccess extends StatelessWidget {
                 maxLines: 5,
                 validator: (val) => InputValidator.validateName(name: val!),
                 style: const TextStyle(
-                  fontFamily: "SF Pro Rounded",
+                  fontFamily: Var.defaultFont,
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0.6,
@@ -377,7 +378,7 @@ class RequestAdminAccess extends StatelessWidget {
                     Text(
                       "Request for Access",
                       style: TextStyle(
-                        fontFamily: "SF Pro Rounded",
+                        fontFamily: Var.defaultFont,
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
@@ -440,7 +441,7 @@ class EditDetails extends StatelessWidget {
                 minLines: 4,
                 maxLines: 5,
                 style: const TextStyle(
-                  fontFamily: "SF Pro Rounded",
+                  fontFamily: Var.defaultFont,
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0.6,
@@ -544,7 +545,7 @@ class EditDetails extends StatelessWidget {
                 child: const Text(
                   "Update Info",
                   style: TextStyle(
-                    fontFamily: "SF Pro Rounded",
+                    fontFamily: Var.defaultFont,
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
                   ),

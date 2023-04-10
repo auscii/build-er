@@ -1,3 +1,4 @@
+import 'package:client/core/utils/global.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -259,7 +260,7 @@ class AdminRequests extends StatelessWidget {
         itemBuilder: (_, i) => RoundedTile(
           label: instance.adminRequest[i].user!.name,
           avatar: Image.network(
-            instance.adminRequest[i].user!.profilePhoto,
+            instance.adminRequest[i].user!.profilePhoto ?? Var.noImageAvailable,
           ),
           icon: const Icon(ProjectBuilder.add),
           onPressed: () => updateUserDetails(

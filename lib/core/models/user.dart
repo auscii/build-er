@@ -40,16 +40,16 @@ extension StringCasingExtension on String {
 }
 
 class UserModel {
-  String name;
-  String email;
-  String phone;
-  String profilePhoto;
-  String description;
-  String password;
-  Address address;
-  String roles; // List<Roles> roles;
-  User? firebaseUser;
   String? uid;
+  String? name;
+  String? email;
+  String? phone;
+  String? profilePhoto;
+  String? description;
+  String? password;
+  Address? address;
+  String? roles; // List<Roles> roles;
+  User? firebaseUser;
   String? userCompanyName;
   String? userPermit;
   String? userLicense;
@@ -58,14 +58,14 @@ class UserModel {
   String? userValidID;
 
   UserModel({
-    required this.name,
-    required this.email,
-    required this.password,
-    required this.phone,
-    required this.address,
+    String? this.name,
+    String? this.email,
+    String? this.password,
+    String? this.phone,
+    Address? this.address,
     String? profileShot,
     String? uid,
-    required this.roles,
+    String? this.roles,
     String? userInfo,
     String? companyName,
     String? permit,
@@ -143,11 +143,12 @@ class UserModel {
 
   Map<String, dynamic> toFirestore() {
     return {
+      "uid": uid,
       "name": name,
       "email": email,
       "password": password,
       "phone": phone,
-      "address": address.toFirestore(),
+      "address": address?.toFirestore(),
       "profilePhoto": profilePhoto,
       "roles": roles, //roles.toRolesString(),
       "companyName": userCompanyName,
@@ -157,7 +158,6 @@ class UserModel {
       "sec": userSec,
       "validID": userValidID,
       "description": description,
-      "uid": uid,
     };
   }
 

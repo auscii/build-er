@@ -53,7 +53,7 @@ class UserProvider extends ChangeNotifier {
     required Address? address,
     required String phone,
     required String description,
-    required String email,
+    required String? email,
   }) {
     if (_user != UserModel.clear() &&
         FirebaseAuth.instance.currentUser != null) {
@@ -62,16 +62,16 @@ class UserProvider extends ChangeNotifier {
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update({
         "name": name.isEmpty ? _user.name : name,
-        "email": email.isEmpty ? _user.email : email,
+        "email": email ?? _user.email ?? Var.na, //email?.isEmpty ? _user.email : email,
         "phone": phone.isEmpty ? _user.phone : phone,
         "address": address != null
             ? address.toFirestore()
-            : _user.address.toFirestore(),
+            : _user.address?.toFirestore(),
         "description": description.isEmpty ? _user.description : description,
       }).then((value) {
         User? currentDetails = FirebaseAuth.instance.currentUser;
         currentDetails?.updateDisplayName(name.isEmpty ? _user.name : name);
-        currentDetails?.updateEmail(email.isEmpty ? _user.email : email);
+        currentDetails?.updateEmail(email ?? _user.email ?? Var.na); //(email.isEmpty ? _user.email : email);
       }).then((value) {
         FirebaseFirestore.instance
             .collection(Var.users)
@@ -110,8 +110,9 @@ class UserProvider extends ChangeNotifier {
     if (signInMethods == SignInMethods.email) {
       FirebaseAuth.instance
         .createUserWithEmailAndPassword(
-            email: payload.email, password: payload.password)
-        .then((credentials) async {
+            email: payload.email ?? "",
+            password: payload.password ?? ""
+        ).then((credentials) async {
           credentials.user!.updateDisplayName(payload.name);
           credentials.user!.updatePhotoURL(payload.profilePhoto);
           storeNewUser(
@@ -318,7 +319,7 @@ class UserProvider extends ChangeNotifier {
           .pushReplacementNamed(GlobalRoutes.auth);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        alertSnackBar(message: "Unable to SignOut"),
+        alertSnackBar(message: "Unable to Logout"),
       );
     }
   }
@@ -417,6 +418,36 @@ class UserProvider extends ChangeNotifier {
         validID: validID
       )
     );
+  }
+
+  static UserModel? getUserDetails(userId) {
+    UserModel? res;
+    FirebaseFirestore.instance
+      .collection(Var.users)
+      .withConverter(
+          fromFirestore: UserModel.fromFirestore,
+          toFirestore: (UserModel userModel, _) => userModel.toFirestore())
+      .doc(userId)
+      .get()
+      .then((value) {
+      res = value.data();
+    });
+    return res;
+  }
+
+  // static Future<String?> getUserRole(userId, UserModel? res) async {
+  static void getUserRole(userId, UserModel? res) async {
+    await FirebaseFirestore.instance
+      .collection(Var.users)
+      .withConverter(
+          fromFirestore: UserModel.fromFirestore,
+          toFirestore: (UserModel userModel, _) => userModel.toFirestore())
+      .doc(userId)
+      .get()
+      .then((value) {
+      Var.activeUserRole = value.data()?.roles ?? Var.na;
+      // return value.data()?.roles ?? Var.na;
+    });
   }
 
 }

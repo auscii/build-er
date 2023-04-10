@@ -1,3 +1,6 @@
+import 'package:client/core/providers/user.dart';
+import 'package:client/core/utils/global.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../core/models/user.dart';
@@ -18,30 +21,21 @@ class _SwitchRolesState extends State<SwitchRoles> {
 
   @override
   void initState() {
-    Future.delayed(const Duration(milliseconds: 2500),() {
-      setState(() => _navToRole(Roles.client));
-    });
+    _getUserRoles();
     super.initState();
   }
 
-  void _navToRole(Roles role) {
+  void _navToRole(String role) {
     String route;
-    role = Roles.user;
-
-    switch (role) {
-      case Roles.admin:
-        route = PagesRoutes.admin;
-        break;
-      case Roles.user:
-        route = PagesRoutes.user;
-        break;
-      case Roles.client:
-        route = PagesRoutes.client;
-        break;
-      default:
-        route = SharedRoutes.profile;
+    if (role == Var.client) {
+      route = PagesRoutes.client;
+    } else if (role == Var.contractor) {
+      route = PagesRoutes.user; 
+    } else if (role == Var.admin) {
+      route = PagesRoutes.admin; 
+    } else {
+      route = SharedRoutes.profile;
     }
-
     GlobalNavigator.router.currentState!
         .pushReplacementNamed(PageNavigator.id, arguments: route);
   }
@@ -58,41 +52,6 @@ class _SwitchRolesState extends State<SwitchRoles> {
         return ProjectBuilder.info;
     }
   }
-
-  /* Widget _generateRoles(BuildContext context) {
-    Widget roleItem(Roles role) => ElevatedButton(
-          onPressed: () => _navToRole(role),
-          style: ElevatedButton.styleFrom(
-            primary: AppColors.bgDark,
-            onSurface: AppColors.primary,
-            padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 19),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          ),
-          child: Icon(_getRoleIcon(role), size: 25, color: AppColors.primary),
-        );
-
-    try {
-      if (Provider.of<UserProvider>(context).user == UserModel.clear()) {
-        return const Center(child: Text("Fetching Roles"));
-      } else {
-        return ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 250),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: Provider.of<UserProvider>(context)
-                .user
-                .roles
-                .map((role) => roleItem(role))
-                .toList(),
-          ),
-        );
-      }
-    } catch (e) {
-      return const Center(child: Text("Unable to fetch Roles"));
-    }
-  } */
 
   @override
   Widget build(BuildContext context) {
@@ -119,4 +78,17 @@ class _SwitchRolesState extends State<SwitchRoles> {
       ),
     );
   }
+
+  _getUserRoles() {
+    var uid = FirebaseAuth.instance.currentUser?.uid;
+    UserProvider.getUserRole(
+      uid, UserModel(uid: uid)
+    );
+    Future.delayed(const Duration(milliseconds: 5000), () {
+      setState(() {
+        _navToRole(Var.activeUserRole);
+      });
+    });
+  }
+
 }

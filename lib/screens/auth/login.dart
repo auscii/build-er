@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-// 🏘️ Local imports
 import '../../core/models/user.dart';
 import '../../core/providers/user.dart';
 import '../../core/utils/global.dart';
@@ -14,7 +12,7 @@ import '../../styles/ui/colors.dart';
 import 'onboarding.dart';
 
 class Login extends StatefulWidget {
-  static const String id = "login";
+  static const String id = Var.login;
   const Login({Key? key}) : super(key: key);
 
   @override
@@ -30,8 +28,8 @@ class _LoginState extends State<Login> {
 
   @override
   void initState() {
-    // _emailController.text = "sean@gmail.com";
-    // _passwordController.text = "123qwe";
+    _emailController.text = "lsn.stonecold@gmail.com";
+    _passwordController.text = "123qwe";
     super.initState();
   }
   
@@ -71,7 +69,7 @@ class _LoginState extends State<Login> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       authInput(
-                        hint: "Enter your Email",
+                        hint: Var.enterEmail,
                         controller: _emailController,
                         focusNode: _emailFocusNode,
                         validator: (value) =>
@@ -84,7 +82,7 @@ class _LoginState extends State<Login> {
                       ),
                       const SizedBox(height: 14),
                       authInput(
-                        hint: "Enter your Password",
+                        hint: Var.enterPassword,
                         controller: _passwordController,
                         focusNode: _passwordFocusNode,
                         validator: (value) =>
@@ -119,7 +117,7 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                           child: const Text(
-                            "LOGIN",
+                            Var.login,
                             style: TextStyle(
                               fontFamily: Var.defaultFont,
                               fontSize: 20,
@@ -135,7 +133,7 @@ class _LoginState extends State<Login> {
                   onPressed: () => AuthRouter.router.currentState!
                       .pushReplacementNamed(AuthRoutes.resetPassword),
                   child: const Text(
-                    "Forgot password?",
+                    Var.forgotPassword,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: AppColors.success,

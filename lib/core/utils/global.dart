@@ -13,6 +13,7 @@ class Var {
   static const ecommerce = "E-COMMERCE";
   static const about = "ABOUT";
   static const profile = "PROFILE";
+  static const userPlaceholder = "https://firebasestorage.googleapis.com/v0/b/nustar-resort-app-92c7c.appspot.com/o/user-placeholder.png?alt=media&token=270f28f1-c9be-4283-a58e-46792053027f";
   static const noImageAvailable = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2048px-No_image_available.svg.png";
   static const camera = "CAMERA";
   static const gallery = "GALLERY";
@@ -43,9 +44,16 @@ class Var {
   static const enterAddress = "Enter your Address";
   static const selectLocation = "SELECT YOUR LOCATION";
   static const register = "REGISTER";
+  static const login = "LOGIN";
+  static const forgotPassword = "Forgot password?";
   static const validID = "Valid ID";
   static const noImageReceived = "No Image Received!";
   static const passwordMismatched = "Password Mismatched! Please re-enter your password correctly.";
+  static const admin = "admin";
+  static const client = "client";
+  static const contractor = "Contractor";
+  
+  static var activeUserRole = "";
   // static const aaa = "aaa";
 
   static charRandomizer() {

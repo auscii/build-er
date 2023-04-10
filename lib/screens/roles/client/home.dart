@@ -1,12 +1,10 @@
 import 'package:client/core/providers/appdata.dart';
+import 'package:client/core/providers/user.dart';
+import 'package:client/core/utils/global.dart';
 import 'package:client/styles/ui/colors.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-
-// 🏘️ Local imports
-import '../../../core/models/user.dart';
 import '../../../router/navigator/roles.dart';
 import '../../../styles/icons/builder_icons.dart';
 import '../admin/home.dart';
@@ -47,7 +45,7 @@ class ClientHome extends StatelessWidget {
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 15,
-                fontFamily: "SF Pro Rounded",
+                fontFamily: Var.defaultFont,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -114,7 +112,7 @@ class ClientHome extends StatelessWidget {
                     const Text(
                       "Earnings Stats",
                       style: TextStyle(
-                        fontFamily: "SF Pro Rounded",
+                        fontFamily: Var.defaultFont,
                         fontWeight: FontWeight.w700,
                         fontSize: 16,
                       ),
@@ -157,7 +155,7 @@ class ClientHome extends StatelessWidget {
                     Text(
                       "Service Requests",
                       style: TextStyle(
-                        fontFamily: "SF Pro Rounded",
+                        fontFamily: Var.defaultFont,
                         fontWeight: FontWeight.w700,
                         fontSize: 16,
                       ),
@@ -190,12 +188,17 @@ class NewRequests extends StatelessWidget {
         padding: const EdgeInsets.all(5),
         separatorBuilder: (_, __) => const SizedBox(height: 15),
         itemCount: instance.serviceRequestN.length,
-        itemBuilder: (_, i) => RoundedTile(
-          label: getUserDetails(instance.serviceRequestN[i].userId)?.name,
-          avatar: Image.network(
-            getUserDetails(instance.serviceRequestN[i].userId)?.profilePhoto ??
-                UserModel.clear().profilePhoto,
-          ),
+        itemBuilder: (_, i) 
+          => RoundedTile(
+          label: 
+            UserProvider.getUserDetails(
+              instance.serviceRequestN[i].userId)?.name,
+          avatar: 
+            Image.network(
+              UserProvider.getUserDetails(
+                instance.serviceRequestN[i].userId)?.profilePhoto
+                ?? Var.userPlaceholder,
+            ),
           icon: const Icon(ProjectBuilder.add),
           onPressed: () {
             instance.updateServiceRequest(
@@ -209,21 +212,6 @@ class NewRequests extends StatelessWidget {
   }
 }
 
-UserModel? getUserDetails(userId) {
-  UserModel? res;
-  FirebaseFirestore.instance
-      .collection("users")
-      .withConverter(
-          fromFirestore: UserModel.fromFirestore,
-          toFirestore: (UserModel userModel, _) => userModel.toFirestore())
-      .doc(userId)
-      .get()
-      .then((value) {
-    res = value.data();
-  });
-  return res;
-}
-
 class CompletedRequests extends StatelessWidget {
   const CompletedRequests({Key? key}) : super(key: key);
 
@@ -235,10 +223,12 @@ class CompletedRequests extends StatelessWidget {
         separatorBuilder: (_, __) => const SizedBox(height: 15),
         itemCount: instance.serviceRequestC.length,
         itemBuilder: (_, i) => RoundedTile(
-          label: getUserDetails(instance.serviceRequestC[i].userId)?.name,
+          label: UserProvider.getUserDetails(
+            instance.serviceRequestC[i].userId)?.name,
           avatar: Image.network(
-            getUserDetails(instance.serviceRequestC[i].userId)?.profilePhoto ??
-                UserModel.clear().profilePhoto,
+            UserProvider.getUserDetails(
+              instance.serviceRequestC[i].userId)?.profilePhoto
+              ?? Var.userPlaceholder,
           ),
           icon: const Icon(ProjectBuilder.info),
         ),
