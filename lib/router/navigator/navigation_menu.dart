@@ -1,72 +1,50 @@
-import 'package:client/screens/roles/user/home.dart';
+import 'package:client/router/navigator/menu_drawer.dart';
+import 'package:client/screens/roles/user/shopping_cart.dart';
 import 'package:client/screens/shared/about.dart';
 import 'package:client/screens/shared/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../core/providers/appdata.dart';
-import '../../core/providers/user.dart';
 import '../../core/utils/global.dart';
 import '../../screens/roles/client/home.dart';
 import '../router.dart';
-import '../routes.dart';
 import '../../styles/icons/builder_icons.dart';
 import '../../../styles/ui/colors.dart';
-import 'menu_drawer.dart';
 
 BoxConstraints pageConstraints =
     const BoxConstraints(minWidth: 320, maxWidth: 480);
 
-class PageNavigator extends StatelessWidget {
-  PageNavigator({
+class NavigationMenu extends StatefulWidget {
+  final String routeToNavigate;
+  static int activeIndex = 0;
+  static const String id = "roles_manager";
+  const NavigationMenu({
     this.routeToNavigate = PageRouter.initialRoute,
     Key? key,
+    int? activeIndex,
   }) : super(key: key);
+  @override
+  State<NavigationMenu> createState() => _NavigationMenuState();
+}
 
-  static const String id = "roles_manager";
-  final String routeToNavigate;
+class _NavigationMenuState extends State<NavigationMenu> {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
-  static GlobalKey<ScaffoldState> scaffold = GlobalKey<ScaffoldState>();
   static CupertinoTabView? returnValue;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: PageNavigator.scaffold,
       backgroundColor: AppColors.bgDark,
-      drawer: const MenuDrawer(), //customDrawer(context),
-      // body: Stack(
-      //   children: <Widget>[
-      //     Navigator(
-      //       key: PageRouter.router,
-      //       initialRoute: routeToNavigate,
-      //       onGenerateRoute: PageRouter.generateRoute,
-      //     ),
-      //     const PageAppBar(),
-      //   ],
-      // ),
+      drawer: const MenuDrawer(),//customDrawer(context),
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
-        // flexibleSpace: Container(
-        //   decoration: const BoxDecoration(
-        //     gradient: LinearGradient(
-        //       begin: Alignment.topCenter,
-        //       end: Alignment.bottomCenter,
-        //       colors: <Color> [
-        //         Color.fromARGB(255, 0, 0, 0),
-        //         Color.fromARGB(249,199,56,255),
-        //       ]
-        //     ),
-        //   ),
-        // ),
         elevation: 0,
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
         title: const Text(
-          Var.home,
+          Var.builder,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white,
@@ -86,21 +64,20 @@ class PageNavigator extends StatelessWidget {
               size: 28,
             ),
             alignment: Alignment.centerLeft,
-            onPressed: () => PageNavigator.scaffold.currentState!.openDrawer() //Scaffold.of(context).openDrawer(),
+            onPressed: () => Scaffold.of(context).openDrawer(),
           );
         }),
       ),
       body: CupertinoTabScaffold(
         tabBar: CupertinoTabBar(
           onTap: (value) {
-            // setState(() => NavigationMenu.activeIndex = value);
-            // if (value == 0) {
-            //   NavigationMenu.activeIndex = 0;
-            //   Routes.replaceScreen(NavigationMenu(uid: widget.uid));
-            //   // Routes.popAndPush(context, Cons.navigationMenuScreen);
-            // } else if (value == 1) {
-            //   NavigationMenu.activeIndex = 1;
-            // }
+            setState(() => NavigationMenu.activeIndex = value);
+            if (value == 0) {
+              NavigationMenu.activeIndex = 0;
+              GlobalNavigator.replaceScreen(const NavigationMenu(activeIndex: 0));
+            } else if (value == 1) {
+              NavigationMenu.activeIndex = 1;
+            }
           },
           activeColor: Colors.white,
           inactiveColor: Colors.grey,
@@ -137,7 +114,7 @@ class PageNavigator extends StatelessWidget {
           ],
         ),
         tabBuilder: (context, index) {
-          // index = NavigationMenu.activeIndex;
+          index = NavigationMenu.activeIndex;
           var home = CupertinoTabView(builder: (context) => const ClientHome());
           switch (index) {
             case 0:
@@ -148,6 +125,9 @@ class PageNavigator extends StatelessWidget {
               break;
             case 2:
               returnValue = CupertinoTabView(builder: (context) => const AboutPage());
+              break;
+            case 3:
+              returnValue = CupertinoTabView(builder: (context) => ShoppingCart());
               break;
           }
           return returnValue ?? home;
@@ -444,7 +424,7 @@ class PageNavigator extends StatelessWidget {
     );
   }
 }
-
+/*
 class PageAppBar extends StatelessWidget {
   const PageAppBar({
     Key? key,
@@ -465,7 +445,7 @@ class PageAppBar extends StatelessWidget {
           children: [
             IconButton(
                 onPressed: () {
-                  PageNavigator.scaffold.currentState!.openDrawer();
+                  NavigationMenu.scaffold.currentState!.openDrawer();
                 },
                 icon: const Icon(ProjectBuilder.menu)),
             Text(
@@ -483,3 +463,4 @@ class PageAppBar extends StatelessWidget {
     );
   }
 }
+*/

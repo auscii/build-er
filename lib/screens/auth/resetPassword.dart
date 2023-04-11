@@ -29,7 +29,7 @@ class ResetPassword extends StatelessWidget {
         foregroundColor: AppColors.primary,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_rounded),
-          onPressed: () => AuthRouter.router.currentState!
+          onPressed: () => GlobalNavigator.router.currentState!
               .popAndPushNamed(AuthRoutes.onboarding),
         ),
       ),

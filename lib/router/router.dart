@@ -20,6 +20,62 @@ import 'routes.dart';
 class GlobalNavigator {
   static GlobalKey<NavigatorState> router = GlobalKey();
 
+  static void pushReplace(BuildContext context, String routeName) {
+    Navigator.of(context).pushReplacementNamed(routeName);
+  }
+
+  static void pushNamed(BuildContext context, String name) {
+    Navigator.pushNamed(context, name);
+  }
+
+  static void pop(BuildContext context) {
+    Navigator.of(context).pop();
+  }
+  
+  static void pushReplaceNav(BuildContext context, int value) {
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (ctx) => NavigationMenu(activeIndex: value))
+    );
+  }
+
+  static void popAndPush(BuildContext context, String value) {
+    Navigator.popAndPushNamed(context, value);
+  }
+
+  static void restorePopAndPush(BuildContext context, String name) {
+    Navigator.restorablePopAndPushNamed(context, name);
+  }
+
+  static void push(BuildContext context, Widget page) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => page,
+      )
+    );
+  }
+
+  static Future<dynamic> replaceScreen(Widget page, {arguments}) 
+    async => router.currentState?.pushReplacement(
+    MaterialPageRoute(
+      builder: (_) => page,
+    ),
+  );
+
+  static Future<dynamic> navigateToScreen(Widget page, {arguments}) 
+    async => router.currentState?.push(
+    MaterialPageRoute(
+      builder: (_) => page,
+    ),
+  );
+
+  static dynamic goBack([dynamic popValue]) {
+    return router.currentState?.pop(popValue);
+  }
+
+  static void popToFirst() => router.currentState?.popUntil((route) 
+    => route.isFirst);
+
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case GlobalRoutes.auth:
@@ -27,8 +83,9 @@ class GlobalNavigator {
             pageBuilder: (_, __, ___) => const AuthNavigator());
       case GlobalRoutes.pages:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => PageNavigator(
+          pageBuilder: (_, __, ___) => NavigationMenu(
             routeToNavigate: settings.arguments as String,
+            activeIndex: 0,
           ),
         );
       case GlobalRoutes.switchRoles:
@@ -36,32 +93,11 @@ class GlobalNavigator {
             pageBuilder: (_, __, ___) => const SwitchRoles());
       case PagesRoutes.user:
         return PageRouteBuilder(
-          pageBuilder: (_, __, ___) => PageNavigator(
-            routeToNavigate: PagesRoutes.user //settings.arguments as String,
+          pageBuilder: (_, __, ___) => const NavigationMenu(
+            routeToNavigate: PagesRoutes.user,
+            activeIndex: 0,
           ),
         );
-      default:
-        return PageRouteBuilder(
-            pageBuilder: (_, __, ___) => const AuthNavigator());
-    }
-  }
-
-  static String initialRoute() {
-    if (FirebaseAuth.instance.currentUser == null) {
-      return GlobalRoutes.auth;
-    } else {
-      return PagesRoutes.user;
-    }
-  }
-}
-
-class AuthRouter {
-  static GlobalKey<NavigatorState> router = GlobalKey();
-
-  static const initialRoute = AuthRoutes.splash;
-
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    switch (settings.name) {
       case AuthRoutes.splash:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const Splash());
       case AuthRoutes.onboarding:
@@ -76,14 +112,21 @@ class AuthRouter {
       case AuthRoutes.resetPassword:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => ResetPassword());
       default:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const Splash());
+        return PageRouteBuilder(
+            pageBuilder: (_, __, ___) => const AuthNavigator());
+    }
+  }
+
+  static String initialRoute() {
+    if (FirebaseAuth.instance.currentUser == null) {
+      return AuthRoutes.onboarding; //GlobalRoutes.auth;
+    } else {
+      return PagesRoutes.user;
     }
   }
 }
 
 class PageRouter {
-  static GlobalKey<NavigatorState> router = GlobalKey();
-
   static const initialRoute = PagesRoutes.user;
 
   static Route<dynamic> generateRoute(RouteSettings settings) {

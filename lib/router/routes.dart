@@ -13,8 +13,7 @@ import '../../screens/roles/user/home.dart';
 
 class GlobalRoutes {
   static const String auth = AuthNavigator.id;
-
-  static const String pages = PageNavigator.id;
+  static const String pages = NavigationMenu.id;
   static const String switchRoles = SwitchRoles.id;
 }
 

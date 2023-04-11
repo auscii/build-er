@@ -44,7 +44,7 @@ class Splash extends StatelessWidget {
 
   void _delay() {
     Timer(const Duration(seconds: 3), () {
-      AuthRouter.router.currentState!
+      GlobalNavigator.router.currentState!
           .pushReplacementNamed(AuthRoutes.onboarding);
     });
   }
@@ -134,7 +134,7 @@ class Onboarding extends StatelessWidget {
   }
 
   void _emailSignIn() =>
-      AuthRouter.router.currentState!.pushReplacementNamed(AuthRoutes.login);
+      GlobalNavigator.router.currentState!.pushReplacementNamed(AuthRoutes.login);
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +196,7 @@ Container createAccountShortcut() {
       children: [
         GestureDetector(
           onTap: ()
-          => AuthRouter.router.currentState!
+          => GlobalNavigator.router.currentState!
             .pushReplacementNamed(AuthRoutes.clientRegister),
           child:
             const Text(
@@ -213,7 +213,7 @@ Container createAccountShortcut() {
         const SizedBox(width: 40),
         GestureDetector(
           onTap: ()
-          => AuthRouter.router.currentState!
+          => GlobalNavigator.router.currentState!
             .pushReplacementNamed(AuthRoutes.contractorRegister),
           child:
             const Text(

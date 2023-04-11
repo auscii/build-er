@@ -2,7 +2,7 @@ class Var {
   static const na = "N/A";
   static const appName = "ProjectBuilder";
   static const appLogo = "assets/images/res/builder-logo.png";
-  static const builder = "Build-er";
+  static const builder = "BUILD-ER";
   static const ok = "OK";
   static const cancel = "Cancel";
   static const yes = "Yes";
@@ -89,6 +89,7 @@ class Var {
   static const welcome = "Welcome, ";
   // static const aaa = "aaa";
   
+  static var activePage = "";
   static var activeUserRole = "";
 
   static charRandomizer() {

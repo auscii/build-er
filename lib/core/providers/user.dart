@@ -314,9 +314,8 @@ class UserProvider extends ChangeNotifier {
       FirebaseAuth.instance.signOut();
       _user = UserModel.clear();
       notifyListeners();
-
       GlobalNavigator.router.currentState!
-          .pushReplacementNamed(GlobalRoutes.auth);
+          .pushReplacementNamed(AuthRoutes.login);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         alertSnackBar(message: "Unable to Logout"),
@@ -336,7 +335,7 @@ class UserProvider extends ChangeNotifier {
           (error) => alertSnackBar(
               message: "Unable to send request, ${error.toString()}"),
         )
-        .then((value) => AuthRouter.router.currentState
+        .then((value) => GlobalNavigator.router.currentState
             ?.pushReplacementNamed(AuthRoutes.splash));
   }
 
@@ -380,7 +379,7 @@ class UserProvider extends ChangeNotifier {
         ),
       );
     Toast.show("Successfully Registered new user!");
-    AuthRouter.router.currentState!
+    GlobalNavigator.router.currentState!
       .popAndPushNamed(AuthRoutes.onboarding);
   }
 

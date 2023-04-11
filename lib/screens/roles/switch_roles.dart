@@ -37,7 +37,7 @@ class _SwitchRolesState extends State<SwitchRoles> {
       route = SharedRoutes.profile;
     }
     GlobalNavigator.router.currentState!
-        .pushReplacementNamed(PageNavigator.id, arguments: route);
+        .pushReplacementNamed(NavigationMenu.id, arguments: route);
   }
 
   IconData _getRoleIcon(Roles role) {

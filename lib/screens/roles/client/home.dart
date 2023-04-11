@@ -21,6 +21,7 @@ class _ClientHomeState extends State<ClientHome> {
 
   @override
   void initState() {
+    setState(() => Var.activePage = Var.home);
     super.initState();
   }
 

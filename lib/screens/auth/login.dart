@@ -51,7 +51,7 @@ class _LoginState extends State<Login> {
         foregroundColor: AppColors.primary,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_rounded),
-          onPressed: () => AuthRouter.router.currentState!
+          onPressed: () => GlobalNavigator.router.currentState!
               .popAndPushNamed(AuthRoutes.onboarding),
         ),
       ),
@@ -130,7 +130,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 TextButton(
-                  onPressed: () => AuthRouter.router.currentState!
+                  onPressed: () => GlobalNavigator.router.currentState!
                       .pushReplacementNamed(AuthRoutes.resetPassword),
                   child: const Text(
                     Var.forgotPassword,

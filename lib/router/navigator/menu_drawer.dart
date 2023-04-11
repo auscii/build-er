@@ -1,8 +1,9 @@
 import 'package:client/core/providers/user.dart';
 import 'package:client/core/utils/global.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import '../router.dart';
+import 'navigation_menu.dart';
 
 class MenuDrawer extends StatefulWidget {
   const MenuDrawer({super.key});
@@ -45,15 +46,24 @@ class _MenuDrawerState extends State<MenuDrawer> {
     ];
 
     navigateTo(title) {
-      // Routes.pop(context);
-      // if (title == Cons.casino) {
-      //   NavigationMenu.activeIndex = 5;
-      //   Routes.popAndPush(context, NavigationMenu.routeName);
-      //   // Routes.pushReplaceNav(context, 5);
-      // } else if (title == Cons.hotels) {
-      //   NavigationMenu.activeIndex = 6;
-      //   Routes.pushReplaceNav(context, 6);
-      // }
+      if (title == Var.home) {
+        NavigationMenu.activeIndex = 0;
+        GlobalNavigator.pushReplaceNav(context, 0);
+      } else if (title == Var.profile) {
+        NavigationMenu.activeIndex = 1;
+        GlobalNavigator.pushReplaceNav(context, 1);
+      } else if (title == Var.about) {
+        NavigationMenu.activeIndex = 2;
+        GlobalNavigator.pushReplaceNav(context, 2);
+      } else if (title == Var.ecommerce) {
+        NavigationMenu.activeIndex = 3;
+        GlobalNavigator.pushReplaceNav(context, 3);
+      } else if (title == Var.logout) {
+        Provider.of<UserProvider>(
+          context, 
+          listen: false
+        ).signOut(context);
+      }
     }
 
     return Drawer(
@@ -77,10 +87,6 @@ class _MenuDrawerState extends State<MenuDrawer> {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(100),
-                          // image: const DecorationImage(
-                          //   image: Image.network(Var.userPlaceholder),
-                          //   fit: BoxFit.cover,
-                          // ),
                           image: const DecorationImage(
                             image: NetworkImage(Var.userPlaceholder),
                             fit: BoxFit.cover,
