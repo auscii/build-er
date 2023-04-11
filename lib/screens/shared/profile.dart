@@ -42,7 +42,7 @@ class ProfilePage extends StatelessWidget {
                   minRadius: 30,
                   maxRadius: 80,
                   backgroundColor: AppColors.input.withOpacity(0.7),
-                  backgroundImage: const NetworkImage(Var.userPlaceholder),
+                  backgroundImage: const AssetImage(Var.userPlaceholder),
                 ),
                 const SizedBox(height: 40),
                 Text(

@@ -1,3 +1,5 @@
+import 'package:client/core/models/products.dart';
+
 class Var {
   static const na = "N/A";
   static const appName = "ProjectBuilder";
@@ -13,7 +15,8 @@ class Var {
   static const ecommerce = "E-COMMERCE";
   static const about = "ABOUT";
   static const profile = "PROFILE";
-  static const userPlaceholder = "https://firebasestorage.googleapis.com/v0/b/nustar-resort-app-92c7c.appspot.com/o/user-placeholder.png?alt=media&token=270f28f1-c9be-4283-a58e-46792053027f";
+  static const userPlaceholder = "assets/images/res/user-placeholder.png";
+  // static const userPlaceholder = "https://firebasestorage.googleapis.com/v0/b/nustar-resort-app-92c7c.appspot.com/o/user-placeholder.png?alt=media&token=270f28f1-c9be-4283-a58e-46792053027f";
   static const noImageAvailable = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2048px-No_image_available.svg.png";
   static const camera = "CAMERA";
   static const gallery = "GALLERY";
@@ -90,10 +93,18 @@ class Var {
   static const welcome = "Welcome, ";
   static const featureNotAvailable = "Sorry, this feature isn't available right now.";
   static const findNearbyContractors = "Find nearby Contractors";
+  static const productDetails = "PRODUCT DETAILS";
+  static const goBack = "GO BACK";
+  static const addCart = "ADD TO CART";
+  static const ecommerceTagLine1 = "A Summer Surpise\n";
+  static const ecommerceTagLine2 = "Mega Sale 50% off!";
+  static const ourProducts = "Our Products";
   // static const aaa = "aaa";
   
   static var activePage = "";
   static var activeUserRole = "";
+  static var previousRoute = "";
+  static Product? product;
 
   static charRandomizer() {
     final now = DateTime.now();

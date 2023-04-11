@@ -1,4 +1,6 @@
 import 'package:client/screens/auth/contractor_register.dart';
+import 'package:client/screens/roles/client/components/product_details.dart';
+import 'package:client/screens/roles/client/ecommerce.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../screens/auth/resetPassword.dart';
@@ -111,6 +113,10 @@ class GlobalNavigator {
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const ContractorRegister());
       case AuthRoutes.resetPassword:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => ResetPassword());
+      case PagesRoutes.ecommerce:
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => const Ecommerce());
+      case PagesRoutes.productDetails:
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => ProductDetails());
       default:
         return PageRouteBuilder(
             pageBuilder: (_, __, ___) => const AuthNavigator());
@@ -154,8 +160,11 @@ class PageRouter {
       case SharedRoutes.about:
         page = const AboutPage();
         break;
-      case SharedRoutes.shoppingCart:
-        page = ShoppingCart();
+      case SharedRoutes.ecommerce:
+        page = const Ecommerce();
+        break;
+      case PagesRoutes.productDetails:
+        page = ProductDetails();
         break;
       default:
         page = const UserHome();

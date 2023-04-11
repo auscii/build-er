@@ -1,6 +1,7 @@
 import 'package:client/router/navigator/menu_drawer.dart';
+import 'package:client/screens/roles/client/components/product_details.dart';
+import 'package:client/screens/roles/client/ecommerce.dart';
 import 'package:client/screens/roles/client/locator.dart';
-import 'package:client/screens/roles/user/shopping_cart.dart';
 import 'package:client/screens/shared/about.dart';
 import 'package:client/screens/shared/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -78,10 +79,12 @@ class _NavigationMenuState extends State<NavigationMenu> {
               GlobalNavigator.replaceScreen(const NavigationMenu(activeIndex: 0));
             } else if (value == 1) {
               NavigationMenu.activeIndex = 1;
+            } else if (value == 2) {
+              NavigationMenu.activeIndex = 2;
             }
           },
           activeColor: Colors.white,
-          inactiveColor: Colors.grey,
+          inactiveColor: Colors.white,
           backgroundColor: Colors.black,
           height: 55,
           items: const <BottomNavigationBarItem>[
@@ -97,11 +100,11 @@ class _NavigationMenuState extends State<NavigationMenu> {
             BottomNavigationBarItem(
               icon: Icon(
                 IconData(
-                  0xe491,
+                  0xe59c,
                   fontFamily: Var.materialIcons
                 ),
               ),
-              label: Var.profile,
+              label: Var.ecommerce,
             ),
             BottomNavigationBarItem(
               icon: Icon(
@@ -122,14 +125,23 @@ class _NavigationMenuState extends State<NavigationMenu> {
               returnValue = home;
               break;
             case 1:
-              returnValue = CupertinoTabView(builder: (context) => ProfilePage());
+              returnValue = CupertinoTabView(builder: (context) => const Ecommerce());
               break;
             case 2:
               returnValue = CupertinoTabView(builder: (context) => const Locator());
               break;
             case 3:
-              returnValue = CupertinoTabView(builder: (context) => ShoppingCart());
+              returnValue = CupertinoTabView(builder: (context) => ProfilePage());
               break;
+            case 4:
+              returnValue = CupertinoTabView(builder: (context) => const AboutPage());
+              break;
+            case 5:
+              returnValue = CupertinoTabView(builder: (context) => ProductDetails());
+              break;
+            // case 6:
+            //   returnValue = CupertinoTabView(builder: (context) => const AAA());
+            //   break;
           }
           return returnValue ?? home;
         },

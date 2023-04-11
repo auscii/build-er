@@ -36,10 +36,6 @@ class _MenuDrawerState extends State<MenuDrawer> {
         'title': Var.about,
       },
       {
-        'icon': Icons.shopping_cart,
-        'title': Var.ecommerce,
-      },
-      {
         'icon': Icons.lock,
         'title': Var.logout,
       }
@@ -50,14 +46,11 @@ class _MenuDrawerState extends State<MenuDrawer> {
         NavigationMenu.activeIndex = 0;
         GlobalNavigator.pushReplaceNav(context, 0);
       } else if (title == Var.profile) {
-        NavigationMenu.activeIndex = 1;
-        GlobalNavigator.pushReplaceNav(context, 1);
-      } else if (title == Var.about) {
-        NavigationMenu.activeIndex = 2;
-        GlobalNavigator.pushReplaceNav(context, 2);
-      } else if (title == Var.ecommerce) {
         NavigationMenu.activeIndex = 3;
         GlobalNavigator.pushReplaceNav(context, 3);
+      } else if (title == Var.about) {
+        NavigationMenu.activeIndex = 4;
+        GlobalNavigator.pushReplaceNav(context, 4);
       } else if (title == Var.logout) {
         Provider.of<UserProvider>(
           context, 
@@ -88,7 +81,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(100),
                           image: const DecorationImage(
-                            image: NetworkImage(Var.userPlaceholder),
+                            image: AssetImage(Var.userPlaceholder),
                             fit: BoxFit.cover,
                           ),
                           border: Border.all(width: 2, color: Colors.white)

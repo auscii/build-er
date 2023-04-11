@@ -1,3 +1,5 @@
+import 'package:client/screens/roles/client/components/product_details.dart';
+import 'package:client/screens/roles/client/ecommerce.dart';
 import 'package:client/screens/roles/client/locator.dart';
 
 import '../screens/auth/contractor_register.dart';
@@ -32,7 +34,7 @@ class SharedRoutes {
   static const String settings = "settings";
   static const String profile = "profile";
   static const String about = "about";
-  static const String shoppingCart = ShoppingCart.id;
+  static const String ecommerce = Ecommerce.id;
 }
 
 class PagesRoutes {
@@ -41,4 +43,6 @@ class PagesRoutes {
   static const String client = ClientHome.id;
   static const String requestRole = "request_role";
   static const String locator = Locator.id;
+  static const String ecommerce = Ecommerce.id;
+  static const String productDetails = ProductDetails.id;
 }

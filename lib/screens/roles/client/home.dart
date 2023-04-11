@@ -94,8 +94,8 @@ class _ClientHomeState extends State<ClientHome> {
                   "${cummulative.isNegative ? '' : '+'}$cummulative%",
                   style: TextStyle(
                     color: cummulative.isNegative
-                        ? const Color.fromRGBO(226, 80, 122, 1)
-                        : const Color.fromRGBO(80, 226, 193, 1),
+                      ? const Color.fromRGBO(226, 80, 122, 1)
+                      : const Color.fromRGBO(80, 226, 193, 1),
                     fontSize: 11,
                   ),
                 )
@@ -477,7 +477,7 @@ class NewRequests extends StatelessWidget {
             Image.network(
               UserProvider.getUserDetails(
                 instance.serviceRequestN[i].userId)?.profilePhoto
-                ?? Var.userPlaceholder,
+                ?? Var.noImageAvailable,
             ),
           icon: const Icon(ProjectBuilder.add),
           onPressed: () {
@@ -508,7 +508,7 @@ class CompletedRequests extends StatelessWidget {
           avatar: Image.network(
             UserProvider.getUserDetails(
               instance.serviceRequestC[i].userId)?.profilePhoto
-              ?? Var.userPlaceholder,
+              ?? Var.noImageAvailable,
           ),
           icon: const Icon(ProjectBuilder.info),
         ),
