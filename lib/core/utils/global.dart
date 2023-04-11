@@ -84,10 +84,12 @@ class Var {
   static const products = "PRODUCTS";
   static const materialIcons = "MaterialIcons";
   static const faq = "FAQ";
+  static const locator = "LOCATOR";
   static const privacyPolicy = "PRIVACY POLICY";
   static const copyright = "2023 BUILD-er.\nALL RIGHTS RESERVED.";
   static const welcome = "Welcome, ";
   static const featureNotAvailable = "Sorry, this feature isn't available right now.";
+  static const findNearbyContractors = "Find nearby Contractors";
   // static const aaa = "aaa";
   
   static var activePage = "";

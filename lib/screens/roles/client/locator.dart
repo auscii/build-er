@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../core/providers/location.dart';
+import '../../../core/utils/global.dart';
 import '../../../router/navigator/navigation_menu.dart';
 import '../../../styles/icons/builder_icons.dart';
 import '../../../styles/ui/colors.dart';
@@ -11,17 +12,12 @@ import '../../../core/models/client.dart';
 import '../../../core/models/user.dart';
 import '../../../core/providers/appdata.dart';
 import '../admin/items.dart';
-import '../client/map.dart';
+import 'map.dart';
 
-class UserHome extends StatelessWidget {
-  const UserHome({super.key});
+class Locator extends StatelessWidget {
+  const Locator({super.key});
 
-  static const String id = "home";
-
-  void _getLocation(BuildContext context) {
-    Provider.of<LocationProvider>(context, listen: false)
-        .getUserLocation(context: context);
-  }
+  static const String id = Var.locator;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +30,11 @@ class UserHome extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void _getLocation(BuildContext context) {
+    Provider.of<LocationProvider>(context, listen: false)
+      .getUserLocation(context: context);
   }
 }
 
@@ -162,25 +163,12 @@ class _SearchOverlayState extends State<SearchOverlay> {
     );
   }
 
-  UserModel getUser(String uid) {
-    UserModel user = UserModel.clear();
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(uid)
-        .withConverter(
-            fromFirestore: UserModel.fromFirestore,
-            toFirestore: (UserModel userModel, _) => userModel.toFirestore())
-        .get()
-        .then((value) => user = value.data()!);
-    return user;
-  }
-
   TextField searchBuilder() {
     return TextField(
       controller: searchController,
       onChanged: (value) => runFilter(value),
       style: const TextStyle(
-        fontFamily: "SF Pro Rounded",
+        fontFamily: Var.defaultFont,
         fontSize: 15,
         fontWeight: FontWeight.w600,
       ),
@@ -199,7 +187,7 @@ class _SearchOverlayState extends State<SearchOverlay> {
             width: 2,
           ),
         ),
-        hintText: "Looking for a Client",
+        hintText: Var.findNearbyContractors,
       ),
     );
   }
@@ -219,22 +207,13 @@ Positioned mapUtils(
           children: [
             ElevatedButton(
               onPressed: () {},
-              // onPressed: () {
-              //   print("pressed GPS");
-              //   Provider.of<AppData>(context, listen: false)
-              //       .changeRoute(SharedRoutes.shoppingCart);
-              //   PageRouter.router.currentState!
-              //       .pushReplacementNamed(SharedRoutes.shoppingCart);
-              // },
               style: ElevatedButton.styleFrom(
-                primary: Color.fromARGB(255, 162, 18, 18),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 0),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
+                primary: Colors.black,
+                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 0),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                 elevation: 0,
               ),
-              child: const Icon(Icons.my_location_rounded),
+              child: const Icon(Icons.chat),
             ),
             const SizedBox(height: 10),
             Container(
@@ -250,7 +229,7 @@ Positioned mapUtils(
                       builder: (context) => const SearchOverlay());
                 },
                 style: const TextStyle(
-                  fontFamily: "SF Pro Rounded",
+                  fontFamily: Var.defaultFont,
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
                 ),
@@ -262,7 +241,7 @@ Positioned mapUtils(
                     borderRadius: BorderRadius.circular(16),
                     borderSide: BorderSide.none,
                   ),
-                  hintText: "Looking for a Client",
+                  hintText: Var.findNearbyContractors,
                 ),
               ),
             ),

@@ -449,4 +449,17 @@ class UserProvider extends ChangeNotifier {
     });
   }
 
+  UserModel getUser(String uid) {
+    UserModel user = UserModel.clear();
+    FirebaseFirestore.instance
+        .collection(Var.users)
+        .doc(uid)
+        .withConverter(
+            fromFirestore: UserModel.fromFirestore,
+            toFirestore: (UserModel userModel, _) => userModel.toFirestore())
+        .get()
+        .then((value) => user = value.data()!);
+    return user;
+  }
+
 }

@@ -1,4 +1,5 @@
 import 'package:client/router/navigator/menu_drawer.dart';
+import 'package:client/screens/roles/client/locator.dart';
 import 'package:client/screens/roles/user/shopping_cart.dart';
 import 'package:client/screens/shared/about.dart';
 import 'package:client/screens/shared/profile.dart';
@@ -124,7 +125,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
               returnValue = CupertinoTabView(builder: (context) => ProfilePage());
               break;
             case 2:
-              returnValue = CupertinoTabView(builder: (context) => const AboutPage());
+              returnValue = CupertinoTabView(builder: (context) => const Locator());
               break;
             case 3:
               returnValue = CupertinoTabView(builder: (context) => ShoppingCart());

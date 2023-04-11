@@ -1,3 +1,5 @@
+import 'package:client/screens/roles/client/locator.dart';
+
 import '../screens/auth/contractor_register.dart';
 import '../screens/auth/resetPassword.dart';
 import '../screens/roles/user/shopping_cart.dart';
@@ -38,4 +40,5 @@ class PagesRoutes {
   static const String user = UserHome.id;
   static const String client = ClientHome.id;
   static const String requestRole = "request_role";
+  static const String locator = Locator.id;
 }
