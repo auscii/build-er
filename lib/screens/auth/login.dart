@@ -28,7 +28,10 @@ class _LoginState extends State<Login> {
 
   @override
   void initState() {
-    _emailController.text = "lsn.stonecold@gmail.com";
+    /* TESTING PURPOSES ONLY */
+    // _emailController.text = "lsn.stonecold@gmail.com"; // CLIENT
+    // _emailController.text = "webmobileappdeveloper@gmail.com"; // CONTRACTOR
+    _emailController.text = "knightdubster@gmail.com"; // ADMIN
     _passwordController.text = "123qwe";
     super.initState();
   }

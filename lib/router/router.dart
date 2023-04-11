@@ -4,7 +4,6 @@ import 'package:client/screens/roles/client/ecommerce.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../screens/auth/resetPassword.dart';
-import '../screens/roles/user/shopping_cart.dart';
 import '../screens/shared/about.dart';
 import 'navigator/auth.dart';
 import 'navigator/navigation_menu.dart';
@@ -14,7 +13,7 @@ import '../screens/auth/client_register.dart';
 import '../../screens/roles/admin/home.dart';
 import '../../screens/roles/client/home.dart';
 import '../../screens/roles/switch_roles.dart';
-import '../../screens/roles/user/home.dart';
+import '../screens/roles/contractor/home.dart';
 import '../../screens/shared/profile.dart';
 import '../../screens/shared/settings.dart';
 import 'routes.dart';
@@ -116,7 +115,7 @@ class GlobalNavigator {
       case PagesRoutes.ecommerce:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const Ecommerce());
       case PagesRoutes.productDetails:
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => ProductDetails());
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => const ProductDetails());
       default:
         return PageRouteBuilder(
             pageBuilder: (_, __, ___) => const AuthNavigator());
@@ -136,11 +135,11 @@ class PageRouter {
   static const initialRoute = PagesRoutes.user;
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    Widget page = const UserHome();
+    Widget page = const ContractorHome();
 
     switch (settings.name) {
       case PagesRoutes.requestRole:
-        page = const UserHome();
+        page = const ContractorHome();
         break;
       case PagesRoutes.admin:
         page = const AdminHome();
@@ -149,7 +148,7 @@ class PageRouter {
         page = const ClientHome();
         break;
       case PagesRoutes.user:
-        page = const UserHome();
+        page = const ContractorHome();
         break;
       case SharedRoutes.profile:
         page = ProfilePage();
@@ -167,7 +166,7 @@ class PageRouter {
         page = ProductDetails();
         break;
       default:
-        page = const UserHome();
+        page = const ContractorHome();
         break;
     }
 

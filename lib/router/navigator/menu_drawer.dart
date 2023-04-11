@@ -22,7 +22,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    final List clientMenu = [
+    final List navMenu = [
       {
         'icon': Icons.home,
         'title': Var.home,
@@ -116,7 +116,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
               ],
             ),
             const SizedBox(height: 20),
-            for (var i in clientMenu) 
+            for (var i in navMenu) 
               ListTile(
                 minLeadingWidth: 20,
                 leading: Icon(

@@ -99,6 +99,7 @@ class Var {
   static const ecommerceTagLine1 = "A Summer Surpise\n";
   static const ecommerceTagLine2 = "Mega Sale 50% off!";
   static const ourProducts = "Our Products";
+  static const contractorHome = "CONTRACTOR HOME";
   // static const aaa = "aaa";
   
   static var activePage = "";

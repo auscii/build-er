@@ -4,7 +4,6 @@ import 'package:client/screens/roles/client/locator.dart';
 
 import '../screens/auth/contractor_register.dart';
 import '../screens/auth/resetPassword.dart';
-import '../screens/roles/user/shopping_cart.dart';
 import 'navigator/auth.dart';
 import 'navigator/navigation_menu.dart';
 import '../../screens/auth/login.dart';
@@ -13,7 +12,7 @@ import '../screens/auth/client_register.dart';
 import '../../screens/roles/admin/home.dart';
 import '../../screens/roles/client/home.dart';
 import '../../screens/roles/switch_roles.dart';
-import '../../screens/roles/user/home.dart';
+import '../screens/roles/contractor/home.dart';
 
 class GlobalRoutes {
   static const String auth = AuthNavigator.id;
@@ -39,7 +38,7 @@ class SharedRoutes {
 
 class PagesRoutes {
   static const String admin = AdminHome.id;
-  static const String user = UserHome.id;
+  static const String user = ContractorHome.id;
   static const String client = ClientHome.id;
   static const String requestRole = "request_role";
   static const String locator = Locator.id;
