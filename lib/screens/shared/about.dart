@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-
-// 🏘️ Local imports
 import '../../core/utils/global.dart';
 import '../../router/navigator/navigation_menu.dart';
-import '../../styles/icons/builder_icons.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({Key? key}) : super(key: key);
-
   static const id = "about";
 
   @override

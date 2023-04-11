@@ -87,6 +87,7 @@ class Var {
   static const privacyPolicy = "PRIVACY POLICY";
   static const copyright = "2023 BUILD-er.\nALL RIGHTS RESERVED.";
   static const welcome = "Welcome, ";
+  static const featureNotAvailable = "Sorry, this feature isn't available right now.";
   // static const aaa = "aaa";
   
   static var activePage = "";

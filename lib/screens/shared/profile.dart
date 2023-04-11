@@ -1,3 +1,4 @@
+import 'package:client/core/utils/toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      minimum: const EdgeInsets.only(top: 130, left: 27, right: 27),
+      minimum: const EdgeInsets.only(top: 0, left: 30, right: 30),
       maintainBottomViewPadding: false,
       child: Center(
         child: ConstrainedBox(
@@ -26,17 +27,26 @@ class ProfilePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const SizedBox(height: 10),
+                const Text(
+                  Var.profile,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+                const SizedBox(height: 10),
                 CircleAvatar(
                   minRadius: 30,
                   maxRadius: 80,
                   backgroundColor: AppColors.input.withOpacity(0.7),
-                  backgroundImage: NetworkImage(
-                    Provider.of<UserProvider>(context).user.profilePhoto ?? Var.noImageAvailable,
-                  ),
+                  backgroundImage: const NetworkImage(Var.userPlaceholder),
                 ),
                 const SizedBox(height: 40),
                 Text(
-                  Provider.of<UserProvider>(context).user.name ?? Var.na,
+                  "NAME: ${Provider.of<UserProvider>(context).user.name ?? Var.na}",
                   softWrap: true,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
@@ -46,9 +56,9 @@ class ProfilePage extends StatelessWidget {
                     fontSize: 24,
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
                 Text(
-                  Provider.of<UserProvider>(context).user.description ?? Var.na,
+                  "USER ID: ${Provider.of<UserProvider>(context).user.uid ?? Var.na}",
                   softWrap: true,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
@@ -61,33 +71,48 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 30),
-                const Text(
-                  "Your Activity",
-                  style: TextStyle(
-                    fontFamily: "SF Pro Rounded",
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  "No Activity Currently, Book a client and your activity will be shown here",
+                Text(
+                  "EMAIL: ${Provider.of<UserProvider>(context).user.email ?? Var.na}",
                   softWrap: true,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: Var.defaultFont,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
                     color: AppColors.textPrimary,
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
+                Text(
+                  "ADDRESS: ${Provider.of<UserProvider>(context).user.address?.name ?? Var.na}",
+                  softWrap: true,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 30),
+                Text(
+                  "PHONE NUMBER: ${Provider.of<UserProvider>(context).user.phone ?? Var.na}",
+                  softWrap: true,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 50),
                 SizedBox(
                   height: kIsWeb ? 50 : null,
                   child: ElevatedButton(
-                    onPressed: () =>
-                        Provider.of<UserProvider>(context, listen: false)
-                            .signOut(context),
+                    onPressed: () {
+                      Toast.show(Var.featureNotAvailable);
+                    },
                     style: ElevatedButton.styleFrom(
                       primary: AppColors.primary,
                       padding: const EdgeInsets.symmetric(
@@ -97,7 +122,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                     child: const Text(
-                      Var.logout,
+                      "Update Profile",
                       style: TextStyle(
                         fontFamily: Var.defaultFont,
                         fontSize: 18,
@@ -105,7 +130,8 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                )
+                ),
+                const SizedBox(height: 30),
               ],
             ),
           ),
