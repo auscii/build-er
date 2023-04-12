@@ -50,7 +50,7 @@ class Var {
   static const login = "LOGIN";
   static const forgotPassword = "Forgot password?";
   static const validID = "Valid ID";
-  static const noImageReceived = "No Image Received!";
+  static const noImageReceived = "Image upload cancelled!";
   static const passwordMismatched = "Password Mismatched! Please re-enter your password correctly.";
   static const admin = "admin";
   static const client = "client";
@@ -96,15 +96,33 @@ class Var {
   static const productDetails = "PRODUCT DETAILS";
   static const goBack = "GO BACK";
   static const addCart = "ADD TO CART";
-  static const ecommerceTagLine1 = "A Summer Surpise\n";
+  static const ecommerceTagLine1 = "A Summer Surprise\n";
   static const ecommerceTagLine2 = "Mega Sale 50% off!";
   static const ourProducts = "Our Products";
   static const contractorHome = "CONTRACTOR HOME";
+  static const startupBg = "assets/images/res/startup-bg.jpg";
+  static const addProduct = "+ ADD NEW PRODUCT";
+  static const productDescription = "Product Description";
+  static const productName = "Product Name";
+  static const productImage = "Product Image";
+  static const productPrice = "Product Price";
+  static const productS = "products";
+  static const clientS = "clients";
+  static const productCode = "PRDBLDR";
+  static const productSuccess = "Product Successfully Saved!";
+  static const unableSave = "Unable to save!";
+  static const submit = "SUBMIT";
+  static const selectCategory = "Please select Product Category";
+  static const productCategory = "Product Category";
   // static const aaa = "aaa";
   
   static var activePage = "";
   static var activeUserRole = "";
   static var previousRoute = "";
+  static var categories = [
+    "Construction Materials",
+    "Construction Tools",
+  ];
   static Product? product;
 
   static charRandomizer() {

@@ -17,6 +17,7 @@ class AppColors {
 
   static const Color emphasis = Color.fromRGBO(250, 74, 12, 1);
   static const Color success = Color.fromRGBO(66, 133, 244, 1);
+  static const Color info = Color.fromARGB(255, 17, 155, 114);
   static const Color error = Color.fromRGBO(255, 26, 26, 1);
 
   static const Color input = Color.fromRGBO(241, 243, 244, 1);

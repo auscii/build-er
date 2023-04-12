@@ -7,7 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import '../../../router/navigator/navigation_menu.dart';
 import '../../../styles/icons/builder_icons.dart';
-import '../admin/items.dart';
+import '../admin/add_products.dart';
 
 class ClientHome extends StatefulWidget {
   static const String id = "client";
@@ -481,10 +481,10 @@ class NewRequests extends StatelessWidget {
             ),
           icon: const Icon(ProjectBuilder.add),
           onPressed: () {
-            instance.updateServiceRequest(
-              completed: false,
-              uid: instance.serviceRequestN[i].userId,
-            );
+            // instance.updateServiceRequest(
+            //   completed: false,
+            //   uid: instance.serviceRequestN[i].userId,
+            // );
           },
         ),
       ),

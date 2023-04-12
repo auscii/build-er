@@ -17,7 +17,7 @@ import '../../styles/icons/builder_icons.dart';
 import '../../../styles/ui/colors.dart';
 
 BoxConstraints pageConstraints =
-    const BoxConstraints(minWidth: 320, maxWidth: 480);
+    const BoxConstraints(minWidth: 320, maxWidth: 480, maxHeight: 1000, minHeight: 350);
 
 class NavigationMenu extends StatefulWidget {
   final String routeToNavigate;

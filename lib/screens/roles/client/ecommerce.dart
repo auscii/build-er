@@ -148,16 +148,15 @@ class _EcommerceState extends State<Ecommerce> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      ...List.generate(
-                        demoProducts.length,
-                        (index) {
-                          if (demoProducts[index].isPopular) {
-                            return ProductCard(product: demoProducts[index]);
-                          }
-                          return const SizedBox
-                              .shrink(); // here by default width and height is 0
-                        },
-                      ),
+                      // ...List.generate(
+                      //   demoProducts.length,
+                      //   (index) {
+                      //     if (demoProducts[index].isPopular) {
+                      //       return ProductCard(product: demoProducts[index]);
+                      //     }
+                      //     return const SizedBox.shrink();
+                      //   },
+                      // ),
                       SizedBox(width: getProportionateScreenWidth(20)),
                     ],
                   ),

@@ -11,7 +11,7 @@ import '../../../styles/ui/colors.dart';
 import '../../../core/models/client.dart';
 import '../../../core/models/user.dart';
 import '../../../core/providers/appdata.dart';
-import '../admin/items.dart';
+import '../admin/add_products.dart';
 import 'map.dart';
 
 class Locator extends StatelessWidget {

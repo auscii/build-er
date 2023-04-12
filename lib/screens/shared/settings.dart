@@ -13,7 +13,7 @@ import '../../router/navigator/navigation_menu.dart';
 import '../../styles/icons/builder_icons.dart';
 import '../../styles/ui/colors.dart';
 import '../auth/login.dart';
-import '../roles/admin/items.dart';
+import '../roles/admin/add_products.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -101,7 +101,7 @@ class SettingsPage extends StatelessWidget {
                       label: "+ Create Client",
                       onPressed: () => showDialog(
                         context: context,
-                        builder: (context) => AddClient(
+                        builder: (context) => AddProduct(
                           admin: false,
                         ),
                       ),

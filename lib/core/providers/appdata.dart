@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:client/core/models/products.dart';
 import 'package:client/core/utils/global.dart';
+import 'package:client/core/utils/toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -87,32 +89,45 @@ class AppData extends ChangeNotifier {
     });
   }
 
-  updateServiceRequest({required bool completed, required String uid}) {
-    FirebaseFirestore.instance
-        .collection("serviceRequest")
-        .doc(FirebaseAuth.instance.currentUser?.uid)
-        .collection("Requests")
-        .withConverter(
-          fromFirestore: ServiceRequest.fromFirestore,
-          toFirestore: (ServiceRequest userModel, _) => userModel.toFirestore(),
-        )
-        .doc(uid)
-        .update({'status': completed});
+  // updateServiceRequest({required bool completed, required String uid}) {
+  //   FirebaseFirestore.instance
+  //       .collection("serviceRequest")
+  //       .doc(FirebaseAuth.instance.currentUser?.uid)
+  //       .collection("Requests")
+  //       .withConverter(
+  //         fromFirestore: ServiceRequest.fromFirestore,
+  //         toFirestore: (ServiceRequest userModel, _) => userModel.toFirestore(),
+  //       )
+  //       .doc(uid)
+  //       .update({'status': completed});
+  // }
+
+  Future<void> createProduct({required Product product}) async {
+    return await FirebaseFirestore.instance
+      .collection(Var.productS)
+      .doc(product.id.toString())
+      .withConverter(
+          fromFirestore: Product.fromFirestore,
+          toFirestore: (Product value, _) => value.toFirestore())
+      .set(product)
+      .then((value) {
+        Toast.show(Var.productSuccess);
+      });
   }
 
   Future<void> createClient({required Client client}) async {
     return await FirebaseFirestore.instance
-        .collection("client")
-        .doc(client.userUid)
-        .withConverter(
-            fromFirestore: Client.fromFirestore,
-            toFirestore: (Client userModel, _) => userModel.toFirestore())
-        .set(client);
+      .collection(Var.clientS)
+      .doc(client.userUid)
+      .withConverter(
+          fromFirestore: Client.fromFirestore,
+          toFirestore: (Client userModel, _) => userModel.toFirestore())
+      .set(client);
   }
 
   Future<List<Client>> getClientsList() async {
     final res = await FirebaseFirestore.instance
-        .collection("client")
+        .collection(Var.clientS)
         .withConverter(
             fromFirestore: Client.fromFirestore,
             toFirestore: (Client userModel, _) => userModel.toFirestore())
@@ -127,7 +142,7 @@ class AppData extends ChangeNotifier {
 
   Future<Client> getClient({required String userUid}) async {
     final res = await FirebaseFirestore.instance
-        .collection("client")
+        .collection(Var.clientS)
         .doc(userUid)
         .withConverter(
             fromFirestore: Client.fromFirestore,
@@ -251,7 +266,7 @@ class ClientRequests {
   toFirestore() {
     return {
       "userId": userId,
-      "client": client.toFirestore(),
+      Var.clientS: client.toFirestore(),
     };
   }
 }

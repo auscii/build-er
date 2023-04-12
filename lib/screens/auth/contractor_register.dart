@@ -19,7 +19,7 @@ import '../../router/router.dart';
 import '../../router/routes.dart';
 import '../../styles/icons/builder_icons.dart';
 import '../../styles/ui/colors.dart';
-import '../roles/admin/items.dart';
+import '../roles/admin/add_products.dart';
 import 'login.dart';
 
 class ContractorRegister extends StatefulWidget {
@@ -80,332 +80,345 @@ class _ContractorRegisterState extends State<ContractorRegister> {
         ),
       ),
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(height: 40),
-                const Text(
-                  Var.createContractorAccount,
-                  style: TextStyle(
-                    fontFamily: Var.defaultFont,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 25,
+        child: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(Var.startupBg),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 40),
+                  const Text(
+                    Var.createContractorAccount,
+                    style: TextStyle(
+                      fontFamily: Var.defaultFont,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 25,
+                      color: AppColors.info
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                Form(
-                  key: _formKey,
-                  child: Column(mainAxisSize: MainAxisSize.min, children: [
-                    authInput(
-                      hint: Var.enterName,
-                      controller: _nameController,
-                      focusNode: _nameFocusNode,
-                      inputType: TextInputType.name,
-                      validator: (value) =>
-                          InputValidator.validateName(name: value),
-                      prefix: const Icon(
-                        ProjectBuilder.user,
-                        size: 15,
+                  const SizedBox(height: 20),
+                  Form(
+                    key: _formKey,
+                    child: Column(mainAxisSize: MainAxisSize.min, children: [
+                      authInput(
+                        hint: Var.enterName,
+                        controller: _nameController,
+                        focusNode: _nameFocusNode,
+                        inputType: TextInputType.name,
+                        validator: (value) =>
+                            InputValidator.validateName(name: value),
+                        prefix: const Icon(
+                          ProjectBuilder.user,
+                          size: 15,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 15),
-                    authInput(
-                      hint: Var.enterEmail,
-                      controller: _emailController,
-                      focusNode: _emailFocusNode,
-                      inputType: TextInputType.emailAddress,
-                      validator: (value) =>
-                          InputValidator.validateEmail(email: value),
-                      prefix: const Icon(
-                        Icons.email_rounded,
-                        size: 15,
+                      const SizedBox(height: 15),
+                      authInput(
+                        hint: Var.enterEmail,
+                        controller: _emailController,
+                        focusNode: _emailFocusNode,
+                        inputType: TextInputType.emailAddress,
+                        validator: (value) =>
+                            InputValidator.validateEmail(email: value),
+                        prefix: const Icon(
+                          Icons.email_rounded,
+                          size: 15,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 15),
-                    authInput(
-                      hint: Var.enterPassword,
-                      controller: _passwordController,
-                      focusNode: _passwordFocusNode,
-                      validator: (value) =>
-                          InputValidator.validatePassword(password: value),
-                      inputType: TextInputType.visiblePassword,
-                      private: true,
-                      prefix: const Icon(
-                        Icons.lock_rounded,
-                        size: 15,
+                      const SizedBox(height: 15),
+                      authInput(
+                        hint: Var.enterPassword,
+                        controller: _passwordController,
+                        focusNode: _passwordFocusNode,
+                        validator: (value) =>
+                            InputValidator.validatePassword(password: value),
+                        inputType: TextInputType.visiblePassword,
+                        private: true,
+                        prefix: const Icon(
+                          Icons.lock_rounded,
+                          size: 15,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 15),
-                    authInput(
-                      hint: Var.confirmPassword,
-                      controller: _confirmPasswordController,
-                      focusNode: _confirmPasswordFocusNode,
-                      validator: (value) =>
-                          InputValidator.validatePassword(password: value),
-                      inputType: TextInputType.visiblePassword,
-                      private: true,
-                      prefix: const Icon(
-                        Icons.lock_rounded,
-                        size: 15,
+                      const SizedBox(height: 15),
+                      authInput(
+                        hint: Var.confirmPassword,
+                        controller: _confirmPasswordController,
+                        focusNode: _confirmPasswordFocusNode,
+                        validator: (value) =>
+                            InputValidator.validatePassword(password: value),
+                        inputType: TextInputType.visiblePassword,
+                        private: true,
+                        prefix: const Icon(
+                          Icons.lock_rounded,
+                          size: 15,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 15),
-                    authInput(
-                      hint: Var.enterPhone,
-                      controller: _phoneController,
-                      focusNode: _phoneFocusNode,
-                      inputType: TextInputType.phone, //TextInputType.phone,
-                      // validator: (value) =>
-                      //     InputValidator.validatePhone(phone: value),
-                      prefix: const Icon(
-                        Icons.phone_rounded,
-                        size: 15,
+                      const SizedBox(height: 15),
+                      authInput(
+                        hint: Var.enterPhone,
+                        controller: _phoneController,
+                        focusNode: _phoneFocusNode,
+                        inputType: TextInputType.phone, //TextInputType.phone,
+                        // validator: (value) =>
+                        //     InputValidator.validatePhone(phone: value),
+                        prefix: const Icon(
+                          Icons.phone_rounded,
+                          size: 15,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 15),
-                    authInput(
-                      hint: Var.enterCompany,
-                      controller: _companyNameController,
-                      focusNode: _companyNameFocusNode,
-                      inputType: TextInputType.name,
-                      validator: (value) =>
-                          InputValidator.validateName(name: value),
-                      prefix: const Icon(
-                        ProjectBuilder.user,
-                        size: 15,
+                      const SizedBox(height: 15),
+                      authInput(
+                        hint: Var.enterCompany,
+                        controller: _companyNameController,
+                        focusNode: _companyNameFocusNode,
+                        inputType: TextInputType.name,
+                        validator: (value) =>
+                            InputValidator.validateName(name: value),
+                        prefix: const Icon(
+                          ProjectBuilder.user,
+                          size: 15,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 15),
-                    authInput(
-                      hint: Var.enterAddress,
-                      controller: _addressTextController,
-                      focusNode: _addressFocusNode,
-                      inputType: TextInputType.streetAddress,
-                      onTap: () => showDialog(
-                        context: context,
-                        builder: (context) => AppDialog(
-                          child: FlutterLocationPicker(
-                            initZoom: 11,
-                            minZoomLevel: 5,
-                            maxZoomLevel: 16,
-                            trackMyPosition: true,
-                            selectLocationButtonText: Var.selectLocation,
-                            selectLocationButtonStyle: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(AppColors.primary),
+                      const SizedBox(height: 15),
+                      authInput(
+                        hint: Var.enterAddress,
+                        controller: _addressTextController,
+                        focusNode: _addressFocusNode,
+                        inputType: TextInputType.streetAddress,
+                        onTap: () => showDialog(
+                          context: context,
+                          builder: (context) => AppDialog(
+                            child: FlutterLocationPicker(
+                              initZoom: 11,
+                              minZoomLevel: 5,
+                              maxZoomLevel: 16,
+                              trackMyPosition: true,
+                              selectLocationButtonText: Var.selectLocation,
+                              selectLocationButtonStyle: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(AppColors.primary),
+                              ),
+                              markerIcon: ProjectBuilder.client,
+                              markerIconColor: AppColors.primary,
+                              searchBarBackgroundColor: AppColors.input,
+                              zoomButtonsBackgroundColor: AppColors.primary,
+                              locationButtonBackgroundColor: AppColors.primary,
+                              onPicked: (pickedData) {
+                                _addressTextController.text = pickedData.address;
+                                Navigator.of(context, rootNavigator: true).pop();
+                                _addressController.value = Address(
+                                    name: pickedData.address.toString(),
+                                    position: LatLng(pickedData.latLong.latitude,
+                                        pickedData.latLong.longitude));
+                              },
                             ),
-                            markerIcon: ProjectBuilder.client,
-                            markerIconColor: AppColors.primary,
-                            searchBarBackgroundColor: AppColors.input,
-                            zoomButtonsBackgroundColor: AppColors.primary,
-                            locationButtonBackgroundColor: AppColors.primary,
-                            onPicked: (pickedData) {
-                              _addressTextController.text = pickedData.address;
-                              Navigator.of(context, rootNavigator: true).pop();
-                              _addressController.value = Address(
-                                  name: pickedData.address.toString(),
-                                  position: LatLng(pickedData.latLong.latitude,
-                                      pickedData.latLong.longitude));
-                            },
                           ),
                         ),
-                      ),
-                      validator: (value) => InputValidator.validateAddress(
-                          address: _addressController.value),
-                      prefix: const Icon(
-                        ProjectBuilder.location,
-                        size: 15,
-                      ),
-                    ),
-                    const SizedBox(height: 40),
-                    const Text(
-                      Var.permit,
-                      style: TextStyle(
-                        fontFamily: Var.defaultFont,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Container(
-                      margin: EdgeInsets.zero,
-                      height: 150,
-                      width: 150,
-                      child: 
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.network(permitImagePath)
+                        validator: (value) => InputValidator.validateAddress(
+                            address: _addressController.value),
+                        prefix: const Icon(
+                          ProjectBuilder.location,
+                          size: 15,
                         ),
-                    ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () => imageUpload(Var.permit),
-                      child:
-                        const Text(
-                          Var.uploadFromGallery,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: Var.defaultFont,
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
+                      ),
+                      const SizedBox(height: 40),
+                      const Text(
+                        Var.permit,
+                        style: TextStyle(
+                          fontFamily: Var.defaultFont,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
+                        margin: EdgeInsets.zero,
+                        height: 150,
+                        width: 150,
+                        child: 
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.network(permitImagePath)
                           ),
-                        ),
-                    ),
-                    const SizedBox(height: 40),
-                    const Text(
-                      Var.license,
-                      style: TextStyle(
-                        fontFamily: Var.defaultFont,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    Container(
-                      margin: EdgeInsets.zero,
-                      height: 150,
-                      width: 150,
-                      child: 
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.network(licenseImagePath)
-                        ),
-                    ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () => imageUpload(Var.license),
-                      child:
-                        const Text(
-                          Var.uploadFromGallery,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: Var.defaultFont,
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () => imageUpload(Var.permit),
+                        child:
+                          const Text(
+                            Var.uploadFromGallery,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: Var.defaultFont,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
-                        ),
-                    ),
-                    const SizedBox(height: 40),
-                    const Text(
-                      Var.dti,
-                      style: TextStyle(
-                        fontFamily: Var.defaultFont,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    Container(
-                      margin: EdgeInsets.zero,
-                      height: 150,
-                      width: 150,
-                      child: 
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.network(dtiImagePath)
+                      const SizedBox(height: 40),
+                      const Text(
+                        Var.license,
+                        style: TextStyle(
+                          fontFamily: Var.defaultFont,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
-                    ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () => imageUpload(Var.dti),
-                      child:
-                        const Text(
-                          Var.uploadFromGallery,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: Var.defaultFont,
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                    ),
-                    const SizedBox(height: 40),
-                    const Text(
-                      Var.sec,
-                      style: TextStyle(
-                        fontFamily: Var.defaultFont,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    Container(
-                      margin: EdgeInsets.zero,
-                      height: 150,
-                      width: 150,
-                      child: 
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.network(secImagePath)
-                        ),
-                    ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () => imageUpload(Var.sec),
-                      child:
-                        const Text(
-                          Var.uploadFromGallery,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: Var.defaultFont,
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
+                      const SizedBox(height: 20),
+                      Container(
+                        margin: EdgeInsets.zero,
+                        height: 150,
+                        width: 150,
+                        child: 
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.network(licenseImagePath)
                           ),
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () => imageUpload(Var.license),
+                        child:
+                          const Text(
+                            Var.uploadFromGallery,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: Var.defaultFont,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                      ),
+                      const SizedBox(height: 40),
+                      const Text(
+                        Var.dti,
+                        style: TextStyle(
+                          fontFamily: Var.defaultFont,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
-                    ),
-                    const SizedBox(height: 60),
-                    SizedBox(
-                      height: kIsWeb ? 50 : null,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          var password = _passwordController.text;
-                          var confirmPassword = _confirmPasswordController.text;
-                          if (_formKey.currentState!.validate()) {
-                            if (password != confirmPassword) {
-                              Toast.show(Var.passwordMismatched);
-                              return;
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
+                        margin: EdgeInsets.zero,
+                        height: 150,
+                        width: 150,
+                        child: 
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.network(dtiImagePath)
+                          ),
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () => imageUpload(Var.dti),
+                        child:
+                          const Text(
+                            Var.uploadFromGallery,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: Var.defaultFont,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                      ),
+                      const SizedBox(height: 40),
+                      const Text(
+                        Var.sec,
+                        style: TextStyle(
+                          fontFamily: Var.defaultFont,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
+                        margin: EdgeInsets.zero,
+                        height: 150,
+                        width: 150,
+                        child: 
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.network(secImagePath)
+                          ),
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () => imageUpload(Var.sec),
+                        child:
+                          const Text(
+                            Var.uploadFromGallery,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: Var.defaultFont,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                      ),
+                      const SizedBox(height: 60),
+                      SizedBox(
+                        height: kIsWeb ? 50 : null,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            var password = _passwordController.text;
+                            var confirmPassword = _confirmPasswordController.text;
+                            if (_formKey.currentState!.validate()) {
+                              if (password != confirmPassword) {
+                                Toast.show(Var.passwordMismatched);
+                                return;
+                              }
+                              UserProvider.userRegister(
+                                context: context,
+                                username: _nameController.text,
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                                phone: _phoneController.text,
+                                address: _addressController.value!,
+                                role: Contractor.role,
+                                companyName: _companyNameController.text,
+                                permit: permitImagePath,
+                                license: licenseImagePath,
+                                dti: dtiImagePath,
+                                sec: secImagePath,
+                              );
+                              clearInputs();
                             }
-                            UserProvider.userRegister(
-                              context: context,
-                              username: _nameController.text,
-                              email: _emailController.text,
-                              password: _passwordController.text,
-                              phone: _phoneController.text,
-                              address: _addressController.value!,
-                              role: Contractor.role,
-                              companyName: _companyNameController.text,
-                              permit: permitImagePath,
-                              license: licenseImagePath,
-                              dti: dtiImagePath,
-                              sec: secImagePath,
-                            );
-                            clearInputs();
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: AppColors.primary,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 17, horizontal: 100),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: AppColors.primary,
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 17, horizontal: 100),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            side: const BorderSide(
+                              width: 2.0,
+                              color: Colors.white,
+                            )
                           ),
-                        ),
-                        child: const Text(
-                          Var.register,
-                          style: TextStyle(
-                            fontFamily: Var.defaultFont,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
+                          child: const Text(
+                            Var.register,
+                            style: TextStyle(
+                              fontFamily: Var.defaultFont,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 50),
-                  ]),
-                ),
-              ],
+                      const SizedBox(height: 50),
+                    ]),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

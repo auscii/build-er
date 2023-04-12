@@ -22,16 +22,16 @@ class _ProductImagesState extends State<ProductImages> {
     Product? products = Var.product;
     return Column(
       children: [
-        SizedBox(
-          width: getProportionateScreenWidth(238),
-          child: AspectRatio(
-            aspectRatio: 1,
-            child: Hero(
-              tag: products?.images.toString() ?? "",
-              child: Image.asset(products?.images[0] ?? ""),
-            ),
-          ),
-        ),
+        // SizedBox(
+        //   width: getProportionateScreenWidth(238),
+        //   child: AspectRatio(
+        //     aspectRatio: 1,
+        //     child: Hero(
+        //       tag: products?.images.toString() ?? "",
+        //       child: Image.asset(products?.images[0] ?? ""),
+        //     ),
+        //   ),
+        // ),
         // SizedBox(height: getProportionateScreenWidth(20)),
         /* Row(
           mainAxisAlignment: MainAxisAlignment.center,

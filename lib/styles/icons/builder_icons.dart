@@ -1,5 +1,6 @@
 // ✏️ ProjectBuilder Icons, big ups to fluttericons.com
 
+import 'package:client/core/utils/global.dart';
 import 'package:flutter/widgets.dart';
 
 class ProjectBuilder {
@@ -56,4 +57,10 @@ class ProjectBuilder {
       IconData(0xe05a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData lock =
       IconData(0xe3ae, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData price =
+      IconData(0xe4e8, fontFamily: Var.materialIcons);
+  static const IconData description =
+      IconData(0xe1bf, fontFamily: Var.materialIcons);
+  static const IconData product =
+      IconData(0xe59b, fontFamily: Var.materialIcons);
 }

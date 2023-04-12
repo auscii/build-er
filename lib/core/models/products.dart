@@ -1,103 +1,70 @@
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Product {
-  final int id;
-  final String title, description;
-  final List<String> images;
-  final List<Color> colors;
-  final double rating, price;
-  final bool isFavourite, isPopular;
+  final String id;
+  final String title;
+  final String description;
+  final String image;
+  final double price;
+  final String category;
+  final String createdBy;
+  final Timestamp? dateTimeCreated;
+  // final List<String> images;
+  // final List<Color> colors;
+  // final double rating, price;
+  // final bool isFavourite, isPopular;
+  // String name, description, image, userUid;
 
   Product({
     required this.id,
-    required this.images,
-    required this.colors,
-    this.rating = 0.0,
-    this.isFavourite = false,
-    this.isPopular = false,
+    String? image,
     required this.title,
-    required this.price,
     required this.description,
-  });
+    required this.price,
+    required this.category,
+    required this.createdBy,
+    this.dateTimeCreated,
+  }) : image = image ?? createProfilePic(name: title);
+
+  factory Product.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
+    return Product(
+      id: data!["id"],
+      image: data["productImage"] ?? 
+        createProfilePic(name: data["productName"]),
+      title: data["productName"],
+      description: data["productDescription"],
+      price: data["productPrice"],
+      category: data["productCategory"],
+      createdBy: data["productCreatedBy"],
+      dateTimeCreated: data["productDateTimeCreated"]
+    );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      "id": id,
+      "productImage": image,
+      "productName": title,
+      "productDescription": description,
+      "productPrice": price,
+      "productCategory": category,
+      "productCreatedBy": createdBy,
+      "productDateTimeCreated": dateTimeCreated,
+    };
+  }
 }
 
-// Our demo Products
-
-List<Product> demoProducts = [
-  Product(
-    id: 1,
-    images: [
-      "assets/images/res/products/images/ps4_console_white_1.png",
-      "assets/images/res/products/images/ps4_console_white_2.png",
-      "assets/images/res/products/images/ps4_console_white_3.png",
-      "assets/images/res/products/images/ps4_console_white_4.png",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Wireless Controller for PS4™",
-    price: 64.99,
-    description: description,
-    rating: 4.8,
-    isFavourite: true,
-    isPopular: true,
-  ),
-  Product(
-    id: 2,
-    images: [
-      "assets/images/res/products/images/Image_Popular_Product_1.png",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Nike Sport White - Man Pant",
-    price: 50.5,
-    description: description,
-    rating: 4.1,
-    isPopular: true,
-  ),
-  Product(
-    id: 3,
-    images: [
-      "assets/images/res/products/images/glap.png",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Gloves XC Omega - Polygon",
-    price: 36.55,
-    description: description,
-    rating: 4.1,
-    isFavourite: true,
-    isPopular: true,
-  ),
-  Product(
-    id: 4,
-    images: [
-      "assets/images/res/products/images/wireless_headset.png",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Logitech Head",
-    price: 20.20,
-    description: description,
-    rating: 4.1,
-    isFavourite: true,
-  ),
-];
-
-const String description =
-    "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";
+String createProfilePic({required String name}) {
+  String profileColor = Colors
+      .primaries[Random().nextInt(Colors.primaries.length)]
+      .toString()
+      .substring(39, 42);
+  return "https://avatars.dicebear.com/api/initials/$name";
+}

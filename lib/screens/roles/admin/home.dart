@@ -1,4 +1,6 @@
+import 'package:client/core/providers/user.dart';
 import 'package:client/core/utils/global.dart';
+import 'package:client/core/utils/sizes.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +12,7 @@ import '../../../styles/icons/builder_icons.dart';
 import '../../../core/providers/appdata.dart';
 import '../../../router/navigator/navigation_menu.dart';
 import '../../../styles/ui/colors.dart';
-import 'items.dart';
+import 'add_products.dart';
 
 class AdminHome extends StatelessWidget {
   const AdminHome({Key? key}) : super(key: key);
@@ -39,7 +41,7 @@ class AdminHome extends StatelessWidget {
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 15,
-                  fontFamily: "SF Pro Rounded",
+                  fontFamily: Var.defaultFont,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -52,8 +54,9 @@ class AdminHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return SafeArea(
-      minimum: const EdgeInsets.only(top: 130, left: 36, right: 36),
+      minimum: const EdgeInsets.only(top: 20, left: 36, right: 36),
       maintainBottomViewPadding: false,
       child: Center(
         child: ConstrainedBox(
@@ -61,6 +64,34 @@ class AdminHome extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
+              Container(
+                width: double.infinity,
+                margin: EdgeInsets.all(getProportionateScreenWidth(20)),
+                padding: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenWidth(20),
+                  vertical: getProportionateScreenWidth(15),
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text.rich(
+                  TextSpan(
+                    style: const TextStyle(color: Colors.white),
+                    children: [
+                      const TextSpan(text: "${Var.welcome}\n"),
+                      TextSpan(
+                        text: Provider.of<UserProvider>(context).user.name,
+                        style: TextStyle(
+                          fontSize: getProportionateScreenWidth(24),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 50),
               Expanded(
                 flex: 2,
                 child: Column(
@@ -70,7 +101,7 @@ class AdminHome extends StatelessWidget {
                     const Text(
                       "Admin Tasks",
                       style: TextStyle(
-                        fontFamily: "SF Pro Rounded",
+                        fontFamily: Var.defaultFont,
                         fontWeight: FontWeight.w700,
                         fontSize: 16,
                       ),
@@ -81,49 +112,49 @@ class AdminHome extends StatelessWidget {
                       children: [
                         _buildAddItem(
                           context: context,
-                          label: "+ Add Client",
+                          label: Var.addProduct,
                           onPressed: () => showDialog(
                             context: context,
-                            builder: (context) => AddClient(
+                            builder: (context) => AddProduct(
                               admin: true,
                             ),
                           ),
                         ),
-                        const SizedBox(width: 10),
-                        _buildAddItem(
-                          context: context,
-                          label: "+ Add Admin",
-                          onPressed: () => showDialog(
-                            context: context,
-                            builder: (context) => const AddAdmin(),
-                          ),
-                        ),
+                        // const SizedBox(width: 10),
+                        // _buildAddItem(
+                        //   context: context,
+                        //   label: "+ Add Admin",
+                        //   onPressed: () => showDialog(
+                        //     context: context,
+                        //     builder: (context) => const AddAdmin(),
+                        //   ),
+                        // ),
                       ],
                     )
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 50),
               Expanded(
                 flex: 6,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
                     Text(
-                      "User Verification Requests",
+                      "Users Verification",
                       style: TextStyle(
-                        fontFamily: "SF Pro Rounded",
+                        fontFamily: Var.defaultFont,
                         fontWeight: FontWeight.w700,
                         fontSize: 16,
                       ),
                     ),
-                    SizedBox(height: 27),
+                    SizedBox(height: 10),
                     Expanded(
                       child: TabbedLayout(
-                        tabLabel: ["Client Requests", "Admin Requests"],
+                        tabLabel: ["CONTRACTOR REQUESTS"],
                         tabs: [
                           ClientRequestsTab(),
-                          AdminRequests(),
+                          // AdminRequests(),
                         ],
                       ),
                     )
@@ -157,7 +188,7 @@ class TabbedLayout extends StatelessWidget {
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 15,
-              fontFamily: "SF Pro Rounded",
+              fontFamily: Var.defaultFont,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -201,31 +232,32 @@ class ClientRequestsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppData>(
-        builder: (context, instance, child) => ListView.separated(
-              padding: const EdgeInsets.all(5),
-              separatorBuilder: (_, __) => const SizedBox(height: 15),
-              itemCount: instance.clientRequest.length,
-              itemBuilder: (_, i) => RoundedTile(
-                label: instance.clientRequest[i].client.name,
-                avatar: Image.network(instance.clientRequest[i].client.image),
-                icon: const Icon(ProjectBuilder.add),
-                onPressed: () {
-                  updateUserDetails(
-                    userId: instance.clientRequest[i].client.userUid,
-                    role: Roles.client,
-                  ).then(
-                    (_) => instance
-                        .createClient(
-                          client: instance.clientRequest[i].client,
-                        )
-                        .then((value) => FirebaseFirestore.instance
-                            .collection("clientRequests")
-                            .doc(instance.clientRequest[i].userId)
-                            .delete()),
-                  );
-                },
-              ),
-            ));
+      builder: (context, instance, child) => ListView.separated(
+        padding: const EdgeInsets.all(5),
+        separatorBuilder: (_, __) => const SizedBox(height: 15),
+        itemCount: instance.clientRequest.length,
+        itemBuilder: (_, i) => RoundedTile(
+          label: instance.clientRequest[i].client.name,
+          avatar: Image.network(instance.clientRequest[i].client.image),
+          icon: const Icon(ProjectBuilder.add),
+          onPressed: () {
+            updateUserDetails(
+              userId: instance.clientRequest[i].client.userUid,
+              role: Roles.client,
+            ).then(
+              (_) => instance
+                .createClient(
+                  client: instance.clientRequest[i].client,
+                )
+                .then((value) => FirebaseFirestore.instance
+                    .collection("clientRequests")
+                    .doc(instance.clientRequest[i].userId)
+                    .delete()),
+            );
+          },
+        ),
+      )
+    );
   }
 }
 

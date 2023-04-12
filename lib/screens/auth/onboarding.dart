@@ -1,12 +1,10 @@
 import 'dart:async';
-
 import 'package:client/core/models/user.dart';
 import 'package:client/core/providers/user.dart';
 import 'package:client/core/utils/global.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-
 import '../../styles/icons/builder_icons.dart';
 import '../../styles/ui/colors.dart';
 import '../../router/router.dart';
@@ -25,14 +23,14 @@ Widget buildBranding(BuildContext context) {
         filterQuality: FilterQuality.high,
       ),
       const SizedBox(height: 18),
-      const Text(
-        Var.appName,
-        style: TextStyle(
-          fontFamily: Var.defaultFont,
-          fontSize: 45,
-          fontWeight: FontWeight.w700,
-        ),
-      ),
+      // const Text(
+      //   Var.appName,
+      //   style: TextStyle(
+      //     fontFamily: Var.defaultFont,
+      //     fontSize: 45,
+      //     fontWeight: FontWeight.w700,
+      //   ),
+      // ),
     ],
   );
 }
@@ -103,10 +101,17 @@ class Onboarding extends StatelessWidget {
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           primary: AppColors.primary,
-          elevation: 0,
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+          padding: 
+            const EdgeInsets.symmetric(
+              vertical: 15,
+              horizontal: 15
+            ),
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          side: const BorderSide(
+            width: 2.0,
+            color: Colors.white,
+          )
         ),
         child: //icon,
           const Text(
@@ -139,42 +144,55 @@ class Onboarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              buildBranding(context),
-              const SizedBox(height: 25),
-              // const Text(
-              //   "Login to your Account ",
-              //   style: TextStyle(
-              //     fontFamily: Var.defaultFont,
-              //     fontWeight: FontWeight.w700,
-              //     fontSize: 25,
-              //   ),
-              // ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // authLet(() => _googleSignIn(context),
-                  //     const Icon(ProjectBuilder.google, size: 36)),
-                  // const SizedBox(width: 15),
-                  // authLet(() => _gitHubSignIn(context),
-                  //     const Icon(ProjectBuilder.github, size: 36)),
-                  // const SizedBox(width: 15),
-                  authLet(
-                    _emailSignIn,
-                    const Icon(
-                      ProjectBuilder.email,
-                      size: 36
-                    )
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              createAccountShortcut(),
-            ],
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(Var.startupBg),
+            fit: BoxFit.cover,
+            // colorFilter: 
+            //   ColorFilter.mode(
+            //     Colors.black.withOpacity(0.8),
+            //     BlendMode.dstATop
+            //   ),
+          ),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                buildBranding(context),
+                const SizedBox(height: 25),
+                // const Text(
+                //   "Login to your Account ",
+                //   style: TextStyle(
+                //     fontFamily: Var.defaultFont,
+                //     fontWeight: FontWeight.w700,
+                //     fontSize: 25,
+                //   ),
+                // ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // authLet(() => _googleSignIn(context),
+                    //     const Icon(ProjectBuilder.google, size: 36)),
+                    // const SizedBox(width: 15),
+                    // authLet(() => _gitHubSignIn(context),
+                    //     const Icon(ProjectBuilder.github, size: 36)),
+                    // const SizedBox(width: 15),
+                    authLet(
+                      _emailSignIn,
+                      const Icon(
+                        ProjectBuilder.email,
+                        size: 36
+                      )
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                createAccountShortcut(),
+              ],
+            ),
           ),
         ),
       ),
@@ -194,34 +212,66 @@ Container createAccountShortcut() {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        GestureDetector(
-          onTap: ()
-          => GlobalNavigator.router.currentState!
+        ElevatedButton(
+          onPressed: () => GlobalNavigator.router.currentState!
             .pushReplacementNamed(AuthRoutes.clientRegister),
+          style: ElevatedButton.styleFrom(
+            primary: AppColors.success,
+            elevation: 0,
+            padding: 
+              const EdgeInsets.symmetric(
+                vertical: 15,
+                horizontal: 15
+              ),
+            shape: 
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20)
+              ),
+            side: const BorderSide(
+              width: 2.0,
+              color: Colors.black,
+            )
+          ),
           child:
             const Text(
               "Sign up as Client",
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Color.fromARGB(255, 17, 155, 114),
-                fontSize: 18,
+                color: AppColors.input,
+                fontSize: 20,
                 fontFamily: Var.defaultFont,
                 fontWeight: FontWeight.w700,
               ),
             ),
         ),
-        const SizedBox(width: 40),
-        GestureDetector(
-          onTap: ()
-          => GlobalNavigator.router.currentState!
+        const SizedBox(width: 20),
+        ElevatedButton(
+          onPressed: () => GlobalNavigator.router.currentState!
             .pushReplacementNamed(AuthRoutes.contractorRegister),
+          style: ElevatedButton.styleFrom(
+            primary: AppColors.info,
+            elevation: 0,
+            padding: 
+              const EdgeInsets.symmetric(
+                vertical: 15,
+                horizontal: 15
+              ),
+            shape: 
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20)
+              ),
+            side: const BorderSide(
+              width: 2.0,
+              color: Colors.black,
+            )
+          ),
           child:
             const Text(
               "Sign up as Contractor",
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Color.fromARGB(255, 3, 99, 140),
-                fontSize: 18,
+                color: AppColors.input,
+                fontSize: 20,
                 fontFamily: Var.defaultFont,
                 fontWeight: FontWeight.w700,
               ),
