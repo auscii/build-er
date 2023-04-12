@@ -1,6 +1,8 @@
 import 'package:client/core/models/products.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Var {
+  static const e = "";
   static const na = "N/A";
   static const appName = "ProjectBuilder";
   static const appLogo = "assets/images/res/builder-logo.png";
@@ -114,8 +116,11 @@ class Var {
   static const submit = "SUBMIT";
   static const selectCategory = "Please select Product Category";
   static const productCategory = "Product Category";
+  static const adminProducts = "ADMIN PRODUCTS";
+  static const viewProduct = "VIEW PRODUCT";
   // static const aaa = "aaa";
   
+  static var appTitle = "";
   static var activePage = "";
   static var activeUserRole = "";
   static var previousRoute = "";
@@ -124,6 +129,7 @@ class Var {
     "Construction Tools",
   ];
   static Product? product;
+  static List<Product> productLists = [];
 
   static charRandomizer() {
     final now = DateTime.now();

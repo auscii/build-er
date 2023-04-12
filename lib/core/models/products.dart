@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -12,11 +11,6 @@ class Product {
   final String category;
   final String createdBy;
   final Timestamp? dateTimeCreated;
-  // final List<String> images;
-  // final List<Color> colors;
-  // final double rating, price;
-  // final bool isFavourite, isPopular;
-  // String name, description, image, userUid;
 
   Product({
     required this.id,

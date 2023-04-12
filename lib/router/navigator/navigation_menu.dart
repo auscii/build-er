@@ -1,4 +1,5 @@
 import 'package:client/router/navigator/menu_drawer.dart';
+import 'package:client/screens/roles/admin/admin_products.dart';
 import 'package:client/screens/roles/admin/home.dart';
 import 'package:client/screens/roles/client/components/product_details.dart';
 import 'package:client/screens/roles/client/ecommerce.dart';
@@ -196,7 +197,13 @@ class _NavigationMenuState extends State<NavigationMenu> {
               returnValue = CupertinoTabView(builder: (context) => const Ecommerce());
               break;
             case 2:
-              returnValue = CupertinoTabView(builder: (context) => const Locator());
+              returnValue
+              = Var.activeUserRole == Var.client ? 
+                CupertinoTabView(builder: (context) => const Locator()) :
+                Var.activeUserRole == Var.contractor ?
+                CupertinoTabView(builder: (context) => const ContractorHome()) :
+                CupertinoTabView(builder: (context) => const AdminProducts());
+              // returnValue = CupertinoTabView(builder: (context) => const Locator());
               break;
             case 3:
               returnValue = CupertinoTabView(builder: (context) => ProfilePage());
@@ -207,9 +214,9 @@ class _NavigationMenuState extends State<NavigationMenu> {
             case 5:
               returnValue = CupertinoTabView(builder: (context) => const ProductDetails());
               break;
-            // case 6:
-            //   returnValue = CupertinoTabView(builder: (context) => const AAA());
-            //   break;
+            case 6:
+              returnValue = CupertinoTabView(builder: (context) => const AdminProducts());
+              break;
           }
           return returnValue ?? home;
         },

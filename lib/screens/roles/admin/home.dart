@@ -115,20 +115,11 @@ class AdminHome extends StatelessWidget {
                           label: Var.addProduct,
                           onPressed: () => showDialog(
                             context: context,
-                            builder: (context) => AddProduct(
+                            builder: (context) => const AddProduct(
                               admin: true,
                             ),
                           ),
                         ),
-                        // const SizedBox(width: 10),
-                        // _buildAddItem(
-                        //   context: context,
-                        //   label: "+ Add Admin",
-                        //   onPressed: () => showDialog(
-                        //     context: context,
-                        //     builder: (context) => const AddAdmin(),
-                        //   ),
-                        // ),
                       ],
                     )
                   ],

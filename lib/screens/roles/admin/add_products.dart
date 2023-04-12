@@ -21,9 +21,11 @@ import '../../../styles/ui/colors.dart';
 import 'home.dart';
 
 class AppDialog extends StatelessWidget {
-  const AppDialog({required this.child, super.key});
-
   final Widget child;
+  const AppDialog({
+    required this.child,
+    super.key
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -283,17 +285,16 @@ class _AddProductState extends State<AddProduct> {
   final TextEditingController _productImageController = TextEditingController();
   final TextEditingController _productDescriptionController = TextEditingController();
   final TextEditingController _productPriceController = TextEditingController();
-  // final TextEditingController _productCategoryController = TextEditingController();
   final FocusNode _productNameFocusNode = FocusNode();
   final FocusNode _productImageFocusNode = FocusNode();
   final FocusNode _productDescriptionFocusNode = FocusNode();
   final FocusNode _productPriceFocusNode = FocusNode();
-  // final FocusNode _productCategoryFocusNode = FocusNode();
   static String productImagePath = Var.noImageAvailable;
   static String _productCategoryValue = Var.na;
 
   @override
   void initState() {
+    setState(() => Var.appTitle = Var.addProduct);
     super.initState();
   }
 
@@ -313,10 +314,10 @@ class _AddProductState extends State<AddProduct> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
-                  Var.addProduct,
+                Text(
+                  Var.appTitle,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 30,
                     fontFamily: Var.defaultFont,
@@ -485,8 +486,6 @@ class _AddProductState extends State<AddProduct> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Column(
-          // mainAxisSize: MainAxisSize.min,
-          // mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

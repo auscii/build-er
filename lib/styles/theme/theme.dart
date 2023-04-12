@@ -12,4 +12,6 @@ class AppTheme {
     final ThemeData base = ThemeData.dark();
     return base.copyWith();
   }
+
+  static of(BuildContext context) {}
 }

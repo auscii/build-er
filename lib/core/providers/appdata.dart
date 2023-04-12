@@ -45,6 +45,7 @@ class AppData extends ChangeNotifier {
   }
 
   List<Client> clients = [];
+  List<Product> products = [];
 
   late List<ClientRequests> _clientRequest = [];
   late List<AdminRequests> _adminRequest = [];
@@ -112,6 +113,22 @@ class AppData extends ChangeNotifier {
       .set(product)
       .then((value) {
         Toast.show(Var.productSuccess);
+      });
+  }
+
+  static void getProductLists() async {
+    await FirebaseFirestore.instance
+      .collection(Var.productS)
+      .withConverter(
+        fromFirestore: Product.fromFirestore,
+        toFirestore: (Product values, _) => values.toFirestore())
+      .get()
+      .then((res) {
+        res.docs.forEach((val) {
+          var products = val.data();
+          Var.productLists.addAll({products});
+        });
+        AppData().notifyListeners();
       });
   }
 
