@@ -1,4 +1,5 @@
 import 'package:client/screens/roles/admin/admin_products.dart';
+import 'package:client/screens/roles/admin/users_lists.dart';
 import 'package:client/screens/roles/client/components/product_details.dart';
 import 'package:client/screens/roles/client/ecommerce.dart';
 import 'package:client/screens/roles/client/locator.dart';
@@ -46,4 +47,5 @@ class PagesRoutes {
   static const String ecommerce = Ecommerce.id;
   static const String productDetails = ProductDetails.id;
   static const String adminProducts = AdminProducts.id;
+  static const String userLists = UserLists.id;
 }

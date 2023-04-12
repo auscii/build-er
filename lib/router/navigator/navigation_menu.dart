@@ -1,6 +1,7 @@
 import 'package:client/router/navigator/menu_drawer.dart';
 import 'package:client/screens/roles/admin/admin_products.dart';
 import 'package:client/screens/roles/admin/home.dart';
+import 'package:client/screens/roles/admin/users_lists.dart';
 import 'package:client/screens/roles/client/components/product_details.dart';
 import 'package:client/screens/roles/client/ecommerce.dart';
 import 'package:client/screens/roles/client/locator.dart';
@@ -194,7 +195,13 @@ class _NavigationMenuState extends State<NavigationMenu> {
               returnValue = home;
               break;
             case 1:
-              returnValue = CupertinoTabView(builder: (context) => const Ecommerce());
+              returnValue
+              = Var.activeUserRole == Var.client ? 
+                CupertinoTabView(builder: (context) => const Locator()) :
+                Var.activeUserRole == Var.contractor ?
+                CupertinoTabView(builder: (context) => const ContractorHome()) :
+                CupertinoTabView(builder: (context) => const UserLists());
+              // returnValue = CupertinoTabView(builder: (context) => const Ecommerce());
               break;
             case 2:
               returnValue

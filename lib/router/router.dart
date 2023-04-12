@@ -1,5 +1,6 @@
 import 'package:client/core/providers/appdata.dart';
 import 'package:client/screens/auth/contractor_register.dart';
+import 'package:client/screens/roles/admin/users_lists.dart';
 import 'package:client/screens/roles/client/components/product_details.dart';
 import 'package:client/screens/roles/client/ecommerce.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -120,6 +121,8 @@ class GlobalNavigator {
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const ProductDetails());
       case PagesRoutes.adminProducts:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const AdminProducts());
+      case PagesRoutes.userLists:
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserLists());
       default:
         return PageRouteBuilder(
             pageBuilder: (_, __, ___) => const AuthNavigator());
@@ -128,6 +131,7 @@ class GlobalNavigator {
 
   static String initialRoute() {
     AppData.getProductLists();
+    AppData.getUserLists();
     if (FirebaseAuth.instance.currentUser == null) {
       return AuthRoutes.onboarding; //GlobalRoutes.auth;
     } else {

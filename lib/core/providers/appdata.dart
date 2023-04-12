@@ -132,6 +132,22 @@ class AppData extends ChangeNotifier {
       });
   }
 
+  static void getUserLists() async {
+    await FirebaseFirestore.instance
+      .collection(Var.users)
+      .withConverter(
+        fromFirestore: UserModel.fromFirestore,
+        toFirestore: (UserModel values, _) => values.toFirestore())
+      .get()
+      .then((res) {
+        res.docs.forEach((val) {
+          var users = val.data();
+          Var.usersLists.addAll({users});
+        });
+        AppData().notifyListeners();
+      });
+  }
+
   Future<void> createClient({required Client client}) async {
     return await FirebaseFirestore.instance
       .collection(Var.clientS)

@@ -1,4 +1,5 @@
 import 'package:client/core/models/products.dart';
+import 'package:client/core/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Var {
@@ -120,6 +121,8 @@ class Var {
   static const viewProduct = "VIEW PRODUCT";
   static const constructionMaterials = "Construction Materials";
   static const constructionTools = "Construction Tools";
+  static const userLists = "USER LISTS";
+  static const viewUser = "VIEW USER";
   // static const aaa = "aaa";
   
   static var appTitle = "";
@@ -132,6 +135,7 @@ class Var {
   ];
   static Product? product;
   static List<Product> productLists = [];
+  static List<UserModel> usersLists = [];
 
   static charRandomizer() {
     final now = DateTime.now();
