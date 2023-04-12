@@ -1,4 +1,6 @@
 import 'package:client/core/models/products.dart';
+import 'package:client/core/utils/global.dart';
+import 'package:client/core/utils/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:client/core/utils/sizes.dart';
 import 'top_rounded_container.dart';
@@ -43,8 +45,10 @@ class ProductBody extends StatelessWidget {
                           top: getProportionateScreenWidth(15),
                         ),
                         child: DefaultButton(
-                          text: "Add To Cart",
-                          press: () {},
+                          text: Var.addCart,
+                          press: () {
+                            Toast.show(Var.featureNotAvailable);
+                          },
                         ),
                       ),
                     ),

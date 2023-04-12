@@ -28,13 +28,7 @@ class ProductCard extends StatelessWidget {
         child: GestureDetector(
           onTap: () {
             Var.product = product;
-            // Var.productName = product.title;
-            // Var.productImage = product.images[0];
             Var.previousRoute = PagesRoutes.productDetails;
-            // ProductDetails(
-            //   previousRoute: PagesRoutes.productDetails,
-            //   productName: product.title
-            // );
             NavigationMenu.activeIndex = 5;
             GlobalNavigator.navigateToScreen(const NavigationMenu());
           },
@@ -49,30 +43,36 @@ class ProductCard extends StatelessWidget {
                     color: const Color(0xFF979797).withOpacity(0.1),
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  // child: Hero(
-                  //   tag: product.id.toString(),
-                  //   child: Image.asset(product.images[0]),
-                  // ),
+                  child: Hero(
+                    tag: product.id.toString(),
+                    child: Image.network(product.image),
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
               Text(
-                product.title,
-                style: TextStyle(color: Colors.black),
-                maxLines: 2,
+                product.title.toUpperCase(),
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontFamily: Var.defaultFont,
+                  fontWeight: FontWeight.bold,
+                ),
+                maxLines: 3,
               ),
+              const SizedBox(height: 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "\$${product.price}",
+                    "\₱ ${product.price.toStringAsFixed(2)}",
                     style: TextStyle(
                       fontSize: getProportionateScreenWidth(18),
                       fontWeight: FontWeight.w600,
                       color: Color(0xFFFF7643),
                     ),
                   ),
-                  InkWell(
+                  /* InkWell(
                     borderRadius: BorderRadius.circular(50),
                     onTap: () {},
                     child: Container(
@@ -88,7 +88,7 @@ class ProductCard extends StatelessWidget {
                         color: Color(0xFFFF4848)
                       ),
                     ),
-                  ),
+                  ), */
                 ],
               )
             ],

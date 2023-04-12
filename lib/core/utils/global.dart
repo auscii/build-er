@@ -118,6 +118,8 @@ class Var {
   static const productCategory = "Product Category";
   static const adminProducts = "ADMIN PRODUCTS";
   static const viewProduct = "VIEW PRODUCT";
+  static const constructionMaterials = "Construction Materials";
+  static const constructionTools = "Construction Tools";
   // static const aaa = "aaa";
   
   static var appTitle = "";
@@ -125,8 +127,8 @@ class Var {
   static var activeUserRole = "";
   static var previousRoute = "";
   static var categories = [
-    "Construction Materials",
-    "Construction Tools",
+    constructionMaterials,
+    constructionTools,
   ];
   static Product? product;
   static List<Product> productLists = [];

@@ -313,6 +313,13 @@ class UserProvider extends ChangeNotifier {
     try {
       FirebaseAuth.instance.signOut();
       _user = UserModel.clear();
+      Var.appTitle = "";
+      Var.activePage = "";
+      Var.activeUserRole = "";
+      Var.previousRoute = "";
+      // Var.product = null;
+      // Var.categories = [];
+      // Var.productLists = [];
       notifyListeners();
       GlobalNavigator.router.currentState!
           .pushReplacementNamed(AuthRoutes.login);

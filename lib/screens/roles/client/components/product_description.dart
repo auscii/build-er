@@ -38,7 +38,7 @@ class ProductDescription extends StatelessWidget {
             right: getProportionateScreenWidth(20),
           ),
           child: Text(
-            "₱ ${product.price}",
+            "₱ ${product.price.toStringAsFixed(2)}",
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Colors.red,

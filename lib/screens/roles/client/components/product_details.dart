@@ -1,4 +1,5 @@
 import 'package:client/core/utils/global.dart';
+import 'package:client/core/utils/toast.dart';
 import 'package:client/router/router.dart';
 import 'package:client/screens/roles/client/components/product_description.dart';
 import 'package:client/screens/roles/client/components/product_images.dart';
@@ -52,7 +53,9 @@ class ProductDetails extends StatelessWidget {
                           ),
                           child: DefaultButton(
                             text: Var.addCart,
-                            press: () {},
+                            press: () {
+                              Toast.show(Var.featureNotAvailable);
+                            },
                           ),
                         ),
                       ),

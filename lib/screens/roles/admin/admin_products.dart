@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:client/core/providers/appdata.dart';
 import 'package:client/core/utils/global.dart';
 import 'package:client/core/utils/toast.dart';
@@ -57,8 +56,7 @@ class _AdminProductsState extends State<AdminProducts> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: 
-      SingleChildScrollView(
+      body: SingleChildScrollView(
         child: 
           Wrap(
             alignment: WrapAlignment.start,
@@ -72,36 +70,17 @@ class _AdminProductsState extends State<AdminProducts> {
                     // padding: const EdgeInsets.all(5),
                     color: AppColors.bg,
                     child: GestureDetector(
-                      onTap: () {
-                        // print('prod.id ->${prod.id}');
-                        // print('prod.title ->${prod.title}');
-                        // print('prod.image ->${prod.image}');
-                        // print('prod.category ->${prod.category}');
-                        // print('prod.description ->${prod.description}');
-                        // print('prod.price ->${prod.price}');
-                        showDialog(
-                          context: context,
-                          builder: (context) => viewProduct(
-                            prod.id,
-                            prod.title,
-                            prod.image,
-                            prod.category,
-                            prod.description,
-                            prod.price
-                          ),
-                        );
-                      },
-                      // onTap: () => showDialog(
-                      //   context: context,
-                      //   builder: (context) => viewProduct(
-                      //     prod.id,
-                      //     prod.title,
-                      //     prod.image,
-                      //     prod.category,
-                      //     prod.description,
-                      //     prod.price
-                      //   ),
-                      // ),
+                      onTap: () => showDialog(
+                        context: context,
+                        builder: (context) => viewProduct(
+                          prod.id,
+                          prod.title,
+                          prod.image,
+                          prod.category,
+                          prod.description,
+                          prod.price
+                        ),
+                      ),
                       child: ListTile(
                         leading: Transform.translate(
                           offset: const Offset(0, 5),
@@ -148,7 +127,6 @@ class _AdminProductsState extends State<AdminProducts> {
             ]
           ),
       )
-  
     );
   }
 
