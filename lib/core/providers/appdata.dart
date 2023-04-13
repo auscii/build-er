@@ -90,19 +90,6 @@ class AppData extends ChangeNotifier {
     });
   }
 
-  // updateServiceRequest({required bool completed, required String uid}) {
-  //   FirebaseFirestore.instance
-  //       .collection("serviceRequest")
-  //       .doc(FirebaseAuth.instance.currentUser?.uid)
-  //       .collection("Requests")
-  //       .withConverter(
-  //         fromFirestore: ServiceRequest.fromFirestore,
-  //         toFirestore: (ServiceRequest userModel, _) => userModel.toFirestore(),
-  //       )
-  //       .doc(uid)
-  //       .update({'status': completed});
-  // }
-
   Future<void> createProduct({required Product product}) async {
     return await FirebaseFirestore.instance
       .collection(Var.productS)
@@ -142,7 +129,43 @@ class AppData extends ChangeNotifier {
       .then((res) {
         res.docs.forEach((val) {
           var users = val.data();
+          // print("getUserLists user roles ->${users.roles}");
+          // print("getUserLists user name ->${users.name}");
           Var.usersLists.addAll({users});
+        });
+        AppData().notifyListeners();
+      });
+  }
+
+  static void getContractorUser() async {
+    await FirebaseFirestore.instance
+      .collection(Var.users)
+      .where(Var.roles, isEqualTo: Var.contractor)
+      .withConverter(
+        fromFirestore: UserModel.fromFirestore,
+        toFirestore: (UserModel values, _) => values.toFirestore())
+      .get()
+      .then((res) {
+        res.docs.forEach((val) {
+          var users = val.data();
+          Var.filteredContractorUsers.addAll({users});
+        });
+        AppData().notifyListeners();
+      });
+  }
+
+  static void getClientUser() async {
+    await FirebaseFirestore.instance
+      .collection(Var.users)
+      .where(Var.roles, isEqualTo: Var.client)
+      .withConverter(
+        fromFirestore: UserModel.fromFirestore,
+        toFirestore: (UserModel values, _) => values.toFirestore())
+      .get()
+      .then((res) {
+        res.docs.forEach((val) {
+          var users = val.data();
+          Var.filteredClientUsers.addAll({users});
         });
         AppData().notifyListeners();
       });
@@ -233,6 +256,24 @@ class AppData extends ChangeNotifier {
         .listen((val) {
       _adminRequest = val.docs.map((e) => e.data()).toList();
       notifyListeners();
+    });
+  }
+
+  Future<void> updateUserDetails(
+    {required String userId}) async {
+    final instance = FirebaseFirestore.instance
+        .collection(Var.users)
+        .withConverter(
+            fromFirestore: UserModel.fromFirestore,
+            toFirestore: (UserModel userModel, _) 
+            => userModel.toFirestore())
+        .doc(userId);
+    // Roles? roles;//List<Roles> doc = [];
+    instance.get().then((value) {
+      // roles = value.data()?.roles as Roles?;
+      // roles.add(role);
+    }).then((_) => {
+      // instance.update({'roles': roles.toString()})
     });
   }
 }

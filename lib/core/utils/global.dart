@@ -19,7 +19,7 @@ class Var {
   static const about = "ABOUT";
   static const profile = "PROFILE";
   static const userPlaceholder = "assets/images/res/user-placeholder.png";
-  // static const userPlaceholder = "https://firebasestorage.googleapis.com/v0/b/nustar-resort-app-92c7c.appspot.com/o/user-placeholder.png?alt=media&token=270f28f1-c9be-4283-a58e-46792053027f";
+  static const userPlaceholderNet = "https://firebasestorage.googleapis.com/v0/b/nustar-resort-app-92c7c.appspot.com/o/user-placeholder.png?alt=media&token=270f28f1-c9be-4283-a58e-46792053027f";
   static const noImageAvailable = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/2048px-No_image_available.svg.png";
   static const camera = "CAMERA";
   static const gallery = "GALLERY";
@@ -123,7 +123,23 @@ class Var {
   static const constructionTools = "Construction Tools";
   static const userLists = "USER LISTS";
   static const viewUser = "VIEW USER";
+  static const emailAddress = "EMAIL ADDRESS";
+  static const userID = "USER ID";
+  static const phoneNumber = "PHONE NUMBER";
+  static const address = "ADDRESS";
+  static const verifyUser = "VERIFY THIS USER";
+  static const userVerified = "USER VERIFIED";
+  static const verifyThisUserMsg = "Do you want to verify this user?";
+  static const contractorRequests = "CONTRACTOR REQUESTS";
+  static const clientRequests = "CLIENT REQUESTS";
+  static const roles = "roles";
+  static const contractorRequestTab = "ContractorRequestsTab";
+  static const clientRequestTab = "ClientRequestsTab";
   // static const aaa = "aaa";
+
+  static const int userPendingForVerification = 2;
+  static const int adminApprovedUserVerification = 1;
+  static const int adminStatus = 3;
   
   static var appTitle = "";
   static var activePage = "";
@@ -136,6 +152,8 @@ class Var {
   static Product? product;
   static List<Product> productLists = [];
   static List<UserModel> usersLists = [];
+  static List<UserModel> filteredClientUsers = [];
+  static List<UserModel> filteredContractorUsers = [];
 
   static charRandomizer() {
     final now = DateTime.now();

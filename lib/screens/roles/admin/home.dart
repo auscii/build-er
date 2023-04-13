@@ -1,12 +1,13 @@
+import 'package:client/core/models/products.dart';
 import 'package:client/core/providers/user.dart';
 import 'package:client/core/utils/global.dart';
+import 'package:client/core/utils/modal.dart';
 import 'package:client/core/utils/sizes.dart';
+import 'package:client/core/utils/toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-// 🏘️ Local imports
 import '../../../core/models/user.dart';
 import '../../../styles/icons/builder_icons.dart';
 import '../../../core/providers/appdata.dart';
@@ -14,10 +15,21 @@ import '../../../router/navigator/navigation_menu.dart';
 import '../../../styles/ui/colors.dart';
 import 'add_products.dart';
 
-class AdminHome extends StatelessWidget {
-  const AdminHome({Key? key}) : super(key: key);
+class AdminHome extends StatefulWidget {
+  static const String id = Var.admin;
+  const AdminHome({
+    Key? key,
+  }) : super(key: key);
+  @override
+  State<AdminHome> createState() => _AdminHomeState();
+}
 
-  static const String id = "admin";
+class _AdminHomeState extends State<AdminHome> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   Widget _buildAddItem({
     required BuildContext context,
@@ -142,10 +154,13 @@ class AdminHome extends StatelessWidget {
                     SizedBox(height: 10),
                     Expanded(
                       child: TabbedLayout(
-                        tabLabel: ["CONTRACTOR REQUESTS"],
+                        tabLabel: [
+                          Var.contractorRequests,
+                          Var.clientRequests
+                        ],
                         tabs: [
+                          ContractorRequestsTab(),
                           ClientRequestsTab(),
-                          // AdminRequests(),
                         ],
                       ),
                     )
@@ -171,21 +186,24 @@ class TabbedLayout extends StatelessWidget {
   final List<Widget> tabs;
 
   List<Widget> _buildTabsLabel() => tabLabel
-      .map(
-        (e) => Padding(
-          padding: const EdgeInsets.only(top: 6, bottom: 6),
-          child: Text(
-            e,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 15,
-              fontFamily: Var.defaultFont,
-              fontWeight: FontWeight.w700,
-            ),
+    .map(
+      (e) => Padding(
+        padding: const EdgeInsets.only(top: 20, bottom: 20),
+        child: 
+          GestureDetector(
+            child:
+              Text(
+                e,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontFamily: Var.defaultFont,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
           ),
-        ),
-      )
-      .toList();
+      ),
+    ).toList();
 
   @override
   Widget build(BuildContext context) {
@@ -204,9 +222,18 @@ class TabbedLayout extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
               ),
-              labelColor: AppColors.success,
+              labelColor: AppColors.primary,
               unselectedLabelColor: const Color(0x42000000),
               tabs: _buildTabsLabel(),
+              onTap: (i) {
+                var selectedTab = tabs[i];
+                Toast.show("selected tab - $selectedTab");
+                showDialog(
+                  context: context,
+                  builder: (context) 
+                    => viewUserNeedToVerify("$selectedTab")
+                );
+              },
             ),
           ),
           const SizedBox(height: 10),
@@ -215,6 +242,77 @@ class TabbedLayout extends StatelessWidget {
       ),
     );
   }
+
+  Widget viewUserNeedToVerify(String userType) {
+    List<UserModel> filteredUsers = [];
+    userType == Var.contractorRequestTab ?
+      filteredUsers = Var.filteredContractorUsers :
+      filteredUsers = Var.filteredClientUsers;
+    return AppDialog(
+      child: SingleChildScrollView(
+        child: 
+          Wrap(
+            alignment: WrapAlignment.start,
+            crossAxisAlignment: WrapCrossAlignment.start,
+            children: [
+              Column(
+                children: filteredUsers.map((user) {
+                  return Container(
+                    color: Colors.black, //const Color(0xFF979797).withOpacity(0.1),
+                    child:
+                      GestureDetector(
+                        onTap: () {
+                          print("selected user -> ${user.name}");
+                        },
+                        child: ListTile(
+                          // leading: Transform.translate(
+                          //   offset: const Offset(0, 5),
+                          //   child: Container(
+                          //     height: 250,
+                          //     width: 60,
+                          //     decoration: BoxDecoration(
+                          //         color: Colors.black,
+                          //         image: DecorationImage(
+                          //           image: NetworkImage(prod.image),
+                          //           fit: BoxFit.cover,
+                          //         ),
+                          //         border: Border.all(width: 2, color: Colors.white)
+                          //     ),
+                          //   ),
+                          // ),
+                          title: 
+                            Text(
+                              "Name: ${user.name!}",
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontFamily: Var.defaultFont,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          subtitle: 
+                            Text(
+                            "User ID: ${user.uid}",
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontFamily: Var.defaultFont,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                        ),
+                      )
+                  );
+                }).toList(),
+              )
+            ]
+          ),
+      )
+    );
+  }
+
 }
 
 class ClientRequestsTab extends StatelessWidget {
@@ -232,19 +330,59 @@ class ClientRequestsTab extends StatelessWidget {
           avatar: Image.network(instance.clientRequest[i].client.image),
           icon: const Icon(ProjectBuilder.add),
           onPressed: () {
-            updateUserDetails(
-              userId: instance.clientRequest[i].client.userUid,
-              role: Roles.client,
-            ).then(
-              (_) => instance
-                .createClient(
-                  client: instance.clientRequest[i].client,
-                )
-                .then((value) => FirebaseFirestore.instance
-                    .collection("clientRequests")
-                    .doc(instance.clientRequest[i].userId)
-                    .delete()),
-            );
+            // Modal.promptUserVerify(
+            //   context, Var.verifyThisUserMsg,
+            //   Var.yes, Var.no, "userId"
+            // );
+
+            // updateUserDetails(
+            //   userId: instance.clientRequest[i].client.userUid,
+            //   role: Roles.client,
+            // ).then(
+            //   (_) => instance
+            //     .createClient(
+            //       client: instance.clientRequest[i].client,
+            //     )
+            //     .then((value) => FirebaseFirestore.instance
+            //         .collection("clientRequests")
+            //         .doc(instance.clientRequest[i].userId)
+            //         .delete()),
+            // ); 
+          },
+        ),
+      )
+    );
+  }
+}
+
+class ContractorRequestsTab extends StatelessWidget {
+  const ContractorRequestsTab({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<AppData>(
+      builder: (context, instance, child) => ListView.separated(
+        padding: const EdgeInsets.all(5),
+        separatorBuilder: (_, __) => const SizedBox(height: 15),
+        itemCount: instance.clientRequest.length,
+        itemBuilder: (_, i) => RoundedTile(
+          label: instance.clientRequest[i].client.name,
+          avatar: Image.network(instance.clientRequest[i].client.image),
+          icon: const Icon(ProjectBuilder.add),
+          onPressed: () {
+            // updateUserDetails(
+            //   userId: instance.clientRequest[i].client.userUid,
+            //   role: Roles.client,
+            // ).then(
+            //   (_) => instance
+            //     .createClient(
+            //       client: instance.clientRequest[i].client,
+            //     )
+            //     .then((value) => FirebaseFirestore.instance
+            //         .collection("clientRequests")
+            //         .doc(instance.clientRequest[i].userId)
+            //         .delete()),
+            // );
           },
         ),
       )
@@ -255,7 +393,7 @@ class ClientRequestsTab extends StatelessWidget {
 Future<void> updateUserDetails(
     {required String userId, required Roles role}) async {
   final instance = FirebaseFirestore.instance
-      .collection("users")
+      .collection(Var.users)
       .withConverter(
           fromFirestore: UserModel.fromFirestore,
           toFirestore: (UserModel userModel, _) => userModel.toFirestore())

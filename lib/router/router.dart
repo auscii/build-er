@@ -132,6 +132,8 @@ class GlobalNavigator {
   static String initialRoute() {
     AppData.getProductLists();
     AppData.getUserLists();
+    AppData.getContractorUser();
+    AppData.getClientUser();
     if (FirebaseAuth.instance.currentUser == null) {
       return AuthRoutes.onboarding; //GlobalRoutes.auth;
     } else {
