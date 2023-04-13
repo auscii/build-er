@@ -7,6 +7,7 @@ import 'package:client/core/utils/toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import '../../../core/models/user.dart';
 import '../../../styles/icons/builder_icons.dart';
@@ -54,7 +55,7 @@ class _AdminHomeState extends State<AdminHome> {
                   color: Colors.black,
                   fontSize: 15,
                   fontFamily: Var.defaultFont,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.normal,
                 ),
               ),
             ],
@@ -114,7 +115,7 @@ class _AdminHomeState extends State<AdminHome> {
                       "Admin Tasks",
                       style: TextStyle(
                         fontFamily: Var.defaultFont,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.normal,
                         fontSize: 16,
                       ),
                     ),
@@ -147,7 +148,7 @@ class _AdminHomeState extends State<AdminHome> {
                       "Users Verification",
                       style: TextStyle(
                         fontFamily: Var.defaultFont,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.normal,
                         fontSize: 16,
                       ),
                     ),
@@ -198,7 +199,7 @@ class TabbedLayout extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 15,
                   fontFamily: Var.defaultFont,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.normal,
                 ),
               ),
           ),
@@ -227,11 +228,10 @@ class TabbedLayout extends StatelessWidget {
               tabs: _buildTabsLabel(),
               onTap: (i) {
                 var selectedTab = tabs[i];
-                Toast.show("selected tab - $selectedTab");
                 showDialog(
                   context: context,
                   builder: (context) 
-                    => viewUserNeedToVerify("$selectedTab")
+                    => viewUserNeedToVerify(context, "$selectedTab")
                 );
               },
             ),
@@ -243,7 +243,10 @@ class TabbedLayout extends StatelessWidget {
     );
   }
 
-  Widget viewUserNeedToVerify(String userType) {
+  Widget viewUserNeedToVerify(
+    BuildContext context,
+    String userType
+  ) {
     List<UserModel> filteredUsers = [];
     userType == Var.contractorRequestTab ?
       filteredUsers = Var.filteredContractorUsers :
@@ -255,14 +258,38 @@ class TabbedLayout extends StatelessWidget {
             alignment: WrapAlignment.start,
             crossAxisAlignment: WrapCrossAlignment.start,
             children: [
+              Text(
+                userType == Var.contractorRequestTab ? 
+                Var.contractor.toUpperCase() + Var.s + Var.user :
+                Var.client.toUpperCase() + Var.s + Var.user,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 30,
+                  fontFamily: Var.defaultFont,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 20),
               Column(
                 children: filteredUsers.map((user) {
+                  String userStatus
+                    = user.isUserVerified == Var.userPendingForVerification ?
+                    Var.userNotVerified : Var.verifiedUser;
                   return Container(
-                    color: Colors.black, //const Color(0xFF979797).withOpacity(0.1),
+                    color: const Color(0xFF979797).withOpacity(0.1),
                     child:
                       GestureDetector(
                         onTap: () {
-                          print("selected user -> ${user.name}");
+                          if (user.isUserVerified == Var.adminApprovedUserVerification) {
+                            Toast.show(Var.verifiedUser);
+                            return;
+                          }
+                          Modal.promptUserVerify(
+                            context, Var.verifyThisUserMsg 
+                            + (user.name ?? Var.e) + Var.q,
+                            Var.yes, Var.no, user.uid ?? Var.e
+                          );
                         },
                         child: ListTile(
                           // leading: Transform.translate(
@@ -272,36 +299,45 @@ class TabbedLayout extends StatelessWidget {
                           //     width: 60,
                           //     decoration: BoxDecoration(
                           //         color: Colors.black,
-                          //         image: DecorationImage(
-                          //           image: NetworkImage(prod.image),
-                          //           fit: BoxFit.cover,
-                          //         ),
+                          //         // image: DecorationImage(
+                          //         //   image: NetworkImage(Var.noImageAvailable),
+                          //         //   fit: BoxFit.cover,
+                          //         // ),
                           //         border: Border.all(width: 2, color: Colors.white)
                           //     ),
                           //   ),
+                          // ),Status: $userStatus
+                          title: Text(
+                            "Name: ${user.name!}",
+                            textAlign: TextAlign.left,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontFamily: Var.defaultFont,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "Status: $userStatus",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: (user.isUserVerified == Var.userPendingForVerification) ?
+                                Colors.red : Colors.green,
+                              fontSize: 16,
+                              fontFamily: Var.defaultFont,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          // trailing: Text(
+                          //   "User ID: ${user.uid}",
+                          //   textAlign: TextAlign.left,
+                          //   style: const TextStyle(
+                          //     color: Colors.black,
+                          //     fontSize: 15,
+                          //     fontFamily: Var.defaultFont,
+                          //     fontWeight: FontWeight.normal,
+                          //   ),
                           // ),
-                          title: 
-                            Text(
-                              "Name: ${user.name!}",
-                              textAlign: TextAlign.left,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontFamily: Var.defaultFont,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          subtitle: 
-                            Text(
-                            "User ID: ${user.uid}",
-                              textAlign: TextAlign.left,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontFamily: Var.defaultFont,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
                         ),
                       )
                   );
@@ -330,11 +366,6 @@ class ClientRequestsTab extends StatelessWidget {
           avatar: Image.network(instance.clientRequest[i].client.image),
           icon: const Icon(ProjectBuilder.add),
           onPressed: () {
-            // Modal.promptUserVerify(
-            //   context, Var.verifyThisUserMsg,
-            //   Var.yes, Var.no, "userId"
-            // );
-
             // updateUserDetails(
             //   userId: instance.clientRequest[i].client.userUid,
             //   role: Roles.client,
@@ -357,7 +388,6 @@ class ClientRequestsTab extends StatelessWidget {
 
 class ContractorRequestsTab extends StatelessWidget {
   const ContractorRequestsTab({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Consumer<AppData>(
@@ -369,72 +399,9 @@ class ContractorRequestsTab extends StatelessWidget {
           label: instance.clientRequest[i].client.name,
           avatar: Image.network(instance.clientRequest[i].client.image),
           icon: const Icon(ProjectBuilder.add),
-          onPressed: () {
-            // updateUserDetails(
-            //   userId: instance.clientRequest[i].client.userUid,
-            //   role: Roles.client,
-            // ).then(
-            //   (_) => instance
-            //     .createClient(
-            //       client: instance.clientRequest[i].client,
-            //     )
-            //     .then((value) => FirebaseFirestore.instance
-            //         .collection("clientRequests")
-            //         .doc(instance.clientRequest[i].userId)
-            //         .delete()),
-            // );
-          },
+          onPressed: () {},
         ),
       )
-    );
-  }
-}
-
-Future<void> updateUserDetails(
-    {required String userId, required Roles role}) async {
-  final instance = FirebaseFirestore.instance
-      .collection(Var.users)
-      .withConverter(
-          fromFirestore: UserModel.fromFirestore,
-          toFirestore: (UserModel userModel, _) => userModel.toFirestore())
-      .doc(userId);
-
-  Roles? roles;//List<Roles> doc = [];
-  instance.get().then((value) {
-    roles = value.data()?.roles as Roles?;
-    // roles.add(role);
-  }).then((_) => {
-    instance.update({'roles': roles.toString()})
-  });
-}
-
-class AdminRequests extends StatelessWidget {
-  const AdminRequests({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<AppData>(
-      builder: (context, instance, child) => ListView.separated(
-        padding: const EdgeInsets.all(5),
-        separatorBuilder: (_, __) => const SizedBox(height: 15),
-        itemCount: instance.adminRequest.length,
-        itemBuilder: (_, i) => RoundedTile(
-          label: instance.adminRequest[i].user!.name,
-          avatar: Image.network(
-            instance.adminRequest[i].user!.profilePhoto ?? Var.noImageAvailable,
-          ),
-          icon: const Icon(ProjectBuilder.add),
-          onPressed: () => updateUserDetails(
-            userId: instance.adminRequest[i].user!.uid!,
-            role: Roles.admin,
-          ).then(
-            (value) => FirebaseFirestore.instance
-                .collection("adminRequests")
-                .doc(instance.adminRequest[i].userId)
-                .delete(),
-          ),
-        ),
-      ),
     );
   }
 }

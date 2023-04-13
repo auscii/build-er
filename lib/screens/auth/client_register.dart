@@ -282,7 +282,8 @@ class _ClientRegisterState extends State<ClientRegister> {
                                 address: _addressController.value!,
                                 role: Client.role,
                                 companyName: _companyNameController.text,
-                                validID: validIDImagePath
+                                validID: validIDImagePath,
+                                isUserVerified: Var.userPendingForVerification
                               );
                               clearInputs();
                             }

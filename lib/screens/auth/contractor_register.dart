@@ -388,6 +388,7 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                                 license: licenseImagePath,
                                 dti: dtiImagePath,
                                 sec: secImagePath,
+                                isUserVerified: Var.userPendingForVerification
                               );
                               clearInputs();
                             }

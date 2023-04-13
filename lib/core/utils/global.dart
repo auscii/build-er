@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Var {
   static const e = "";
+  static const s = " ";
+  static const q = "?";
   static const na = "N/A";
   static const appName = "ProjectBuilder";
   static const appLogo = "assets/images/res/builder-logo.png";
@@ -129,17 +131,22 @@ class Var {
   static const address = "ADDRESS";
   static const verifyUser = "VERIFY THIS USER";
   static const userVerified = "USER VERIFIED";
-  static const verifyThisUserMsg = "Do you want to verify this user?";
+  static const verifyThisUserMsg = "Do you want to verify this user - ";
   static const contractorRequests = "CONTRACTOR REQUESTS";
   static const clientRequests = "CLIENT REQUESTS";
   static const roles = "roles";
   static const contractorRequestTab = "ContractorRequestsTab";
   static const clientRequestTab = "ClientRequestsTab";
+  static const userIsNowUpdated = "Successfully updated! This user is now approved!";
+  static const isUserVerified = "isUserVerified";
+  static const userCancelled = "User cancelled!";
+  static const userNotVerified = "User not Verified.";
+  static const verifiedUser = "Verified User and approved by Admin.";
   // static const aaa = "aaa";
 
-  static const int userPendingForVerification = 2;
-  static const int adminApprovedUserVerification = 1;
-  static const int adminStatus = 3;
+  static const String userPendingForVerification = "DPL1W";
+  static const String adminApprovedUserVerification = "VML2RW";
+  static const String adminStatus = "PFA9R";
   
   static var appTitle = "";
   static var activePage = "";
@@ -159,4 +166,5 @@ class Var {
     final now = DateTime.now();
     return now.microsecondsSinceEpoch.toString();
   }
+
 }

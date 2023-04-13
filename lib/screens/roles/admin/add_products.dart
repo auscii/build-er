@@ -178,8 +178,6 @@ class _AddAdminState extends State<AddAdmin> {
           label: users[i].name,
           avatar: Image.network(users[i].image),
           icon: const Icon(ProjectBuilder.add),
-          onPressed: () =>
-              updateUserDetails(userId: users[i].userUid, role: Roles.admin),
         );
       },
     );

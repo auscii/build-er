@@ -1,4 +1,7 @@
+import 'package:client/core/providers/appdata.dart';
 import 'package:client/core/providers/user.dart';
+import 'package:client/core/utils/global.dart';
+import 'package:client/core/utils/toast.dart';
 import 'package:client/router/router.dart';
 import 'package:client/styles/ui/colors.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +54,7 @@ class Modal {
   static Future<dynamic> promptUserVerify(
     BuildContext context, String msgValue,
     String positiveBtn, String negativeBtn,
-    String userId
+    String id
   ) {
     return showCupertinoModalPopup(
       context: context,
@@ -72,24 +75,17 @@ class Modal {
               style: const TextStyle(color: AppColors.primary)
             ),
             onPressed: () {
-              // AppData().updateUserDetails(
-              //   userId: userId,
-              // ).then(
-                // (_) => instance
-                //   .createClient(
-                //     client: instance.clientRequest[i].client,
-                //   )
-                //   .then((value) => FirebaseFirestore.instance
-                //       .collection("clientRequests")
-                //       .doc(instance.clientRequest[i].userId)
-                //       .delete()),
-              // );
+              AppData().updateUserDetails(userId: id);
+              GlobalNavigator.doubleGoBack();
             }
           ),
         ],
         cancelButton: CupertinoActionSheetAction(
           child: Text(negativeBtn),
-          onPressed: () async => GlobalNavigator.goBack(),
+          onPressed: () {
+            Toast.show(Var.userCancelled);
+            GlobalNavigator.goBack();
+          },
         ),
       ),
     );

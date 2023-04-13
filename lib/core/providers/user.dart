@@ -1,3 +1,4 @@
+import 'package:client/core/providers/appdata.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -129,6 +130,7 @@ class UserProvider extends ChangeNotifier {
             payload.userDTI,
             payload.userSec,
             payload.userValidID,
+            payload.isUserVerified
           );
         })
         .then((_) => init())
@@ -308,7 +310,6 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  // User SignOut
   void signOut(BuildContext context) {
     try {
       FirebaseAuth.instance.signOut();
@@ -359,7 +360,8 @@ class UserProvider extends ChangeNotifier {
     license,
     dti,
     sec,
-    validID
+    validID,
+    isUserVerified
   ) async {
     await FirebaseFirestore.instance
       .collection(Var.users)
@@ -382,7 +384,8 @@ class UserProvider extends ChangeNotifier {
           license: license,
           dti: dti,
           sec: sec,
-          validID: validID
+          validID: validID,
+          isUserVerified: isUserVerified
         ),
       );
     Toast.show("Successfully Registered new user!");
@@ -403,7 +406,8 @@ class UserProvider extends ChangeNotifier {
     String? license,
     String? dti,
     String? sec,
-    String? validID
+    String? validID,
+    String? isUserVerified
   }) {
     Loader.show(context, 0);
     Provider.of<UserProvider>(context, listen: false).createUser(
@@ -415,13 +419,14 @@ class UserProvider extends ChangeNotifier {
         password: password,
         phone: phone,
         address: address,
-        roles: role, //[Roles.user],
+        roles: role,
         companyName: companyName,
         permit: permit,
         license: license,
         dti: dti,
         sec: sec,
-        validID: validID
+        validID: validID,
+        isUserVerified: isUserVerified
       )
     );
   }
@@ -467,6 +472,13 @@ class UserProvider extends ChangeNotifier {
         .get()
         .then((value) => user = value.data()!);
     return user;
+  }
+
+  static void clearUserLists() {
+    Var.filteredClientUsers.clear();
+    Var.filteredContractorUsers.clear();
+    AppData.getContractorUser();
+    AppData.getClientUser();
   }
 
 }

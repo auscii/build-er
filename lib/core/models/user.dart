@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:client/core/utils/global.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -56,16 +57,17 @@ class UserModel {
   String? userDTI;
   String? userSec;
   String? userValidID;
+  String? isUserVerified;
 
   UserModel({
-    String? this.name,
-    String? this.email,
-    String? this.password,
-    String? this.phone,
-    Address? this.address,
+    this.name,
+    this.email,
+    this.password,
+    this.phone,
+    this.address,
     String? profileShot,
     String? uid,
-    String? this.roles,
+    this.roles,
     String? userInfo,
     String? companyName,
     String? permit,
@@ -73,6 +75,7 @@ class UserModel {
     String? dti,
     String? sec,
     String? validID,
+    String? isUserVerified
   }) : firebaseUser = FirebaseAuth.instance.currentUser,
         uid = uid ?? FirebaseAuth.instance.currentUser?.uid,
         description = userInfo ??
@@ -84,7 +87,8 @@ class UserModel {
         userLicense = license,
         userDTI = dti,
         userSec = sec,
-        userValidID = validID;
+        userValidID = validID,
+        isUserVerified = isUserVerified;
 
   createProfilePic() {
     String profileColor = Colors
@@ -97,18 +101,19 @@ class UserModel {
 
   factory UserModel.clear({String? customName}) {
     return UserModel(
-      name: customName ?? "name",
-      email: "email",
-      password: "password",
-      phone: "phone",
+      name: customName ?? Var.e,
+      email: Var.e,
+      password: Var.e,
+      phone: Var.e,
       address: Client.sample().address,
-      roles: "roles", // [Roles.error],
-      companyName: "companyName",
-      permit: "permit",
-      license: "license",
-      dti: "dti",
-      sec: "sec",
-      validID: "validID",
+      roles: Var.e, // [Roles.error],
+      companyName: Var.e,
+      permit: Var.e,
+      license: Var.e,
+      dti: Var.e,
+      sec: Var.e,
+      validID: Var.e,
+      isUserVerified: Var.e,
     );
   }
 
@@ -131,11 +136,7 @@ class UserModel {
       sec: data["sec"],
       roles: data["roles"],
       validID: data["validID"],
-      // roles: toRoles(
-      //   List<String>.from(
-      //     data["roles"],
-      //   ),
-      // ),
+      isUserVerified: data["isUserVerified"],
       uid: data['uid'],
       userInfo: data["description"],
     );
@@ -150,7 +151,7 @@ class UserModel {
       "phone": phone,
       "address": address?.toFirestore(),
       "profilePhoto": profilePhoto,
-      "roles": roles, //roles.toRolesString(),
+      "roles": roles,
       "companyName": userCompanyName,
       "permit": userPermit,
       "license": userLicense,
@@ -158,6 +159,7 @@ class UserModel {
       "sec": userSec,
       "validID": userValidID,
       "description": description,
+      "isUserVerified": isUserVerified,
     };
   }
 

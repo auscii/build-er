@@ -140,6 +140,12 @@ class GlobalNavigator {
       return PagesRoutes.user;
     }
   }
+
+  static void doubleGoBack() {
+    GlobalNavigator.goBack();
+    GlobalNavigator.goBack();
+  }
+
 }
 
 class PageRouter {

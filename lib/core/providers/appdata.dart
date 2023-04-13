@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:client/core/models/products.dart';
+import 'package:client/core/providers/user.dart';
 import 'package:client/core/utils/global.dart';
 import 'package:client/core/utils/toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -259,8 +260,7 @@ class AppData extends ChangeNotifier {
     });
   }
 
-  Future<void> updateUserDetails(
-    {required String userId}) async {
+  Future<void> updateUserDetails({required String userId}) async {
     final instance = FirebaseFirestore.instance
         .collection(Var.users)
         .withConverter(
@@ -268,12 +268,13 @@ class AppData extends ChangeNotifier {
             toFirestore: (UserModel userModel, _) 
             => userModel.toFirestore())
         .doc(userId);
-    // Roles? roles;//List<Roles> doc = [];
     instance.get().then((value) {
-      // roles = value.data()?.roles as Roles?;
-      // roles.add(role);
+      instance.update({
+        Var.isUserVerified: Var.adminApprovedUserVerification
+      });
+      UserProvider.clearUserLists();
     }).then((_) => {
-      // instance.update({'roles': roles.toString()})
+      Toast.show(Var.userIsNowUpdated)
     });
   }
 }
