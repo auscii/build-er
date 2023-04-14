@@ -6,6 +6,7 @@ import 'package:client/screens/roles/client/components/product_details.dart';
 import 'package:client/screens/roles/client/ecommerce.dart';
 import 'package:client/screens/roles/client/locator.dart';
 import 'package:client/screens/roles/contractor/home.dart';
+import 'package:client/screens/roles/contractor/portfolio.dart';
 import 'package:client/screens/shared/about.dart';
 import 'package:client/screens/shared/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -135,20 +136,20 @@ class _NavigationMenuState extends State<NavigationMenu> {
             BottomNavigationBarItem(
               icon: Icon(
                 IconData(
-                  0xf0891,
-                  fontFamily: Var.materialIcons
-                ),
-              ),
-              label: Var.profile,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                IconData(
                   0xf0541,
                   fontFamily: Var.materialIcons
                 ),
               ),
               label: Var.portfolio,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                IconData(
+                  0xf0891,
+                  fontFamily: Var.materialIcons
+                ),
+              ),
+              label: Var.profile,
             ),
           ] :
           <BottomNavigationBarItem>[
@@ -199,7 +200,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
               = Var.activeUserRole == Var.client ? 
                 CupertinoTabView(builder: (context) => const Ecommerce()) :
                 Var.activeUserRole == Var.contractor ?
-                CupertinoTabView(builder: (context) => const ContractorHome()) :
+                CupertinoTabView(builder: (context) => const PortfolioScreen()) :
                 CupertinoTabView(builder: (context) => const UserLists());
               // returnValue = CupertinoTabView(builder: (context) => const Ecommerce());
               break;
@@ -208,7 +209,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
               = Var.activeUserRole == Var.client ? 
                 CupertinoTabView(builder: (context) => const Locator()) :
                 Var.activeUserRole == Var.contractor ?
-                CupertinoTabView(builder: (context) => const ContractorHome()) :
+                CupertinoTabView(builder: (context) => ProfilePage()) :
                 CupertinoTabView(builder: (context) => const AdminProducts());
               // returnValue = CupertinoTabView(builder: (context) => const Locator());
               break;

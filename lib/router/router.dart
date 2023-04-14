@@ -4,6 +4,7 @@ import 'package:client/screens/auth/contractor_register.dart';
 import 'package:client/screens/roles/admin/users_lists.dart';
 import 'package:client/screens/roles/client/components/product_details.dart';
 import 'package:client/screens/roles/client/ecommerce.dart';
+import 'package:client/screens/roles/contractor/portfolio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../screens/auth/resetPassword.dart';
@@ -124,6 +125,8 @@ class GlobalNavigator {
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const AdminProducts());
       case PagesRoutes.userLists:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserLists());
+      case PagesRoutes.portfolio:
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => const PortfolioScreen());
       default:
         return PageRouteBuilder(
             pageBuilder: (_, __, ___) => const AuthNavigator());
@@ -133,6 +136,7 @@ class GlobalNavigator {
   static String initialRoute() {
     AppData.getProductLists();
     AppData.getUserLists();
+    AppData.getPortfolioLists();
     AppData.getContractorUser();
     AppData.getClientUser();
     AppData.checkUserIfVerified();
@@ -181,8 +185,8 @@ class PageRouter {
       case SharedRoutes.ecommerce:
         page = const Ecommerce();
         break;
-      case PagesRoutes.productDetails:
-        page = ProductDetails();
+      case PagesRoutes.portfolio:
+        page = const PortfolioScreen();
         break;
       default:
         page = const ContractorHome();

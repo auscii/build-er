@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'package:client/core/models/portfolio.dart';
 import 'package:client/core/models/products.dart';
 import 'package:client/core/providers/user.dart';
 import 'package:client/core/utils/global.dart';
 import 'package:client/core/utils/modal.dart';
 import 'package:client/core/utils/toast.dart';
+import 'package:client/screens/roles/contractor/portfolio.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -105,6 +107,36 @@ class AppData extends ChangeNotifier {
       });
   }
 
+  Future<void> createPortfolio({required Portfolio portfolio}) async {
+    return await FirebaseFirestore.instance
+      .collection(Var.portfolio.toLowerCase())
+      .doc(portfolio.id.toString())
+      .withConverter(
+          fromFirestore: Portfolio.fromFirestore,
+          toFirestore: (Portfolio value, _) => value.toFirestore())
+      .set(portfolio)
+      .then((value) {
+        Toast.show(Var.portfolioSuccess);
+        // AppData.clearPortfolioLists();
+      });
+  }
+
+  static void getPortfolioLists() async {
+    await FirebaseFirestore.instance
+      .collection(Var.portfolio.toLowerCase())
+      .withConverter(
+        fromFirestore: Portfolio.fromFirestore,
+        toFirestore: (Portfolio values, _) => values.toFirestore())
+      .get()
+      .then((res) {
+        res.docs.forEach((val) {
+          var portfolio = val.data();
+          Var.portfolioLists.addAll({portfolio});
+        });
+        AppData().notifyListeners();
+      });
+  }
+
   static void getProductLists() async {
     await FirebaseFirestore.instance
       .collection(Var.productS)
@@ -131,8 +163,6 @@ class AppData extends ChangeNotifier {
       .then((res) {
         res.docs.forEach((val) {
           var users = val.data();
-          // print("getUserLists user roles ->${users.roles}");
-          // print("getUserLists user name ->${users.name}");
           Var.usersLists.addAll({users});
         });
         AppData().notifyListeners();
@@ -306,6 +336,11 @@ class AppData extends ChangeNotifier {
         Modal.modalInfo(context, Var.notVerifiedUseMsg);
       }
     });
+  }
+
+  static void clearPortfolioLists() {
+    Var.portfolioLists.clear();
+    AppData.getPortfolioLists();
   }
 
 }

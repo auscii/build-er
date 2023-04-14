@@ -1,3 +1,4 @@
+import 'package:client/core/models/portfolio.dart';
 import 'package:client/core/models/products.dart';
 import 'package:client/core/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -50,6 +51,7 @@ class Var {
   static const enterPhone = "Enter your Phone Number";
   static const enterCompany = "Enter your Company Name";
   static const enterAddress = "Enter your Address";
+  static const enterBriefDetails = "Enter your Brief Details";
   static const selectLocation = "SELECT YOUR LOCATION";
   static const register = "REGISTER";
   static const login = "LOGIN";
@@ -115,6 +117,7 @@ class Var {
   static const clientS = "clients";
   static const productCode = "PRDBLDR";
   static const productSuccess = "Product Successfully Saved!";
+  static const portfolioSuccess = "Portfolio Successfully Saved!";
   static const unableSave = "Unable to save!";
   static const submit = "SUBMIT";
   static const selectCategory = "Please select Product Category";
@@ -145,6 +148,21 @@ class Var {
   static const uid = "uid";
   static const notVerifiedUseMsg = "This user is not yet verified! Waiting for Approval by the Administrator for you to access the other pages from the BUILD-ER app. Thank you for your understanding!";
   static const warning = "Warning!";
+  static const builderTagline = '"Building your visions, Creating Reality"';
+  static const keyFeatures = "KEY FEATURES";
+  static const keyFeaturesImg = "assets/images/res/key-features.png";
+  static const reviewsImg = "assets/images/res/reviews-bg.png";
+  static const partnersImg = "assets/images/res/partners-bg.png";
+  static const addPortfolio = "ADD NEW PORTFOLIO";
+  static const companyName = "COMPANY NAME";
+  static const briefDetails = "BRIEF DETAILS OF THE COMPANY";
+  static const feedback = "FEEDBACK";
+  static const enter = "ENTER ";
+  static const companyLogo = "COMPANY LOGO";
+  static const previousCompany = "PREVIOUS COMPANY";
+  static const portfolioCode = "PRTFL";
+  static const ratings = "RATINGS";
+  static const refresh = "REFRESH";
   // static const aaa = "aaa";
 
   static const String userPendingForVerification = "DPL1W";
@@ -163,6 +181,7 @@ class Var {
 
   static Product? product;
   static List<Product> productLists = [];
+  static List<Portfolio> portfolioLists = [];
   static List<UserModel> usersLists = [];
   static List<UserModel> filteredClientUsers = [];
   static List<UserModel> filteredContractorUsers = [];

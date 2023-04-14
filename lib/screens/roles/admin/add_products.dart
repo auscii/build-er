@@ -12,13 +12,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import '../../../core/models/client.dart';
-import '../../../core/models/user.dart';
 import '../../../core/providers/appdata.dart';
 import '../../../core/utils/validator.dart';
 import '../../../router/navigator/navigation_menu.dart';
 import '../../../styles/icons/builder_icons.dart';
 import '../../../styles/ui/colors.dart';
-import 'home.dart';
 
 class AppDialog extends StatelessWidget {
   final Widget child;
@@ -262,9 +260,6 @@ class RoundedTile extends StatelessWidget {
     );
   }
 }
-
-// ignore: must_be_immutable
-
 
 class AddProduct extends StatefulWidget {
   static const id = Var.addProduct;

@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:client/screens/roles/client/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import '../../../core/providers/location.dart';
 import '../../../core/utils/global.dart';
@@ -130,50 +132,76 @@ class _SearchOverlayState extends State<SearchOverlay> {
   @override
   Widget build(BuildContext context) {
     return AppDialog(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          searchBuilder(),
-          const SizedBox(height: 20),
-          Expanded(
-            child: data.isEmpty
-                ? const Center(
-                    child: Text(
-                      "Fetching Clients",
-                      style: TextStyle(
-                        fontFamily: "SF Pro Rounded",
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.textPrimary,
-                        fontSize: 16,
-                      ),
-                    ),
-                  )
-                : ListView.separated(
-                    padding: const EdgeInsets.all(5),
-                    separatorBuilder: (_, __) => const SizedBox(height: 15),
-                    itemCount: data.length,
-                    itemBuilder: (_, i) {
-                      return RoundedTile(
-                        label: data[i].name,
-                        avatar: Image.network(data[i].image),
-                        icon: const Icon(ProjectBuilder.add),
-                        onPressed: () {
-                          Provider.of<AppData>(context, listen: false)
-                              .createServiceRequest(ServiceRequest(
-                                userId: FirebaseAuth.instance.currentUser!.uid,
-                                clientId: data[i].userUid,
-                                completed: false,
-                              ))
-                              .then((value) => {
-                                    Navigator.of(context, rootNavigator: true)
-                                        .pop()
-                                  });
-                        },
-                      );
-                    },
-                  ),
-          ),
-        ],
+      child: SingleChildScrollView(
+        child: Wrap(
+          alignment: WrapAlignment.start,
+          crossAxisAlignment: WrapCrossAlignment.start,
+          children: [
+            searchBuilder(),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Card(
+                color: Colors.black,
+                elevation: 16,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Wrap(
+                  children: Var.portfolioLists.map((portf) {
+                    return setPortflioImages(
+                      context,
+                      portf.briefDetails,
+                      portf.companyLogo,
+                      portf.companyName,
+                      portf.feedback,
+                      portf.previousProject,
+                      portf.ratings
+                    );
+                  }).toList(),
+                ),
+              ),
+            )
+            // Expanded(
+            //   child: data.isEmpty
+            //   ? const Center(
+            //       child: Text(
+            //         "Fetching Clients",
+            //         style: TextStyle(
+            //           fontFamily: "SF Pro Rounded",
+            //           fontWeight: FontWeight.w500,
+            //           color: AppColors.textPrimary,
+            //           fontSize: 16,
+            //         ),
+            //       ),
+            //     )
+            //   : ListView.separated(
+            //       padding: const EdgeInsets.all(5),
+            //       separatorBuilder: (_, __) => const SizedBox(height: 15),
+            //       itemCount: data.length,
+            //       itemBuilder: (_, i) {
+            //         return RoundedTile(
+            //           label: data[i].name,
+            //           avatar: Image.network(data[i].image),
+            //           icon: const Icon(ProjectBuilder.add),
+            //           onPressed: () {
+            //             Provider.of<AppData>(context, listen: false)
+            //                 .createServiceRequest(ServiceRequest(
+            //                   userId: FirebaseAuth.instance.currentUser!.uid,
+            //                   clientId: data[i].userUid,
+            //                   completed: false,
+            //                 ))
+            //                 .then((value) => {
+            //                       Navigator.of(context, rootNavigator: true)
+            //                           .pop()
+            //                     });
+            //           },
+            //         );
+            //       },
+            //     ),
+            // ),
+          ],
+        ),
       ),
     );
   }
@@ -208,28 +236,308 @@ class _SearchOverlayState extends State<SearchOverlay> {
   }
 }
 
+Widget setPortflioImages(
+  BuildContext context,
+  String briefDetails,
+  String companyLogo,
+  String companyName,
+  String feedback,
+  String previousProject,
+  int rating
+) {
+  return InkWell(
+    onTap: () => showDialog(
+      context: context,
+      builder: (context) => viewPortfolio(
+      briefDetails,
+      companyLogo,
+      companyName,
+      feedback,
+      previousProject,
+      rating
+    )),
+    child: Container(
+      width: MediaQuery.of(context).size.width,
+      height: 500,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(10),
+            topRight: Radius.circular(10))),
+      margin: const EdgeInsets.only(left: 10, bottom: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(left: 20),
+            child: 
+              Text(
+                "${Var.companyName}: $companyName",
+                style: const TextStyle(
+                  fontFamily: Var.defaultFont,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                ),
+              ),
+          ),
+          const SizedBox(height: 50),
+          Container(
+            margin: EdgeInsets.zero,
+            width: 450,
+            height: 220,
+            child: Image.network(
+              companyLogo,
+              width: 250,
+              height: 250,
+              fit: BoxFit.fitHeight,
+              alignment: Alignment.center,
+              filterQuality: FilterQuality.high,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+  
+Widget viewPortfolio(
+  String briefDetails,
+  String companyLogo,
+  String companyName,
+  String feedback,
+  String previousProject,
+  int rating
+) {
+  return AppDialog(
+    child: SingleChildScrollView(
+      child: 
+        Wrap(
+          alignment: WrapAlignment.start,
+          crossAxisAlignment: WrapCrossAlignment.start,
+          children: [
+            Column(
+              children: [
+                const Text(
+                  Var.companyName,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  companyName,
+                  style: const TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(height: 25),
+                const Divider(color: Colors.black, thickness: 1, height: 1),
+                const SizedBox(height: 25),
+                const Text(
+                  Var.companyLogo,
+                  style: TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.zero,
+                  width: 350,
+                  height: 200,
+                  child: Image.network(
+                    companyLogo,
+                    width: 350,
+                    height: 150,
+                    fit: BoxFit.fitWidth,
+                    alignment: Alignment.center,
+                    filterQuality: FilterQuality.high,
+                  ),
+                ),
+                const SizedBox(height: 25),
+                const Divider(color: Colors.black, thickness: 1, height: 1),
+                const SizedBox(height: 25),
+                const Text(
+                  Var.previousCompany,
+                  style: TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.zero,
+                  width: 350,
+                  height: 200,
+                  child: Image.network(
+                    previousProject,
+                    width: 350,
+                    height: 150,
+                    fit: BoxFit.fitWidth,
+                    alignment: Alignment.center,
+                    filterQuality: FilterQuality.high,
+                  ),
+                ),
+                const SizedBox(height: 25),
+                const Divider(color: Colors.black, thickness: 1, height: 1),
+                const SizedBox(height: 25),
+                const Text(
+                  Var.briefDetails,
+                  style: TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                Text(
+                  briefDetails,
+                  style: const TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(height: 25),
+                const Divider(color: Colors.black, thickness: 1, height: 1),
+                const SizedBox(height: 25),
+                const Text(
+                  Var.feedback,
+                  style: TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                Text(
+                  feedback,
+                  style: const TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(height: 25),
+                const Divider(color: Colors.black, thickness: 1, height: 1),
+                const SizedBox(height: 25),
+                ratings(rating),
+                const SizedBox(height: 25),
+                const Divider(color: Colors.black, thickness: 1, height: 1),
+                const SizedBox(height: 25),
+                /*
+                Container(
+                  color: Colors.transparent,
+                  child: GestureDetector(
+                    child: ListTile(
+                      leading: Transform.translate(
+                        offset: const Offset(0, 5),
+                        child: Container(
+                          height: 250,
+                          width: 60,
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              image: DecorationImage(
+                                image: NetworkImage(companyLogo),
+                                fit: BoxFit.cover,
+                              ),
+                              border: Border.all(width: 2, color: Colors.white)
+                          ),
+                        ),
+                      ),
+                      title: 
+                        Text(
+                          "COMPANY NAME: $companyName",
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontFamily: Var.defaultFont,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      subtitle: 
+                        Text(
+                          "BRIEF DETAILS OF THE COMPANY: $briefDetails",
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontFamily: Var.defaultFont,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                    ),
+                  )
+                )
+                */
+              ]
+            )
+          ]
+        ),
+    )
+  );
+}
+
+Widget ratings(int? ratingValue) {
+  return Column(
+    children: [
+      const Text(
+        Var.ratings,
+        style: TextStyle(
+          fontFamily: Var.defaultFont,
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          color: Colors.black
+        ),
+      ),
+      RatingBar.builder(
+        initialRating: ratingValue != null ? ratingValue.toDouble() : 3,
+        minRating: 1,
+        direction: Axis.horizontal,
+        allowHalfRating: true,
+        itemCount: 5,
+        itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+        itemBuilder: (context, _) => const Icon(
+          Icons.star,
+          color: Colors.amber,
+        ),
+        onRatingUpdate: (rating) {
+          // _ratings = rating.round();
+        },
+      )
+    ],
+  );
+}
+
 Positioned mapUtils(
     {required BuildContext context, required VoidCallback callback}) {
+  print("from top of mapUtils");
   return Positioned(
     bottom: 30,
     left: 10,
     right: 10,
     child: Center(
-      child: ConstrainedBox(
-        constraints: pageConstraints,
+      // child: ConstrainedBox(
+      //   constraints: pageConstraints,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                primary: Colors.black,
-                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 0),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                elevation: 0,
-              ),
-              child: const Icon(Icons.chat),
-            ),
+            // CHAT FAB
+            // ElevatedButton(
+            //   onPressed: () {},
+            //   style: ElevatedButton.styleFrom(
+            //     primary: Colors.black,
+            //     padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 0),
+            //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            //     elevation: 0,
+            //   ),
+            //   child: const Icon(Icons.chat),
+            // ),
             const SizedBox(height: 10),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 22),
@@ -239,6 +547,8 @@ Positioned mapUtils(
               ),
               child: TextField(
                 onTap: () {
+                  print("find nearby contractors...");
+                  FocusManager.instance.primaryFocus?.unfocus();
                   showDialog(
                       context: context,
                       builder: (context) => const SearchOverlay());
@@ -262,7 +572,7 @@ Positioned mapUtils(
             ),
           ],
         ),
-      ),
+      // ),
     ),
   );
 }

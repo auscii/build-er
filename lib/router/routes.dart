@@ -3,6 +3,7 @@ import 'package:client/screens/roles/admin/users_lists.dart';
 import 'package:client/screens/roles/client/components/product_details.dart';
 import 'package:client/screens/roles/client/ecommerce.dart';
 import 'package:client/screens/roles/client/locator.dart';
+import 'package:client/screens/roles/contractor/portfolio.dart';
 
 import '../screens/auth/contractor_register.dart';
 import '../screens/auth/resetPassword.dart';
@@ -48,4 +49,5 @@ class PagesRoutes {
   static const String productDetails = ProductDetails.id;
   static const String adminProducts = AdminProducts.id;
   static const String userLists = UserLists.id;
+  static const String portfolio = PortfolioScreen.id;
 }
