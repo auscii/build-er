@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:client/core/models/products.dart';
 import 'package:client/core/providers/user.dart';
 import 'package:client/core/utils/global.dart';
+import 'package:client/core/utils/modal.dart';
 import 'package:client/core/utils/toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -277,6 +278,36 @@ class AppData extends ChangeNotifier {
       Toast.show(Var.userIsNowUpdated)
     });
   }
+
+  static checkUserIfVerified() async {
+    String uid = FirebaseAuth.instance.currentUser?.uid ?? Var.e;
+    await FirebaseFirestore.instance
+      .collection(Var.users)
+      .where(Var.uid, isEqualTo: uid)
+      .withConverter(
+        fromFirestore: UserModel.fromFirestore,
+        toFirestore: (UserModel values, _) => values.toFirestore())
+      .get()
+      .then((res) {
+        res.docs.forEach((val) {
+          var user = val.data();
+          if (user.isUserVerified == Var.userPendingForVerification) {
+            Var.userIsVerified = true;
+            AppData().notifyListeners();
+          }
+        });
+      });
+    return;
+  }
+
+  static getUserResultIfVerified(BuildContext context) {
+    Future.delayed(const Duration(milliseconds: 3000), () {
+      if (Var.userIsVerified) {
+        Modal.modalInfo(context, Var.notVerifiedUseMsg);
+      }
+    });
+  }
+
 }
 
 class AdminRequests {

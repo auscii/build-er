@@ -1,4 +1,5 @@
 import 'package:client/core/providers/appdata.dart';
+import 'package:client/core/utils/global.dart';
 import 'package:client/screens/auth/contractor_register.dart';
 import 'package:client/screens/roles/admin/users_lists.dart';
 import 'package:client/screens/roles/client/components/product_details.dart';
@@ -134,6 +135,7 @@ class GlobalNavigator {
     AppData.getUserLists();
     AppData.getContractorUser();
     AppData.getClientUser();
+    AppData.checkUserIfVerified();
     if (FirebaseAuth.instance.currentUser == null) {
       return AuthRoutes.onboarding; //GlobalRoutes.auth;
     } else {

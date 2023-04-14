@@ -1,3 +1,4 @@
+import 'package:client/core/providers/appdata.dart';
 import 'package:client/core/utils/global.dart';
 import 'package:client/core/utils/sizes.dart';
 import 'package:client/screens/roles/admin/add_products.dart';
@@ -24,6 +25,7 @@ class _EcommerceState extends State<Ecommerce> {
 
   @override
   void initState() {
+    AppData.getUserResultIfVerified(context);
     super.initState();
   }
 

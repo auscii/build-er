@@ -2,6 +2,7 @@ import 'package:client/core/providers/appdata.dart';
 import 'package:client/core/providers/user.dart';
 import 'package:client/core/utils/global.dart';
 import 'package:client/core/utils/toast.dart';
+import 'package:client/router/navigator/navigation_menu.dart';
 import 'package:client/router/router.dart';
 import 'package:client/styles/ui/colors.dart';
 import 'package:flutter/material.dart';
@@ -92,26 +93,83 @@ class Modal {
   }
   
   static Future<dynamic> modalInfo(
-    BuildContext context, String msgValue, String msgBtn) {
-    return showCupertinoModalPopup(
+    BuildContext context,
+    String msgValue,
+  ) {
+    return showDialog(
       context: context,
-      builder: (context) => CupertinoActionSheet(
-        message: 
-          Text(
-            msgValue,
-            style: 
-              const TextStyle(
-                color: Colors.black,
-                fontSize: 16.0
-              ),
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Center(
+            child: 
+              Text(
+                Var.warning,
+                style: TextStyle(
+                  fontFamily: Var.defaultFont,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 21,
+                  color: Colors.black
+                ),
+              )
           ),
-        cancelButton: CupertinoActionSheetAction(
-          child: Text(msgBtn),
-          onPressed: () => GlobalNavigator.pop(context),
-        ),
-      ),
-    );
-  }
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.zero,
+                child: Text(
+                  msgValue,
+                  textAlign: TextAlign.justify,
+                  style: const TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 19,
+                    color: Colors.black
+                  ),
+                ),
+              ),
+              const SizedBox(height: 15),
+              GestureDetector(
+                child: 
+                  Container(
+                    height: 50,
+                    width: 100,
+                    margin: const EdgeInsets.symmetric(horizontal: 28),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(25)),
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                            color: const Color.fromARGB(255, 255, 255, 255).withAlpha(100),
+                            offset: const Offset(1, 1),
+                            blurRadius: 8,
+                            spreadRadius: 2
+                        )
+                      ],
+                      color: Colors.black
+                    ),
+                    child: const Text(
+                      Var.ok,
+                      style: TextStyle(
+                        backgroundColor: AppColors.primary,
+                        fontFamily: Var.defaultFont,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 19,
+                        color: Colors.white
+                      ),
+                    ),
+                  ),       
+                onTap: () {
+                  NavigationMenu.activeIndex = 0;
+                  GlobalNavigator.replaceScreen(const NavigationMenu(activeIndex: 0));
+                }
+              ),
+            ],
+          ),
+        );
+      });
+   }
 
   static modalLoader(
     BuildContext context, String title, String subject) async {

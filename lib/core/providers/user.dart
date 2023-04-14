@@ -19,9 +19,10 @@ class UserProvider extends ChangeNotifier {
 
   init() {
     if (FirebaseAuth.instance.currentUser != null) {
+      var userId = FirebaseAuth.instance.currentUser!.uid;
       FirebaseFirestore.instance
           .collection(Var.users)
-          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .doc(userId)
           .withConverter(
               fromFirestore: UserModel.fromFirestore,
               toFirestore: (UserModel userModel, _) => userModel.toFirestore())
@@ -285,17 +286,18 @@ class UserProvider extends ChangeNotifier {
     switch (signInMethods) {
       case SignInMethods.email:
         FirebaseAuth.instance
-            .signInWithEmailAndPassword(email: email!, password: password!)
-            .then((_) => init())
-            .then((_) => GlobalNavigator.router.currentState!
-                .pushReplacementNamed(GlobalRoutes.switchRoles))
-            .onError(
-              (FirebaseAuthException error, stackTrace) => _resolveAuthError(
-                error: error,
-                context: context,
-                signInMethods: SignInMethods.email,
-              ),
-            );
+          .signInWithEmailAndPassword(email: email!, password: password!)
+          .then((_) => init())
+          .then((_) => GlobalNavigator.router.currentState!
+              .pushReplacementNamed(GlobalRoutes.switchRoles))
+          .then((value) => AppData.checkUserIfVerified())
+          .onError(
+            (FirebaseAuthException error, stackTrace) => _resolveAuthError(
+              error: error,
+              context: context,
+              signInMethods: SignInMethods.email,
+            ),
+          );
         break;
       case SignInMethods.google:
         googleSignIn(context);
@@ -318,10 +320,8 @@ class UserProvider extends ChangeNotifier {
       Var.activePage = "";
       Var.activeUserRole = "";
       Var.previousRoute = "";
-      // Var.product = null;
-      // Var.categories = [];
-      // Var.productLists = [];
       notifyListeners();
+      UserProvider.clearUserLists();
       GlobalNavigator.router.currentState!
           .pushReplacementNamed(AuthRoutes.login);
     } catch (e) {

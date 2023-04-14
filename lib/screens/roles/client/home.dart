@@ -10,7 +10,7 @@ import '../../../styles/icons/builder_icons.dart';
 import '../admin/add_products.dart';
 
 class ClientHome extends StatefulWidget {
-  static const String id = "client";
+  static const String id = Var.client;
   const ClientHome({Key? key}) : super(key: key);
 
   @override

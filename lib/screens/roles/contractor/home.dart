@@ -1,13 +1,32 @@
+import 'package:client/core/providers/appdata.dart';
 import 'package:client/core/utils/global.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import '../../../router/navigator/navigation_menu.dart';
 import '../../../styles/ui/colors.dart';
 
-class ContractorHome extends StatelessWidget {
+class ContractorHome extends StatefulWidget {
+  static const String id = Var.contractorHome;
   const ContractorHome({Key? key}) : super(key: key);
 
-  static const String id = Var.contractorHome;
+  @override
+  State<ContractorHome> createState() => _ContractorHomeState();
+}
+
+class _ContractorHomeState extends State<ContractorHome> {
+
+  @override
+  void initState() {
+    setState(() => Var.activePage = Var.home);
+    AppData.getUserResultIfVerified(context);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 
   Widget _buildAddItem({
     required BuildContext context,

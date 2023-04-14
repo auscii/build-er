@@ -49,7 +49,7 @@ class UserModel {
   String? description;
   String? password;
   Address? address;
-  String? roles; // List<Roles> roles;
+  String? roles;
   User? firebaseUser;
   String? userCompanyName;
   String? userPermit;

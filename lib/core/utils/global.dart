@@ -142,6 +142,9 @@ class Var {
   static const userCancelled = "User cancelled!";
   static const userNotVerified = "User not Verified.";
   static const verifiedUser = "Verified User and approved by Admin.";
+  static const uid = "uid";
+  static const notVerifiedUseMsg = "This user is not yet verified! Waiting for Approval by the Administrator for you to access the other pages from the BUILD-ER app. Thank you for your understanding!";
+  static const warning = "Warning!";
   // static const aaa = "aaa";
 
   static const String userPendingForVerification = "DPL1W";
@@ -156,6 +159,8 @@ class Var {
     constructionMaterials,
     constructionTools,
   ];
+  static bool userIsVerified = false;
+
   static Product? product;
   static List<Product> productLists = [];
   static List<UserModel> usersLists = [];

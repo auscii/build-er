@@ -37,7 +37,7 @@ dependencies:
   permission_handler: 10.2.0
   device_info: ^2.0.3
   responsive_sizer: ^3.0.8
-  font_awesome_flutter: ^10.1.0 
+  font_awesome_flutter: ^10.1.0
 
 dev_dependencies:
   flutter_test:

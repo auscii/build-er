@@ -31,7 +31,7 @@ class LocationProvider extends ChangeNotifier {
 
       if (permissionGranted != PermissionStatus.granted ||
           permissionGranted != PermissionStatus.grantedLimited) {
-        return Future.error("Location Permissions denied ⚠");
+        // return Future.error("Location Permissions denied ⚠");
       } else {
         locationInstance.enableBackgroundMode(enable: true);
         locationInstance.changeSettings(accuracy: LocationAccuracy.high);

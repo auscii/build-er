@@ -1,13 +1,10 @@
-import 'package:client/core/models/products.dart';
 import 'package:client/core/providers/user.dart';
 import 'package:client/core/utils/global.dart';
 import 'package:client/core/utils/modal.dart';
 import 'package:client/core/utils/sizes.dart';
 import 'package:client/core/utils/toast.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import '../../../core/models/user.dart';
 import '../../../styles/icons/builder_icons.dart';

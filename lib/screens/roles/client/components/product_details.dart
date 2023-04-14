@@ -1,3 +1,4 @@
+import 'package:client/core/providers/appdata.dart';
 import 'package:client/core/utils/global.dart';
 import 'package:client/core/utils/toast.dart';
 import 'package:client/router/router.dart';
@@ -12,13 +13,26 @@ import 'default_button.dart';
 BoxConstraints pageConstraints =
     const BoxConstraints(minWidth: 320, maxWidth: 480);
 
-// ignore: must_be_immutable
-class ProductDetails extends StatelessWidget {
-  static const id = Var.productDetails;
-  
-  const ProductDetails({
-    Key? key,
-  }) : super(key: key);
+class ProductDetails extends StatefulWidget {
+  static const String id = Var.productDetails;
+  const ProductDetails({Key? key}) : super(key: key);
+  @override
+  State<ProductDetails> createState() => _ProductDetailsState();
+}
+
+class _ProductDetailsState extends State<ProductDetails> {
+
+  @override
+  void initState() {
+    AppData.getUserResultIfVerified(context);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

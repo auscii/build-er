@@ -9,15 +9,30 @@ import '../../../router/navigator/navigation_menu.dart';
 import '../../../styles/icons/builder_icons.dart';
 import '../../../styles/ui/colors.dart';
 import '../../../core/models/client.dart';
-import '../../../core/models/user.dart';
 import '../../../core/providers/appdata.dart';
 import '../admin/add_products.dart';
 import 'map.dart';
 
-class Locator extends StatelessWidget {
-  const Locator({super.key});
-
+class Locator extends StatefulWidget {
   static const String id = Var.locator;
+  const Locator({Key? key}) : super(key: key);
+  @override
+  State<Locator> createState() => _LocatorState();
+}
+
+class _LocatorState extends State<Locator> {
+
+  @override
+  void initState() {
+    AppData.getUserResultIfVerified(context);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
