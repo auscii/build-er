@@ -24,6 +24,8 @@ class Locator extends StatefulWidget {
 
 class _LocatorState extends State<Locator> {
 
+  //TODO: - TO UPDATE GET LISTS OF VERIFIED CONTRACTORS ONLY THEN GET THE LISTS OF ALL PORTFOLIOS
+
   @override
   void initState() {
     AppData.getUserResultIfVerified(context);

@@ -1,5 +1,4 @@
 import 'package:client/core/utils/global.dart';
-import 'package:client/styles/ui/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../router/navigator/navigation_menu.dart';

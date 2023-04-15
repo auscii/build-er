@@ -1,12 +1,10 @@
 import 'dart:io';
-import 'package:client/core/models/address.dart';
 import 'package:client/core/models/portfolio.dart';
 import 'package:client/core/providers/appdata.dart';
 import 'package:client/core/utils/global.dart';
 import 'package:client/core/utils/loader.dart';
 import 'package:client/core/utils/toast.dart';
 import 'package:client/core/utils/validator.dart';
-import 'package:client/router/navigator/navigation_menu.dart';
 import 'package:client/router/router.dart';
 import 'package:client/screens/roles/admin/add_products.dart';
 import 'package:client/styles/ui/colors.dart';
@@ -42,9 +40,12 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
   String? _companyLogo;
   int _ratings = 0;
 
+  //TODO: - GET LISTS OF YOUR CREATED PORTFOLIOS ONLY.
+
   @override
   void initState() {
-    print("Var.portfolioLists ->${Var.portfolioLists}");
+    // print("Var.portfolioLists ->${Var.portfolioLists}");
+    AppData.getUserResultIfVerified(context);
     super.initState();
   }
 
