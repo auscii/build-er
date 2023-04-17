@@ -1,3 +1,4 @@
+import 'package:client/core/providers/appdata.dart';
 import 'package:client/core/utils/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,6 +16,11 @@ class _ContractorHomeState extends State<ContractorHome> {
 
   @override
   void initState() {
+    Future.delayed(const Duration(milliseconds: 3000), () {
+      setState(() {
+        AppData.getPortfolioLists();
+      });
+    });
     super.initState();
   }
 

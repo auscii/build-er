@@ -221,14 +221,14 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                 _previousProject ?? Var.noImageAvailable,
                 Var.previousCompany
               ),
-              const SizedBox(height: 25),
-              textArea(
-                _feedbackController,
-                _feedbackFocusNode,
-                Var.feedback
-              ),
-              const SizedBox(height: 35),
-              ratings(3),
+              // const SizedBox(height: 25),
+              // textArea(
+              //   _feedbackController,
+              //   _feedbackFocusNode,
+              //   Var.feedback
+              // ),
+              // const SizedBox(height: 35),
+              // ratings(3),
               const SizedBox(height: 50),
               ElevatedButton(
                 onPressed: () {
@@ -241,8 +241,8 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                         companyName: _companyNameController.text,
                         companyLogo: _companyLogo ?? Var.noImageAvailable,
                         previousProject: _previousProject ?? Var.noImageAvailable,
-                        ratings: _ratings,
-                        feedback: _feedbackController.text,
+                        ratings: 0,
+                        feedback: Var.na,
                         createdBy: FirebaseAuth.instance.currentUser!.uid,
                         dateTimeCreated: Timestamp.now()
                       ),
@@ -454,32 +454,32 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                       fontSize: 20,
                     ),
                   ),
-                  const SizedBox(height: 25),
-                  const Divider(color: Colors.black, thickness: 1, height: 1),
-                  const SizedBox(height: 25),
-                  const Text(
-                    Var.feedback,
-                    style: TextStyle(
-                      fontFamily: Var.defaultFont,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                  Text(
-                    feedback,
-                    style: const TextStyle(
-                      fontFamily: Var.defaultFont,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(height: 25),
-                  const Divider(color: Colors.black, thickness: 1, height: 1),
-                  const SizedBox(height: 25),
-                  ratings(rating),
-                  const SizedBox(height: 25),
-                  const Divider(color: Colors.black, thickness: 1, height: 1),
-                  const SizedBox(height: 25),
+                  // const SizedBox(height: 25),
+                  // const Divider(color: Colors.black, thickness: 1, height: 1),
+                  // const SizedBox(height: 25),
+                  // const Text(
+                  //   Var.feedback,
+                  //   style: TextStyle(
+                  //     fontFamily: Var.defaultFont,
+                  //     fontWeight: FontWeight.bold,
+                  //     fontSize: 20,
+                  //   ),
+                  // ),
+                  // Text(
+                  //   feedback,
+                  //   style: const TextStyle(
+                  //     fontFamily: Var.defaultFont,
+                  //     fontWeight: FontWeight.normal,
+                  //     fontSize: 20,
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 25),
+                  // const Divider(color: Colors.black, thickness: 1, height: 1),
+                  // const SizedBox(height: 25),
+                  // ratings(rating),
+                  // const SizedBox(height: 25),
+                  // const Divider(color: Colors.black, thickness: 1, height: 1),
+                  // const SizedBox(height: 25),
                   /*
                   Container(
                     color: Colors.transparent,
