@@ -58,83 +58,98 @@ class _UserListsState extends State<UserLists> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: 
-          Wrap(
-            alignment: WrapAlignment.start,
-            crossAxisAlignment: WrapCrossAlignment.start,
-            children: [
-              Column(
-                children: Var.usersLists.map((user){
-                  return Container(
-                    // height: 90,
-                    // margin: const EdgeInsets.all(5),
-                    // padding: const EdgeInsets.all(5),
-                    color: AppColors.bg,
-                    child: GestureDetector(
-                      onTap: () => showDialog(
-                        context: context,
-                        builder: (context) => viewUsers(
-                          user.uid ?? "",
-                          user.name ?? "",
-                          user.email ?? "",
-                          user.phone ?? "",
-                          user.profilePhoto ?? "",
-                          user.description ?? "",
-                          user.password ?? "",
-                          user.address!,
-                          user.roles ?? "",
-                          user.userCompanyName ?? "",
-                          user.userPermit ?? "",
-                          user.userLicense ?? "",
-                          user.userDTI ?? "",
-                          user.userSec ?? "",
-                          user.userValidID ?? "",
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            color: Colors.black,
+            image: DecorationImage(
+              image: AssetImage(Var.lightBg),
+              fit: BoxFit.cover,
+              // colorFilter: ColorFilter.mode(
+              //   Colors.black.withOpacity(.6),
+              //   BlendMode.darken,
+              // ),
+            ),
+          ),
+          child: 
+            Wrap(
+              alignment: WrapAlignment.start,
+              crossAxisAlignment: WrapCrossAlignment.start,
+              children: [
+                Column(
+                  children: Var.usersLists.map((user){
+                    return Container(
+                      // height: 90,
+                      // margin: const EdgeInsets.all(5),
+                      // padding: const EdgeInsets.all(5),
+                      // color: AppColors.bg,
+                      child: GestureDetector(
+                        onTap: () => showDialog(
+                          context: context,
+                          builder: (context) => viewUsers(
+                            user.uid ?? "",
+                            user.name ?? "",
+                            user.email ?? "",
+                            user.phone ?? "",
+                            user.profilePhoto ?? "",
+                            user.description ?? "",
+                            user.password ?? "",
+                            user.address!,
+                            user.roles ?? "",
+                            user.userCompanyName ?? "",
+                            user.userPermit ?? "",
+                            user.userLicense ?? "",
+                            user.userDTI ?? "",
+                            user.userSec ?? "",
+                            user.userValidID ?? "",
+                          ),
                         ),
-                      ),
-                      child: ListTile(
-                        // leading: Transform.translate(
-                        //   offset: const Offset(0, 5),
-                        //   child: Container(
-                        //     height: 250,
-                        //     width: 60,
-                        //     decoration: BoxDecoration(
-                        //         color: Colors.white,
-                        //         image: DecorationImage(
-                        //           image: NetworkImage(prod.image),
-                        //           fit: BoxFit.cover,
-                        //         ),
-                        //         border: Border.all(width: 2, color: Colors.white)
-                        //     ),
-                        //   ),
-                        // ),
-                        title: 
-                          Text(
-                            "Name: ${user.name!}",
-                            textAlign: TextAlign.left,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontFamily: Var.defaultFont,
-                              fontWeight: FontWeight.w700,
+                        child: ListTile(
+                          // leading: Transform.translate(
+                          //   offset: const Offset(0, 5),
+                          //   child: Container(
+                          //     height: 250,
+                          //     width: 60,
+                          //     decoration: BoxDecoration(
+                          //         color: Colors.white,
+                          //         image: DecorationImage(
+                          //           image: NetworkImage(prod.image),
+                          //           fit: BoxFit.cover,
+                          //         ),
+                          //         border: Border.all(width: 2, color: Colors.white)
+                          //     ),
+                          //   ),
+                          // ),
+                          title: 
+                            Text(
+                              "Name: ${user.name!}",
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontFamily: Var.defaultFont,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
-                          ),
-                        subtitle: 
-                          Text(
-                            "User ID: ${user.uid}",
-                            textAlign: TextAlign.left,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontFamily: Var.defaultFont,
-                              fontWeight: FontWeight.normal,
+                          subtitle: 
+                            Text(
+                              "User ID: ${user.uid}",
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontFamily: Var.defaultFont,
+                                fontWeight: FontWeight.normal,
+                              ),
                             ),
-                          ),
-                      ),
-                    )
-                  );
-                }).toList(),
-              )
-            ]
+                        ),
+                      )
+                    );
+                  }).toList(),
+                )
+              ]
+            ),
           ),
       )
     );

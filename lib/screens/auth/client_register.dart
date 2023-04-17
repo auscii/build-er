@@ -35,7 +35,7 @@ class _ClientRegisterState extends State<ClientRegister> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _companyNameController = TextEditingController();
+  // final TextEditingController _companyNameController = TextEditingController();
   final TextEditingController _addressTextController = TextEditingController();
   final ValueNotifier<Address?> _addressController = ValueNotifier(null);
   final FocusNode _nameFocusNode = FocusNode();
@@ -43,7 +43,7 @@ class _ClientRegisterState extends State<ClientRegister> {
   final FocusNode _passwordFocusNode = FocusNode();
   final FocusNode _confirmPasswordFocusNode = FocusNode();
   final FocusNode _phoneFocusNode = FocusNode();
-  final FocusNode _companyNameFocusNode = FocusNode();
+  // final FocusNode _companyNameFocusNode = FocusNode();
   final FocusNode _addressFocusNode = FocusNode();
   final _firebaseStorage = FirebaseStorage.instance;
   final _imagePicker = ImagePicker();
@@ -173,19 +173,19 @@ class _ClientRegisterState extends State<ClientRegister> {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      authInput(
-                        hint: Var.enterCompany,
-                        controller: _companyNameController,
-                        focusNode: _companyNameFocusNode,
-                        inputType: TextInputType.name,
-                        validator: (value) =>
-                            InputValidator.validateName(name: value),
-                        prefix: const Icon(
-                          ProjectBuilder.user,
-                          size: 15,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
+                      // authInput(
+                      //   hint: Var.enterCompany,
+                      //   controller: _companyNameController,
+                      //   focusNode: _companyNameFocusNode,
+                      //   inputType: TextInputType.name,
+                      //   validator: (value) =>
+                      //       InputValidator.validateName(name: value),
+                      //   prefix: const Icon(
+                      //     ProjectBuilder.user,
+                      //     size: 15,
+                      //   ),
+                      // ),
+                      // const SizedBox(height: 15),
                       authInput(
                         hint: Var.enterAddress,
                         controller: _addressTextController,
@@ -281,7 +281,7 @@ class _ClientRegisterState extends State<ClientRegister> {
                                 phone: _phoneController.text,
                                 address: _addressController.value!,
                                 role: Client.role,
-                                companyName: _companyNameController.text,
+                                companyName: Var.na,
                                 validID: validIDImagePath,
                                 isUserVerified: Var.userPendingForVerification
                               );
@@ -379,7 +379,7 @@ class _ClientRegisterState extends State<ClientRegister> {
     _passwordController.clear();
     _confirmPasswordController.clear();
     _phoneController.clear();
-    _companyNameController.clear();
+    // _companyNameController.clear();
     _addressTextController.clear();
     _addressController.removeListener(() {});
     _nameFocusNode.removeListener(() {});
@@ -387,7 +387,7 @@ class _ClientRegisterState extends State<ClientRegister> {
     _passwordFocusNode.removeListener(() {});
     _confirmPasswordFocusNode.removeListener(() {});
     _phoneFocusNode.removeListener(() {});
-    _companyNameFocusNode.removeListener(() {});
+    // _companyNameFocusNode.removeListener(() {});
     _addressFocusNode.removeListener(() {});
     validIDImagePath = Var.noImageAvailable;
   }

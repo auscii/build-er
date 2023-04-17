@@ -66,106 +66,122 @@ class _AdminHomeState extends State<AdminHome> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return SafeArea(
-      minimum: const EdgeInsets.only(top: 20, left: 36, right: 36),
+      // minimum: const EdgeInsets.only(top: 20, left: 36, right: 36),
       maintainBottomViewPadding: false,
       child: Center(
-        child: ConstrainedBox(
-          constraints: pageConstraints,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.all(getProportionateScreenWidth(20)),
-                padding: EdgeInsets.symmetric(
-                  horizontal: getProportionateScreenWidth(20),
-                  vertical: getProportionateScreenWidth(15),
-                ),
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text.rich(
-                  TextSpan(
-                    style: const TextStyle(color: Colors.white),
-                    children: [
-                      const TextSpan(text: "${Var.welcome}\n"),
-                      TextSpan(
-                        text: Provider.of<UserProvider>(context).user.name,
-                        style: TextStyle(
-                          fontSize: getProportionateScreenWidth(24),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            color: Colors.black,
+            image: DecorationImage(
+              image: AssetImage(Var.lightBg),
+              fit: BoxFit.cover,
+              // colorFilter: ColorFilter.mode(
+              //   Colors.black.withOpacity(.6),
+              //   BlendMode.darken,
+              // ),
+            ),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+          child: ConstrainedBox(
+            constraints: pageConstraints,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.all(getProportionateScreenWidth(20)),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(20),
+                    vertical: getProportionateScreenWidth(15),
                   ),
-                ),
-              ),
-              const SizedBox(height: 50),
-              Expanded(
-                flex: 2,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Admin Tasks",
-                      style: TextStyle(
-                        fontFamily: Var.defaultFont,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 16,
-                      ),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text.rich(
+                    TextSpan(
+                      style: const TextStyle(color: Colors.white),
                       children: [
-                        _buildAddItem(
-                          context: context,
-                          label: Var.addProduct,
-                          onPressed: () => showDialog(
-                            context: context,
-                            builder: (context) => const AddProduct(
-                              admin: true,
-                            ),
+                        const TextSpan(text: "${Var.welcome}\n"),
+                        TextSpan(
+                          text: Provider.of<UserProvider>(context).user.name,
+                          style: TextStyle(
+                            fontSize: getProportionateScreenWidth(24),
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(height: 50),
-              Expanded(
-                flex: 6,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      "Users Verification",
-                      style: TextStyle(
-                        fontFamily: Var.defaultFont,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 16,
-                      ),
                     ),
-                    SizedBox(height: 10),
-                    Expanded(
-                      child: TabbedLayout(
-                        tabLabel: [
-                          Var.contractorRequests,
-                          Var.clientRequests
-                        ],
-                        tabs: [
-                          ContractorRequestsTab(),
-                          ClientRequestsTab(),
-                        ],
-                      ),
-                    )
-                  ],
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 50),
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Admin Tasks",
+                        style: TextStyle(
+                          fontFamily: Var.defaultFont,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _buildAddItem(
+                            context: context,
+                            label: Var.addProduct,
+                            onPressed: () => showDialog(
+                              context: context,
+                              builder: (context) => const AddProduct(
+                                admin: true,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 50),
+                Expanded(
+                  flex: 6,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        "Users Verification",
+                        style: TextStyle(
+                          fontFamily: Var.defaultFont,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Expanded(
+                        child: TabbedLayout(
+                          tabLabel: [
+                            Var.contractorRequests,
+                            Var.clientRequests
+                          ],
+                          tabs: [
+                            ContractorRequestsTab(),
+                            ClientRequestsTab(),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -38,92 +38,107 @@ class _ProductDetailsState extends State<ProductDetails> {
   Widget build(BuildContext context) {
     Product? products = Var.product;
     return SafeArea(
-      minimum: const EdgeInsets.only(top: 0, left: 30, right: 30),
+      // minimum: const EdgeInsets.only(top: 0, left: 30, right: 30),
       maintainBottomViewPadding: false,
       child: ConstrainedBox(
         constraints: pageConstraints,
-        child: Center(
-          child: 
-            ListView(
-              children: [
-                const SizedBox(height: 20),
-                const ProductImages(),
-                TopRoundedContainer(
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      ProductDescription(
-                        product: products!,
-                        pressOnSeeMore: () {},
-                      ),
-                      TopRoundedContainer(
-                        color: Colors.white,
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            left: SizeConfig.screenWidth * 0.15,
-                            right: SizeConfig.screenWidth * 0.15,
-                            bottom: getProportionateScreenWidth(40),
-                            top: getProportionateScreenWidth(15),
-                          ),
-                          child: DefaultButton(
-                            text: Var.addCart,
-                            press: () {
-                              Toast.show(Var.featureNotAvailable);
-                            },
-                          ),
-                        ),
-                      ),
-                      TopRoundedContainer(
-                        color: Colors.white,
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            left: SizeConfig.screenWidth * 0.15,
-                            right: SizeConfig.screenWidth * 0.15,
-                            bottom: getProportionateScreenWidth(40),
-                            // top: getProportionateScreenWidth(2),
-                          ),
-                          child: DefaultButton(
-                            text: Var.goBack,
-                            press: () => GlobalNavigator.goBack(),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 30)
-                      // TopRoundedContainer(
-                      //   color: Colors.transparent,
-                      //   child: Column(
-                      //     children: const [
-                      //       // Icon(
-                      //       //   Icons.arrow_back,
-                      //       //   size: 12,
-                      //       //   color: Colors.black,
-                      //       // ),
-                      //       // SizedBox(width: 5),
-                      //       Text(
-                      //         Var.goBack,
-                      //         style: TextStyle(
-                      //           fontFamily: Var.defaultFont,
-                      //           fontWeight: FontWeight.bold,
-                      //           fontSize: 25,
-                      //         ),
-                      //       ),
-                      //       SizedBox(height: 30),
-                      //     ],
-                      //   ),
-                      // ),
-                    ],
-                  ),
+          child: Center(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: Colors.transparent,
+                image: DecorationImage(
+                  image: AssetImage(Var.lightBg),
+                  fit: BoxFit.cover,
+                  // colorFilter: ColorFilter.mode(
+                  //   Colors.black.withOpacity(.6),
+                  //   BlendMode.darken,
+                  // ),
                 ),
-                const SizedBox(height: 50),
-              ],
-            )
-          // ProductBody(productName: Var.productName),
-          // child: Column(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     ProductBody(productName: Var.productName),
-          //   ],
-          // ),
+              ),
+            child: 
+              ListView(
+                children: [
+                  const SizedBox(height: 20),
+                  const ProductImages(),
+                  TopRoundedContainer(
+                    color: Colors.transparent,
+                    child: Column(
+                      children: [
+                        ProductDescription(
+                          product: products!,
+                          pressOnSeeMore: () {},
+                        ),
+                        TopRoundedContainer(
+                          color: Colors.transparent,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: SizeConfig.screenWidth * 0.15,
+                              right: SizeConfig.screenWidth * 0.15,
+                              bottom: getProportionateScreenWidth(40),
+                              top: getProportionateScreenWidth(15),
+                            ),
+                            child: DefaultButton(
+                              text: Var.addCart,
+                              press: () {
+                                Toast.show(Var.featureNotAvailable);
+                              },
+                            ),
+                          ),
+                        ),
+                        TopRoundedContainer(
+                          color: Colors.transparent,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: SizeConfig.screenWidth * 0.15,
+                              right: SizeConfig.screenWidth * 0.15,
+                              bottom: getProportionateScreenWidth(40),
+                              // top: getProportionateScreenWidth(2),
+                            ),
+                            child: DefaultButton(
+                              text: Var.goBack,
+                              press: () => GlobalNavigator.goBack(),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 30)
+                        // TopRoundedContainer(
+                        //   color: Colors.transparent,
+                        //   child: Column(
+                        //     children: const [
+                        //       // Icon(
+                        //       //   Icons.arrow_back,
+                        //       //   size: 12,
+                        //       //   color: Colors.black,
+                        //       // ),
+                        //       // SizedBox(width: 5),
+                        //       Text(
+                        //         Var.goBack,
+                        //         style: TextStyle(
+                        //           fontFamily: Var.defaultFont,
+                        //           fontWeight: FontWeight.bold,
+                        //           fontSize: 25,
+                        //         ),
+                        //       ),
+                        //       SizedBox(height: 30),
+                        //     ],
+                        //   ),
+                        // ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 50),
+                ],
+              )
+            // ProductBody(productName: Var.productName),
+            // child: Column(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     ProductBody(productName: Var.productName),
+            //   ],
+            // ),
+          ),
         ),
       ),
     );

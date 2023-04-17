@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:client/core/models/portfolio.dart';
+import 'package:client/core/models/user.dart';
 import 'package:client/core/providers/appdata.dart';
 import 'package:client/core/utils/global.dart';
 import 'package:client/core/utils/loader.dart';
@@ -59,110 +60,121 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: 
-          Wrap(
-            alignment: WrapAlignment.start,
-            crossAxisAlignment: WrapCrossAlignment.start,
-            children: [
-              GestureDetector(
-                child: 
-                  Container(
-                    height: 50,
-                    width: 200,
-                    margin: const EdgeInsets.symmetric(horizontal: 28, vertical: 20),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(25)),
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                            color: const Color.fromARGB(255, 0, 0, 0).withAlpha(100),
-                            offset: const Offset(1, 1),
-                            blurRadius: 8,
-                            spreadRadius: 2
-                        )
-                      ],
-                      color: Colors.blue
-                    ),
-                    child: const Text(
-                      Var.addPortfolio,
-                      style: TextStyle(
-                        backgroundColor: Colors.transparent,
-                        fontFamily: Var.defaultFont,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 19,
-                        color: Colors.white
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            color: Colors.black,
+            image: DecorationImage(
+              image: AssetImage(Var.lightBg),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: 
+            Wrap(
+              alignment: WrapAlignment.start,
+              crossAxisAlignment: WrapCrossAlignment.start,
+              children: [
+                GestureDetector(
+                  child: 
+                    Container(
+                      height: 50,
+                      width: 200,
+                      margin: const EdgeInsets.symmetric(horizontal: 28, vertical: 20),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(Radius.circular(25)),
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                              color: const Color.fromARGB(255, 0, 0, 0).withAlpha(100),
+                              offset: const Offset(1, 1),
+                              blurRadius: 8,
+                              spreadRadius: 2
+                          )
+                        ],
+                        color: Colors.blue
+                      ),
+                      child: const Text(
+                        Var.addPortfolio,
+                        style: TextStyle(
+                          backgroundColor: Colors.transparent,
+                          fontFamily: Var.defaultFont,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 19,
+                          color: Colors.white
+                        ),
                       ),
                     ),
+                    onTap: () => showDialog(
+                    context: context,
+                    builder: (context) =>  addPortfolio(),
                   ),
-                  onTap: () => showDialog(
-                  context: context,
-                  builder: (context) =>  addPortfolio(),
                 ),
-              ),
-              GestureDetector(
-                child: 
-                  Container(
-                    height: 50,
-                    width: 200,
-                    margin: const EdgeInsets.symmetric(horizontal: 28, vertical: 5),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(25)),
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                            color: const Color.fromARGB(255, 0, 0, 0).withAlpha(100),
-                            offset: const Offset(1, 1),
-                            blurRadius: 8,
-                            spreadRadius: 2
-                        )
-                      ],
-                      color: Colors.green
-                    ),
-                    child: const Text(
-                      Var.refresh,
-                      style: TextStyle(
-                        backgroundColor: Colors.transparent,
-                        fontFamily: Var.defaultFont,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 19,
-                        color: Colors.white
+                GestureDetector(
+                  child: 
+                    Container(
+                      height: 50,
+                      width: 200,
+                      margin: const EdgeInsets.symmetric(horizontal: 28, vertical: 5),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(Radius.circular(25)),
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                              color: const Color.fromARGB(255, 0, 0, 0).withAlpha(100),
+                              offset: const Offset(1, 1),
+                              blurRadius: 8,
+                              spreadRadius: 2
+                          )
+                        ],
+                        color: Colors.green
+                      ),
+                      child: const Text(
+                        Var.refresh,
+                        style: TextStyle(
+                          backgroundColor: Colors.transparent,
+                          fontFamily: Var.defaultFont,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 19,
+                          color: Colors.white
+                        ),
                       ),
                     ),
-                  ),
-                  onTap: () {
-                    Loader.show(context, 0);
-                    AppData.clearPortfolioLists();
-                    Future.delayed(const Duration(milliseconds: 3000), () {
-                      Loader.stop();
-                      setState(() {
-                        AppData.getPortfolioLists();
+                    onTap: () {
+                      Loader.show(context, 0);
+                      AppData.clearPortfolioLists();
+                      Future.delayed(const Duration(milliseconds: 3000), () {
+                        Loader.stop();
+                        setState(() {
+                          AppData.getPortfolioLists();
+                        });
                       });
-                    });
-                  },
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Card(
-                  color: Colors.black,
-                  elevation: 16,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Wrap(
-                    children: Var.portfolioLists.map((portf) {
-                      return setPortflioImages(
-                        portf.briefDetails,
-                        portf.companyLogo,
-                        portf.companyName,
-                        portf.feedback,
-                        portf.previousProject,
-                        portf.ratings
-                      );
-                    }).toList(),
-                  ),
+                    },
                 ),
-              )
-            ]
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Card(
+                    color: Colors.black,
+                    elevation: 16,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Wrap(
+                      children: Var.portfolioLists.map((portf) {
+                        return setPortflioImages(
+                          portf.briefDetails,
+                          portf.companyLogo,
+                          portf.companyName,
+                          portf.feedback,
+                          portf.previousProject,
+                          portf.ratings
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                )
+              ]
+            ),
           ),
       )
     );
@@ -310,14 +322,14 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: const EdgeInsets.only(left: 20),
+              margin: const EdgeInsets.only(left: 0),
               child: 
                 Text(
-                  "${Var.companyName}: $companyName",
+                  "${Var.companyName.toCapitalized()}: $companyName",
                   style: const TextStyle(
                     fontFamily: Var.defaultFont,
                     fontWeight: FontWeight.bold,
-                    fontSize: 30,
+                    fontSize: 22,
                   ),
                 ),
             ),

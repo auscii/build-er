@@ -83,6 +83,7 @@ class Var {
   static const asdecSmCoast = "assets/images/res/asdec-sm-coast.png";
   static const monolithLogo = "assets/images/res/monolith-logo.png";
   static const monolithMoaArena = "assets/images/res/monolith-moa-arena.jpg";
+  static const lightBg = "assets/images/res/light-bg.jpg";
   static const asdec = "Asdec Builders Corporation";
   static const asec = "Asec Development and Construction Corporation";
   static const cki = "CKI Builders Engineering Services";

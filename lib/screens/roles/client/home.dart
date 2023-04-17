@@ -110,346 +110,171 @@ class _ClientHomeState extends State<ClientHome> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      minimum: const EdgeInsets.only(top: 30, left: 36, right: 36),
+      // minimum: const EdgeInsets.only(top: 30),
       maintainBottomViewPadding: false,
       child: Center(
-        child: ConstrainedBox(
-          constraints: pageConstraints,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Image.asset(
-                  Var.appLogo,
-                  width: 150,
-                  height: 150,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
-                  filterQuality: FilterQuality.high,
-                ),
-                const SizedBox(height: 15),
-                const Text(
-                  Var.builder,
-                  style: TextStyle(
-                    fontFamily: Var.defaultFont,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  margin: EdgeInsets.zero,
-                  width: 350,
-                  child: Column(
-                    children: const <Widget>[
-                      Text(
-                        Var.aboutBuilder,
-                        textAlign: TextAlign.justify,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                        )
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 25),
-                const Divider(color: Colors.black, thickness: 1, height: 1),
-                const SizedBox(height: 25),
-                const Text(
-                  Var.services,
-                  style: TextStyle(
-                    fontFamily: Var.defaultFont,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  margin: EdgeInsets.zero,
-                  width: 350,
-                  child: Column(
-                    children: const <Widget>[
-                      Text(
-                        Var.servicesInfo,
-                        textAlign: TextAlign.justify,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                        )
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Image.asset(
-                  Var.stanleyLogo,
-                  width: 350,
-                  height: 150,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
-                  filterQuality: FilterQuality.high,
-                ),
-                const SizedBox(height: 15),
-                Image.asset(
-                  Var.dewaltLogo,
-                  width: 350,
-                  height: 150,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
-                  filterQuality: FilterQuality.high,
-                ),
-                const SizedBox(height: 15),
-                Image.asset(
-                  Var.makitaLogo,
-                  width: 350,
-                  height: 150,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
-                  filterQuality: FilterQuality.high,
-                ),
-                const SizedBox(height: 25),
-                const Divider(color: Colors.black, thickness: 1, height: 1),
-                const SizedBox(height: 25),
-                const Text(
-                  Var.partners,
-                  style: TextStyle(
-                    fontFamily: Var.defaultFont,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                  ),
-                ),
-                const SizedBox(height: 35),
-                const Text(
-                  Var.asec,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: Var.defaultFont,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-                const SizedBox(height: 15),
-                Image.asset(
-                  Var.asecLogo,
-                  width: 350,
-                  height: 150,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
-                  filterQuality: FilterQuality.high,
-                ),
-                const SizedBox(height: 15),
-                Image.asset(
-                  Var.asecBuilding,
-                  width: 350,
-                  height: 150,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
-                  filterQuality: FilterQuality.high,
-                ),
-                const SizedBox(height: 35),
-                const Text(
-                  Var.asdec,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: Var.defaultFont,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-                const SizedBox(height: 15),
-                Image.asset(
-                  Var.asdecLogo,
-                  width: 350,
-                  height: 150,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
-                  filterQuality: FilterQuality.high,
-                ),
-                const SizedBox(height: 15),
-                Image.asset(
-                  Var.asdecSmCoast,
-                  width: 350,
-                  height: 150,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
-                  filterQuality: FilterQuality.high,
-                ),
-                const SizedBox(height: 35),
-                const Text(
-                  Var.cki,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: Var.defaultFont,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-                const SizedBox(height: 15),
-                Image.asset(
-                  Var.ckiLogo,
-                  width: 350,
-                  height: 250,
-                  fit: BoxFit.fill,
-                  alignment: Alignment.center,
-                  filterQuality: FilterQuality.high,
-                ),
-                const SizedBox(height: 15),
-                Image.asset(
-                  Var.ckiRestau,
-                  width: 350,
-                  height: 150,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
-                  filterQuality: FilterQuality.high,
-                ),
-                const SizedBox(height: 35),
-                const Text(
-                  Var.datem,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: Var.defaultFont,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-                const SizedBox(height: 15),
-                Image.asset(
-                  Var.datemLogo,
-                  width: 350,
-                  height: 150,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
-                  filterQuality: FilterQuality.high,
-                ),
-                const SizedBox(height: 15),
-                Image.asset(
-                  Var.datemBuilding,
-                  width: 350,
-                  height: 150,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
-                  filterQuality: FilterQuality.high,
-                ),
-                const SizedBox(height: 35),
-                const Text(
-                  Var.ffCruz,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: Var.defaultFont,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-                const SizedBox(height: 15),
-                Image.asset(
-                  Var.ffLogo,
-                  width: 350,
-                  height: 150,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
-                  filterQuality: FilterQuality.high,
-                ),
-                const SizedBox(height: 15),
-                Image.asset(
-                  Var.ffFishport,
-                  width: 350,
-                  height: 150,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
-                  filterQuality: FilterQuality.high,
-                ),
-                const SizedBox(height: 35),
-                const Text(
-                  Var.monolithConstruction,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: Var.defaultFont,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-                Image.asset(
-                  Var.monolithLogo,
-                  width: 350,
-                  height: 150,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
-                  filterQuality: FilterQuality.high,
-                ),
-                const SizedBox(height: 15),
-                Image.asset(
-                  Var.monolithMoaArena,
-                  width: 350,
-                  height: 150,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
-                  filterQuality: FilterQuality.high,
-                ),
-                const SizedBox(height: 35),
-                /*
-                Expanded(
-                  flex: 2,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          _buildStats(
-                            context: context,
-                            label: "Daily",
-                            cummulative: -5.23,
-                            // onPressed: () => showDialog(
-                            //   context: context,
-                            //   builder: (context) => const SearchOverlay(),
-                            // ),
-                          ),
-                          const SizedBox(width: 10),
-                          _buildStats(
-                            context: context,
-                            label: "Weekly",
-                            cummulative: 39.69,
-                            // onPressed: () => showDialog(
-                            //   context: context,
-                            //   builder: (context) => const SearchOverlay(),
-                            // ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                */
-                const SizedBox(height: 20),
-                /*
-                Expanded(
-                  flex: 6,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
-                        "Service Requests",
-                        style: TextStyle(
-                          fontFamily: Var.defaultFont,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16,
-                        ),
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            color: Colors.black,
+            image: DecorationImage(
+              image: AssetImage(Var.lightBg),
+              fit: BoxFit.cover,
+              // colorFilter: ColorFilter.mode(
+              //   Colors.black.withOpacity(.6),
+              //   BlendMode.darken,
+              // ),
+            ),
+          ),
+          child: ConstrainedBox(
+            constraints: pageConstraints,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    const SizedBox(height: 15),
+                    Image.asset(
+                      Var.appLogo,
+                      width: 150,
+                      height: 150,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                      filterQuality: FilterQuality.high,
+                    ),
+                    const SizedBox(height: 15),
+                    const Text(
+                      Var.builder,
+                      style: TextStyle(
+                        fontFamily: Var.defaultFont,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        color: Colors.black
                       ),
-                      SizedBox(height: 27),
-                      Expanded(
-                        child: TabbedLayout(
-                          tabLabel: ["New Requests", "Completed"],
-                          tabs: [NewRequests(), CompletedRequests()],
-                        ),
-                      )
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 3),
+                    const Text(
+                      Var.builderTagline,
+                      style: TextStyle(
+                        fontFamily: Var.defaultFont,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 16,
+                        color: Colors.black
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    Container(
+                      margin: EdgeInsets.zero,
+                      width: 350,
+                      child: Column(
+                        children: const <Widget>[
+                          Text(
+                            Var.aboutBuilder,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                            )
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 25),
+                    const Divider(color: Colors.black, thickness: 1, height: 1),
+                    const SizedBox(height: 25),
+                    const Text(
+                      Var.services,
+                      style: TextStyle(
+                        fontFamily: Var.defaultFont,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        color: Colors.black
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Container(
+                      margin: EdgeInsets.zero,
+                      width: 350,
+                      child: Column(
+                        children: const <Widget>[
+                          Text(
+                            Var.servicesInfo,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                            )
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 25),
+                    const Divider(color: Colors.black, thickness: 1, height: 1),
+                    const SizedBox(height: 25),
+                    // const Text(
+                    //   Var.keyFeatures,
+                    //   style: TextStyle(
+                    //     fontFamily: Var.defaultFont,
+                    //     fontWeight: FontWeight.bold,
+                    //     fontSize: 25,
+                    //   ),
+                    // ),
+                    // const SizedBox(height: 10),
+                    Container(
+                      margin: EdgeInsets.zero,
+                      width: 450,
+                      height: 200,
+                      child: Image.asset(
+                        Var.keyFeaturesImg,
+                        width: 350,
+                        height: 150,
+                        fit: BoxFit.fitHeight,
+                        alignment: Alignment.center,
+                        filterQuality: FilterQuality.high,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Container(
+                      margin: EdgeInsets.zero,
+                      width: 350,
+                      height: 100,
+                      child: Image.asset(
+                        Var.reviewsImg,
+                        width: 350,
+                        height: 150,
+                        fit: BoxFit.fitWidth,
+                        alignment: Alignment.center,
+                        filterQuality: FilterQuality.high,
+                      ),
+                    ),
+                    const SizedBox(height: 25),
+                    const Divider(color: Colors.black, thickness: 1, height: 1),
+                    const SizedBox(height: 25),
+                    const Text(
+                      Var.partners,
+                      style: TextStyle(
+                        fontFamily: Var.defaultFont,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        color: Colors.black
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.zero,
+                      width: 350,
+                      height: 200,
+                      child: Image.asset(
+                        Var.partnersImg,
+                        width: 350,
+                        height: 150,
+                        fit: BoxFit.fitWidth,
+                        alignment: Alignment.center,
+                        filterQuality: FilterQuality.high,
+                      ),
+                    ),
+                    const SizedBox(height: 100),
+                  ],
                 ),
-                */
-              ],
             ),
           ),
         ),

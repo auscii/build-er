@@ -57,74 +57,90 @@ class _AdminProductsState extends State<AdminProducts> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: 
-          Wrap(
-            alignment: WrapAlignment.start,
-            crossAxisAlignment: WrapCrossAlignment.start,
-            children: [
-              Column(
-                children: Var.productLists.map((prod){
-                  return Container(
-                    // height: 90,
-                    // margin: const EdgeInsets.all(5),
-                    // padding: const EdgeInsets.all(5),
-                    color: AppColors.bg,
-                    child: GestureDetector(
-                      onTap: () => showDialog(
-                        context: context,
-                        builder: (context) => viewProduct(
-                          prod.id,
-                          prod.title,
-                          prod.image,
-                          prod.category,
-                          prod.description,
-                          prod.price
-                        ),
-                      ),
-                      child: ListTile(
-                        leading: Transform.translate(
-                          offset: const Offset(0, 5),
-                          child: Container(
-                            height: 250,
-                            width: 60,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                image: DecorationImage(
-                                  image: NetworkImage(prod.image),
-                                  fit: BoxFit.cover,
-                                ),
-                                border: Border.all(width: 2, color: Colors.white)
-                            ),
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            // color: Colors.black,
+            image: DecorationImage(
+              image: AssetImage(Var.lightBg),
+              fit: BoxFit.cover,
+              // colorFilter: ColorFilter.mode(
+              //   Colors.black.withOpacity(.6),
+              //   BlendMode.darken,
+              // ),
+            ),
+          ),
+          child: 
+            Wrap(
+              alignment: WrapAlignment.start,
+              crossAxisAlignment: WrapCrossAlignment.start,
+              children: [
+                Column(
+                  children: Var.productLists.map((prod){
+                    return Container(
+                      // height: 90,
+                      // margin: const EdgeInsets.all(5),
+                      // padding: const EdgeInsets.all(5),
+                      // color: AppColors.bg,
+                      color: Colors.transparent,
+                      child: GestureDetector(
+                        onTap: () => showDialog(
+                          context: context,
+                          builder: (context) => viewProduct(
+                            prod.id,
+                            prod.title,
+                            prod.image,
+                            prod.category,
+                            prod.description,
+                            prod.price
                           ),
                         ),
-                        title: 
-                          Text(
-                            prod.title.toUpperCase(),
-                            textAlign: TextAlign.left,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontFamily: Var.defaultFont,
-                              fontWeight: FontWeight.w700,
+                        child: ListTile(
+                          leading: Transform.translate(
+                            offset: const Offset(0, 5),
+                            child: Container(
+                              height: 250,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  image: DecorationImage(
+                                    image: NetworkImage(prod.image),
+                                    fit: BoxFit.cover,
+                                  ),
+                                  border: Border.all(width: 2, color: Colors.white)
+                              ),
                             ),
                           ),
-                        subtitle: 
-                          Text(
-                            "Description: ${prod.description}",
-                            textAlign: TextAlign.left,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontFamily: Var.defaultFont,
-                              fontWeight: FontWeight.normal,
+                          title: 
+                            Text(
+                              prod.title.toUpperCase(),
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontFamily: Var.defaultFont,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
-                          ),
-                      ),
-                    )
-                  );
-                }).toList(),
-              )
-            ]
+                          subtitle: 
+                            Text(
+                              "Description: ${prod.description}",
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontFamily: Var.defaultFont,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                        ),
+                      )
+                    );
+                  }).toList(),
+                )
+              ]
+            ),
           ),
       )
     );
