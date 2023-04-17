@@ -10,47 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e111177e-1a4d-468a-bcf5-14eafdc46362" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v21/launch_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v21/launch_background.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher_foreground.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher_foreground.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/launch_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/launch_background.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/startup_bg.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/startup_bg.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/startup_bg.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/startup_bg.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_launcher.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/startup_bg.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/startup_bg.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/startup_bg.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/startup_bg.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/startup_bg.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/startup_bg.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/core/providers/appdata.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/providers/appdata.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/core/utils/global.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/utils/global.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/screens/auth/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/auth/login.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/screens/roles/admin/admin_products.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/roles/admin/admin_products.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/screens/roles/admin/home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/roles/admin/home.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/screens/roles/admin/users_lists.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/roles/admin/users_lists.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/screens/roles/client/components/product_details.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/roles/client/components/product_details.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/screens/roles/client/components/product_images.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/roles/client/components/product_images.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/screens/roles/client/ecommerce.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/roles/client/ecommerce.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/screens/roles/client/home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/roles/client/home.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/screens/roles/contractor/home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/roles/contractor/home.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/screens/roles/contractor/portfolio.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/roles/contractor/portfolio.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/screens/shared/about.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/shared/about.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/screens/shared/profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/shared/profile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/screens/roles/client/locator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/roles/client/locator.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

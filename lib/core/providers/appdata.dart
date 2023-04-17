@@ -135,6 +135,7 @@ class AppData extends ChangeNotifier {
           if (portfolio.createdBy == currentUserId) {
             Var.portfolioLists.addAll({portfolio});
           }
+          Var.contractorNearbyPortfolioLists.addAll({portfolio});
         });
         AppData().notifyListeners();
       });
@@ -343,7 +344,31 @@ class AppData extends ChangeNotifier {
 
   static void clearPortfolioLists() {
     Var.portfolioLists.clear();
+    Var.contractorNearbyPortfolioLists.clear();
     AppData.getPortfolioLists();
+  }
+
+  static void getPortfolioListsByContractor(String id) async {
+    Var.contractorNearbyPortfolioLists.clear();
+    print("getPortfolioListsByContractor");
+    await FirebaseFirestore.instance
+      .collection(Var.portfolio.toLowerCase())
+      // .where("createdBy", isEqualTo: id)
+      .withConverter(
+        fromFirestore: Portfolio.fromFirestore,
+        toFirestore: (Portfolio values, _) => values.toFirestore())
+      .get()
+      .then((res) {
+        res.docs.forEach((val) {
+          var portfolio = val.data();
+          if (portfolio.createdBy == id) {
+            print("getPortfolioListsByContractor contractorNearbyPortfolioLists ->${Var.contractorNearbyPortfolioLists}");
+            Var.contractorNearbyPortfolioLists.addAll({portfolio});
+          }
+          print("getPortfolioListsByContractor res.docs");
+        });
+        AppData().notifyListeners();
+      });
   }
 
 }

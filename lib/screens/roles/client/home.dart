@@ -22,6 +22,12 @@ class _ClientHomeState extends State<ClientHome> {
   @override
   void initState() {
     setState(() => Var.activePage = Var.home);
+    AppData.clearPortfolioLists();
+    Future.delayed(const Duration(milliseconds: 3000), () {
+      setState(() {
+        AppData.getPortfolioLists();
+      });
+    });
     super.initState();
   }
 

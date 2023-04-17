@@ -101,6 +101,7 @@ class Var {
   static const welcome = "Welcome, ";
   static const featureNotAvailable = "Sorry, this feature isn't available right now.";
   static const findNearbyContractors = "Find nearby Contractors";
+  static const nearby = "Nearby";
   static const productDetails = "PRODUCT DETAILS";
   static const goBack = "GO BACK";
   static const addCart = "ADD TO CART";
@@ -174,6 +175,7 @@ class Var {
   static var activePage = "";
   static var activeUserRole = "";
   static var previousRoute = "";
+  static var selectedContractorId = "";
   static var categories = [
     constructionMaterials,
     constructionTools,
@@ -183,6 +185,8 @@ class Var {
   static Product? product;
   static List<Product> productLists = [];
   static List<Portfolio> portfolioLists = [];
+  static List<Portfolio> contractorNearbyPortfolioLists = [];
+  static List<Portfolio> selectedContractorPortfolio = [];
   static List<UserModel> usersLists = [];
   static List<UserModel> filteredClientUsers = [];
   static List<UserModel> filteredContractorUsers = [];

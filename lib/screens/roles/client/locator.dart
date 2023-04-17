@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'package:client/core/models/user.dart';
+import 'package:client/core/utils/loader.dart';
+import 'package:client/core/utils/toast.dart';
 import 'package:client/screens/roles/client/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,10 +28,10 @@ class Locator extends StatefulWidget {
 class _LocatorState extends State<Locator> {
 
   //TODO: - TO UPDATE GET LISTS OF VERIFIED CONTRACTORS ONLY THEN GET THE LISTS OF ALL PORTFOLIOS
-
   @override
   void initState() {
     AppData.getUserResultIfVerified(context);
+    print("CLIENT to find contractorNearbyPortfolioLists ->${Var.contractorNearbyPortfolioLists}");
     super.initState();
   }
 
@@ -84,23 +87,6 @@ class _SearchOverlayState extends State<SearchOverlay> {
   @override
   void initState() {
     super.initState();
-
-    instance = FirebaseFirestore.instance
-        .collection('client')
-        .withConverter(
-          fromFirestore: Client.fromFirestore,
-          toFirestore: (Client userModel, _) => userModel.toFirestore(),
-        )
-        .snapshots();
-
-    instance.listen((val) {
-      setState(() {
-        data = val.docs
-            .map((QueryDocumentSnapshot<Client> clientSnapshot) =>
-                clientSnapshot.data())
-            .toList();
-      });
-    });
   }
 
   // This function is called whenever the text field changes
@@ -135,74 +121,65 @@ class _SearchOverlayState extends State<SearchOverlay> {
   Widget build(BuildContext context) {
     return AppDialog(
       child: SingleChildScrollView(
-        child: Wrap(
+        child:
+        Wrap(
           alignment: WrapAlignment.start,
           crossAxisAlignment: WrapCrossAlignment.start,
           children: [
-            searchBuilder(),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Card(
+            Text(
+              "${Var.nearby} ${Var.contractor} ${Var.user.toCapitalized()}",
+              textAlign: TextAlign.center,
+              style: const TextStyle(
                 color: Colors.black,
-                elevation: 16,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Wrap(
-                  children: Var.portfolioLists.map((portf) {
-                    return setPortflioImages(
-                      context,
-                      portf.briefDetails,
-                      portf.companyLogo,
-                      portf.companyName,
-                      portf.feedback,
-                      portf.previousProject,
-                      portf.ratings
-                    );
-                  }).toList(),
-                ),
+                fontSize: 30,
+                fontFamily: Var.defaultFont,
+                fontWeight: FontWeight.w700,
               ),
+            ),
+            Column(
+              children: Var.filteredContractorUsers.map((user) {
+                return Container(
+                  margin: EdgeInsets.zero,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() => Var.selectedContractorPortfolio.clear());
+                      showDialog(
+                        context: context,
+                        builder: (context) => viewContractorPortfolios(
+                          user.uid ?? Var.na,
+                          user.name ?? Var.na
+                        ),
+                      );
+                    },
+                    child: ListTile(
+                      title: 
+                        Text(
+                          "Name: ${user.name!}",
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontFamily: Var.defaultFont,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      subtitle: 
+                        Text(
+                          "User ID: ${user.uid}",
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontFamily: Var.defaultFont,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                    ),
+                  )
+                );
+              }).toList(),
             )
-            // Expanded(
-            //   child: data.isEmpty
-            //   ? const Center(
-            //       child: Text(
-            //         "Fetching Clients",
-            //         style: TextStyle(
-            //           fontFamily: "SF Pro Rounded",
-            //           fontWeight: FontWeight.w500,
-            //           color: AppColors.textPrimary,
-            //           fontSize: 16,
-            //         ),
-            //       ),
-            //     )
-            //   : ListView.separated(
-            //       padding: const EdgeInsets.all(5),
-            //       separatorBuilder: (_, __) => const SizedBox(height: 15),
-            //       itemCount: data.length,
-            //       itemBuilder: (_, i) {
-            //         return RoundedTile(
-            //           label: data[i].name,
-            //           avatar: Image.network(data[i].image),
-            //           icon: const Icon(ProjectBuilder.add),
-            //           onPressed: () {
-            //             Provider.of<AppData>(context, listen: false)
-            //                 .createServiceRequest(ServiceRequest(
-            //                   userId: FirebaseAuth.instance.currentUser!.uid,
-            //                   clientId: data[i].userUid,
-            //                   completed: false,
-            //                 ))
-            //                 .then((value) => {
-            //                       Navigator.of(context, rootNavigator: true)
-            //                           .pop()
-            //                     });
-            //           },
-            //         );
-            //       },
-            //     ),
-            // ),
-          ],
+          ]
         ),
       ),
     );
@@ -236,6 +213,57 @@ class _SearchOverlayState extends State<SearchOverlay> {
       ),
     );
   }
+
+  Widget viewContractorPortfolios(String id, String name) {
+    Var.selectedContractorPortfolio = 
+      Var.contractorNearbyPortfolioLists.where((p) => p.createdBy == id).toList();
+    return AppDialog(
+      child: SingleChildScrollView(
+        child: 
+          Wrap(
+            alignment: WrapAlignment.start,
+            crossAxisAlignment: WrapCrossAlignment.start,
+            children: [
+              Text(
+                "$name ${Var.portfolio.toCapitalized()}",
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 23,
+                  fontFamily: Var.defaultFont,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Card(
+                      color: Colors.black,
+                      elevation: 16,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Wrap(
+                        children: Var.selectedContractorPortfolio.map((portf) {
+                          return setPortflioImages(
+                            context,
+                            portf.briefDetails,
+                            portf.companyLogo,
+                            portf.companyName,
+                            portf.previousProject
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  )
+                ]
+              )
+            ]
+          ),
+      )
+    );
+  }
 }
 
 Widget setPortflioImages(
@@ -243,9 +271,7 @@ Widget setPortflioImages(
   String briefDetails,
   String companyLogo,
   String companyName,
-  String feedback,
   String previousProject,
-  int rating
 ) {
   return InkWell(
     onTap: () => showDialog(
@@ -254,9 +280,7 @@ Widget setPortflioImages(
       briefDetails,
       companyLogo,
       companyName,
-      feedback,
-      previousProject,
-      rating
+      previousProject
     )),
     child: Container(
       width: MediaQuery.of(context).size.width,
@@ -272,14 +296,14 @@ Widget setPortflioImages(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: const EdgeInsets.only(left: 20),
+            margin: const EdgeInsets.only(left: 5),
             child: 
               Text(
-                "${Var.companyName}: $companyName",
+                "${Var.companyName.toCapitalized()}: $companyName",
                 style: const TextStyle(
                   fontFamily: Var.defaultFont,
                   fontWeight: FontWeight.bold,
-                  fontSize: 30,
+                  fontSize: 16,
                 ),
               ),
           ),
@@ -307,9 +331,7 @@ Widget viewPortfolio(
   String briefDetails,
   String companyLogo,
   String companyName,
-  String feedback,
   String previousProject,
-  int rating
 ) {
   return AppDialog(
     child: SingleChildScrollView(
@@ -320,10 +342,10 @@ Widget viewPortfolio(
           children: [
             Column(
               children: [
-                const Text(
-                  Var.companyName,
+                Text(
+                  Var.companyName.toCapitalized(),
                   textAlign: TextAlign.left,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 20,
                     fontFamily: Var.defaultFont,
@@ -416,67 +438,6 @@ Widget viewPortfolio(
                     fontSize: 20,
                   ),
                 ),
-                Text(
-                  feedback,
-                  style: const TextStyle(
-                    fontFamily: Var.defaultFont,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 20,
-                  ),
-                ),
-                const SizedBox(height: 25),
-                const Divider(color: Colors.black, thickness: 1, height: 1),
-                const SizedBox(height: 25),
-                ratings(rating),
-                const SizedBox(height: 25),
-                const Divider(color: Colors.black, thickness: 1, height: 1),
-                const SizedBox(height: 25),
-                /*
-                Container(
-                  color: Colors.transparent,
-                  child: GestureDetector(
-                    child: ListTile(
-                      leading: Transform.translate(
-                        offset: const Offset(0, 5),
-                        child: Container(
-                          height: 250,
-                          width: 60,
-                          decoration: BoxDecoration(
-                              color: Colors.black,
-                              image: DecorationImage(
-                                image: NetworkImage(companyLogo),
-                                fit: BoxFit.cover,
-                              ),
-                              border: Border.all(width: 2, color: Colors.white)
-                          ),
-                        ),
-                      ),
-                      title: 
-                        Text(
-                          "COMPANY NAME: $companyName",
-                          textAlign: TextAlign.left,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontFamily: Var.defaultFont,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      subtitle: 
-                        Text(
-                          "BRIEF DETAILS OF THE COMPANY: $briefDetails",
-                          textAlign: TextAlign.left,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: Var.defaultFont,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                    ),
-                  )
-                )
-                */
               ]
             )
           ]
