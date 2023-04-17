@@ -122,6 +122,7 @@ class AppData extends ChangeNotifier {
   }
 
   static void getPortfolioLists() async {
+    var currentUserId = FirebaseAuth.instance.currentUser!.uid;
     await FirebaseFirestore.instance
       .collection(Var.portfolio.toLowerCase())
       .withConverter(
@@ -131,7 +132,9 @@ class AppData extends ChangeNotifier {
       .then((res) {
         res.docs.forEach((val) {
           var portfolio = val.data();
-          Var.portfolioLists.addAll({portfolio});
+          if (portfolio.createdBy == currentUserId) {
+            Var.portfolioLists.addAll({portfolio});
+          }
         });
         AppData().notifyListeners();
       });

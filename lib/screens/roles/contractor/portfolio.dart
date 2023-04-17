@@ -45,7 +45,6 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
 
   @override
   void initState() {
-    // print("Var.portfolioLists ->${Var.portfolioLists}");
     AppData.getUserResultIfVerified(context);
     super.initState();
   }
