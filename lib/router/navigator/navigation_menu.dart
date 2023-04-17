@@ -1,3 +1,4 @@
+import 'package:client/core/utils/toast.dart';
 import 'package:client/router/navigator/menu_drawer.dart';
 import 'package:client/screens/roles/admin/admin_products.dart';
 import 'package:client/screens/roles/admin/home.dart';
@@ -71,10 +72,17 @@ class _NavigationMenuState extends State<NavigationMenu> {
         ),
         centerTitle: true,
         // actions: [NotificationButton()],
+        actions: [
+          IconButton(icon: const Icon(Icons.notifications),
+          color: Colors.white,
+          onPressed: () {
+            Toast.show(Var.featureNotAvailable);
+          }),
+        ],
         leading: Builder(builder: (context) {
           return IconButton(
             padding: const EdgeInsets.only(left: 16, right: 16),
-            icon: const Icon(
+            icon: const Icon( 
               Icons.menu,
               color: Colors.white,
               size: 28,
