@@ -1,5 +1,6 @@
 import 'package:client/core/providers/appdata.dart';
 import 'package:client/core/utils/global.dart';
+import 'package:client/core/utils/loader.dart';
 import 'package:client/core/utils/sizes.dart';
 import 'package:client/screens/roles/admin/add_products.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,9 +24,15 @@ class _EcommerceState extends State<Ecommerce> {
       {"icon": "assets/images/res/products/icons/Discover.svg", "text": "More"},
     ];
 
+    var constructionMaterials = 
+      Var.productLists.where((i) => i.category == Var.constructionMaterials).toList();
+    var constructionTools = 
+      Var.productLists.where((i) => i.category == Var.constructionTools).toList();
+
   @override
   void initState() {
     AppData.getUserResultIfVerified(context);
+    // initProducts();
     super.initState();
   }
 
@@ -37,158 +44,158 @@ class _EcommerceState extends State<Ecommerce> {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
-    var constructionMaterials = 
-      Var.productLists.where((i) => i.category == Var.constructionMaterials).toList();
-    var constructionTools = 
-      Var.productLists.where((i) => i.category == Var.constructionTools).toList();
+    // SizeConfig().init(context);
+    // var constructionMaterials = 
+    //   Var.productLists.where((i) => i.category == Var.constructionMaterials).toList();
+    // var constructionTools = 
+    //   Var.productLists.where((i) => i.category == Var.constructionTools).toList();
+    initProducts();
     return SafeArea(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          color: Colors.black,
-          image: DecorationImage(
-            image: AssetImage(Var.lightBg),
-            fit: BoxFit.cover,
-            // colorFilter: ColorFilter.mode(
-            //   Colors.black.withOpacity(.6),
-            //   BlendMode.darken,
-            // ),
+      child: RefreshIndicator( 
+        onRefresh: _pullRefresh,
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            color: Colors.black,
+            image: DecorationImage(
+              image: AssetImage(Var.lightBg),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: getProportionateScreenHeight(20)),
-              // Padding(
-              //   padding:
-              //       EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       SearchField(),
-              //       IconBtnWithCounter(
-              //         svgSrc: "assets/icons/Cart Icon.svg",
-              //         press: () => Navigator.pushNamed(context, CartScreen.routeName),
-              //       ),
-              //       IconBtnWithCounter(
-              //         svgSrc: "assets/icons/Bell.svg",
-              //         numOfitem: 3,
-              //         press: () {},
-              //       ),
-              //     ],
-              //   ),
-              // );
-              SizedBox(height: getProportionateScreenWidth(10)),
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.all(getProportionateScreenWidth(20)),
-                padding: EdgeInsets.symmetric(
-                  horizontal: getProportionateScreenWidth(20),
-                  vertical: getProportionateScreenWidth(15),
-                ),
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 195, 201, 24),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text.rich(
-                  TextSpan(
-                    style: const TextStyle(color: Colors.white),
-                    children: [
-                      const TextSpan(text: Var.ecommerceTagLine1),
-                      TextSpan(
-                        text: Var.ecommerceTagLine2,
-                        style: TextStyle(
-                          fontSize: getProportionateScreenWidth(24),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: getProportionateScreenHeight(20)),
+                // Padding(
+                //   padding:
+                //       EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       SearchField(),
+                //       IconBtnWithCounter(
+                //         svgSrc: "assets/icons/Cart Icon.svg",
+                //         press: () => Navigator.pushNamed(context, CartScreen.routeName),
+                //       ),
+                //       IconBtnWithCounter(
+                //         svgSrc: "assets/icons/Bell.svg",
+                //         numOfitem: 3,
+                //         press: () {},
+                //       ),
+                //     ],
+                //   ),
+                // );
+                SizedBox(height: getProportionateScreenWidth(10)),
+                Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.all(getProportionateScreenWidth(20)),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(20),
+                    vertical: getProportionateScreenWidth(15),
                   ),
-                ),
-              ),
-              // Padding(
-              //   padding: EdgeInsets.all(getProportionateScreenWidth(20)),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: List.generate(
-              //       categories.length,
-              //       (index) => CategoryCard(
-              //         icon: categories[index]["icon"],
-              //         text: categories[index]["text"],
-              //         press: () {},
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              Column(
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-                    child: SectionTitle(
-                      title: Var.constructionMaterials,
-                      press: () => showDialog(
-                        context: context,
-                        builder: (context) => viewProductCategory(
-                          constructionMaterials
-                        ),
-                      ),
-                    ),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 195, 201, 24),
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  SizedBox(height: getProportionateScreenWidth(20)),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
+                  child: Text.rich(
+                    TextSpan(
+                      style: const TextStyle(color: Colors.white),
                       children: [
-                        ...List.generate(
-                          constructionMaterials.length,
-                          (index) {
-                            return ProductCard(product: constructionMaterials[index]);
-                          },
+                        const TextSpan(text: Var.ecommerceTagLine1),
+                        TextSpan(
+                          text: Var.ecommerceTagLine2,
+                          style: TextStyle(
+                            fontSize: getProportionateScreenWidth(24),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        SizedBox(width: getProportionateScreenWidth(20)),
                       ],
                     ),
                   ),
-                ],
-              ),
-              SizedBox(height: getProportionateScreenWidth(30)),
-              Column(
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-                    child: SectionTitle(title: Var.constructionTools, 
-                      press: () => showDialog(
-                        context: context,
-                        builder: (context) => viewProductCategory(
-                          constructionTools
+                ),
+                // Padding(
+                //   padding: EdgeInsets.all(getProportionateScreenWidth(20)),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: List.generate(
+                //       categories.length,
+                //       (index) => CategoryCard(
+                //         icon: categories[index]["icon"],
+                //         text: categories[index]["text"],
+                //         press: () {},
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                Column(
+                  children: [
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+                      child: SectionTitle(
+                        title: Var.constructionMaterials,
+                        press: () => showDialog(
+                          context: context,
+                          builder: (context) => viewProductCategory(
+                            constructionMaterials
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: getProportionateScreenWidth(20)),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        ...List.generate(
-                          constructionTools.length,
-                          (index) {
-                            return ProductCard(product: constructionTools[index]);
-                          },
-                        ),
-                        SizedBox(width: getProportionateScreenWidth(20)),
-                      ],
+                    SizedBox(height: getProportionateScreenWidth(20)),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          ...List.generate(
+                            constructionMaterials.length,
+                            (index) {
+                              return ProductCard(product: constructionMaterials[index]);
+                            },
+                          ),
+                          SizedBox(width: getProportionateScreenWidth(20)),
+                        ],
+                      ),
                     ),
-                  )
-                ],
-              ),
-              SizedBox(height: getProportionateScreenWidth(30)),
-            ],
+                  ],
+                ),
+                SizedBox(height: getProportionateScreenWidth(30)),
+                Column(
+                  children: [
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+                      child: SectionTitle(title: Var.constructionTools, 
+                        press: () => showDialog(
+                          context: context,
+                          builder: (context) => viewProductCategory(
+                            constructionTools
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: getProportionateScreenWidth(20)),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          ...List.generate(
+                            constructionTools.length,
+                            (index) {
+                              return ProductCard(product: constructionTools[index]);
+                            },
+                          ),
+                          SizedBox(width: getProportionateScreenWidth(20)),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: getProportionateScreenWidth(30)),
+              ],
+            ),
           ),
         ),
       ),
@@ -266,6 +273,26 @@ class _EcommerceState extends State<Ecommerce> {
           ),
       )
     );
+  }
+
+  Future<void> _pullRefresh() async {
+    Loader.show(context, 0);
+    Var.productLists.clear();
+    AppData.getProductLists();
+    Future.delayed(const Duration(milliseconds: 10000), () {
+      Loader.stop();
+      setState(() {
+        initProducts();
+      });
+    });
+  }
+
+  initProducts() {
+    SizeConfig().init(context);
+    constructionMaterials = 
+      Var.productLists.where((i) => i.category == Var.constructionMaterials).toList();
+    constructionTools = 
+      Var.productLists.where((i) => i.category == Var.constructionTools).toList();
   }
 
 }

@@ -142,6 +142,7 @@ class AppData extends ChangeNotifier {
   }
 
   static void getProductLists() async {
+    print("getProductLists");
     await FirebaseFirestore.instance
       .collection(Var.productS)
       .withConverter(
@@ -149,9 +150,11 @@ class AppData extends ChangeNotifier {
         toFirestore: (Product values, _) => values.toFirestore())
       .get()
       .then((res) {
+        print("getProductLists res docs");
         res.docs.forEach((val) {
           var products = val.data();
           Var.productLists.addAll({products});
+          print("getProductLists var productLists ->${Var.productLists}");
         });
         AppData().notifyListeners();
       });

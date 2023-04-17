@@ -51,130 +51,132 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            color: Colors.black,
-            image: DecorationImage(
-              image: AssetImage(Var.lightBg),
-              fit: BoxFit.cover,
+      body: RefreshIndicator(
+        onRefresh: _pullRefresh,
+        child: SingleChildScrollView(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              color: Colors.black,
+              image: DecorationImage(
+                image: AssetImage(Var.lightBg),
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          child: 
-            Wrap(
-              alignment: WrapAlignment.start,
-              crossAxisAlignment: WrapCrossAlignment.start,
-              children: [
-                GestureDetector(
-                  child: 
-                    Container(
-                      height: 50,
-                      width: 200,
-                      margin: const EdgeInsets.symmetric(horizontal: 28, vertical: 20),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(25)),
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                              color: const Color.fromARGB(255, 0, 0, 0).withAlpha(100),
-                              offset: const Offset(1, 1),
-                              blurRadius: 8,
-                              spreadRadius: 2
-                          )
-                        ],
-                        color: Colors.blue
-                      ),
-                      child: const Text(
-                        Var.addPortfolio,
-                        style: TextStyle(
-                          backgroundColor: Colors.transparent,
-                          fontFamily: Var.defaultFont,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 19,
-                          color: Colors.white
+            child: 
+              Wrap(
+                alignment: WrapAlignment.start,
+                crossAxisAlignment: WrapCrossAlignment.start,
+                children: [
+                  GestureDetector(
+                    child: 
+                      Container(
+                        height: 50,
+                        width: 200,
+                        margin: const EdgeInsets.symmetric(horizontal: 28, vertical: 20),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(Radius.circular(25)),
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                                color: const Color.fromARGB(255, 0, 0, 0).withAlpha(100),
+                                offset: const Offset(1, 1),
+                                blurRadius: 8,
+                                spreadRadius: 2
+                            )
+                          ],
+                          color: Colors.blue
+                        ),
+                        child: const Text(
+                          Var.addPortfolio,
+                          style: TextStyle(
+                            backgroundColor: Colors.transparent,
+                            fontFamily: Var.defaultFont,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 19,
+                            color: Colors.white
+                          ),
                         ),
                       ),
-                    ),
-                    onTap: () => showDialog(
-                    context: context,
-                    builder: (context) =>  addPortfolio(),
-                  ),
-                ),
-                GestureDetector(
-                  child: 
-                    Container(
-                      height: 50,
-                      width: 200,
-                      margin: const EdgeInsets.symmetric(horizontal: 28, vertical: 5),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(25)),
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                              color: const Color.fromARGB(255, 0, 0, 0).withAlpha(100),
-                              offset: const Offset(1, 1),
-                              blurRadius: 8,
-                              spreadRadius: 2
-                          )
-                        ],
-                        color: Colors.green
-                      ),
-                      child: const Text(
-                        Var.refresh,
-                        style: TextStyle(
-                          backgroundColor: Colors.transparent,
-                          fontFamily: Var.defaultFont,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 19,
-                          color: Colors.white
-                        ),
-                      ),
-                    ),
-                    onTap: () {
-                      Loader.show(context, 0);
-                      AppData.clearPortfolioLists();
-                      Future.delayed(const Duration(milliseconds: 3000), () {
-                        Loader.stop();
-                        setState(() {
-                          AppData.getPortfolioLists();
-                        });
-                      });
-                    },
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Card(
-                    color: Colors.black,
-                    elevation: 16,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Wrap(
-                      children: Var.portfolioLists.map((portf) {
-                        return setPortflioImages(
-                          portf.briefDetails,
-                          portf.companyLogo,
-                          portf.companyName,
-                          portf.feedback,
-                          portf.previousProject,
-                          portf.ratings
-                        );
-                      }).toList(),
+                      onTap: () => showDialog(
+                      context: context,
+                      builder: (context) =>  addPortfolio(),
                     ),
                   ),
-                )
-              ]
-            ),
+                  // GestureDetector(
+                  //   child: 
+                  //     Container(
+                  //       height: 50,
+                  //       width: 200,
+                  //       margin: const EdgeInsets.symmetric(horizontal: 28, vertical: 5),
+                  //       alignment: Alignment.center,
+                  //       decoration: BoxDecoration(
+                  //         borderRadius: const BorderRadius.all(Radius.circular(25)),
+                  //         boxShadow: <BoxShadow>[
+                  //           BoxShadow(
+                  //               color: const Color.fromARGB(255, 0, 0, 0).withAlpha(100),
+                  //               offset: const Offset(1, 1),
+                  //               blurRadius: 8,
+                  //               spreadRadius: 2
+                  //           )
+                  //         ],
+                  //         color: Colors.green
+                  //       ),
+                  //       child: const Text(
+                  //         Var.refresh,
+                  //         style: TextStyle(
+                  //           backgroundColor: Colors.transparent,
+                  //           fontFamily: Var.defaultFont,
+                  //           fontWeight: FontWeight.bold,
+                  //           fontSize: 19,
+                  //           color: Colors.white
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     onTap: () {
+                  //       Loader.show(context, 0);
+                  //       AppData.clearPortfolioLists();
+                  //       Future.delayed(const Duration(milliseconds: 3000), () {
+                  //         Loader.stop();
+                  //         setState(() {
+                  //           AppData.getPortfolioLists();
+                  //         });
+                  //       });
+                  //     },
+                  // ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Card(
+                      color: Colors.black,
+                      elevation: 16,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Wrap(
+                        children: Var.portfolioLists.map((portf) {
+                          return setPortflioImages(
+                            portf.briefDetails,
+                            portf.companyLogo,
+                            portf.companyName,
+                            portf.feedback,
+                            portf.previousProject,
+                            portf.ratings
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  )
+                ]
+              ),
           ),
+        ),
       )
     );
   }
@@ -801,12 +803,15 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     );
   }
 
-  // Widget getTextWidgets(List<String> lists) {
-  //   List<Widget> list = <Widget>[];
-  //   for(var i = 0; i < lists.length; i++){
-  //       list.add(Text(lists[i]));
-  //   }
-  //   return Row(children: list);
-  // }
+  Future<void> _pullRefresh() async {
+    Loader.show(context, 0);
+    AppData.clearPortfolioLists();
+    Future.delayed(const Duration(milliseconds: 3000), () {
+      Loader.stop();
+      setState(() {
+        AppData.getPortfolioLists();
+      });
+    });
+  }
 
 }
