@@ -2,6 +2,8 @@ import 'package:client/core/models/portfolio.dart';
 import 'package:client/core/models/products.dart';
 import 'package:client/core/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class Var {
   static const e = "";

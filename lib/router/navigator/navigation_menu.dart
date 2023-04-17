@@ -18,6 +18,9 @@ import '../../screens/roles/client/home.dart';
 import '../router.dart';
 import '../../styles/icons/builder_icons.dart';
 import '../../../styles/ui/colors.dart';
+import 'dart:developer';
+import 'package:flutter/services.dart';
+import 'package:ymchat_flutter/ymchat_flutter.dart';
 
 BoxConstraints pageConstraints =
     const BoxConstraints(minWidth: 320, maxWidth: 480, maxHeight: 1000, minHeight: 350);
@@ -39,6 +42,12 @@ class _NavigationMenuState extends State<NavigationMenu> {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
   static CupertinoTabView? returnValue;
+
+  @override
+  void initState() {
+    initilizeChatbot();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +83,20 @@ class _NavigationMenuState extends State<NavigationMenu> {
             onPressed: () => Scaffold.of(context).openDrawer(),
           );
         }),
+      ),
+      // Var.activeUserRole != Var.admin ?
+      floatingActionButton: Container(
+        padding: const EdgeInsets.only(bottom: 55.0, right: 0),
+        child: Align(
+          alignment: Alignment.bottomRight,
+          child: FloatingActionButton.extended(
+            onPressed: () => YmChat.startChatbot(),
+            icon: const Icon(Icons.chat),
+            label: const Text("CHAT"),
+            backgroundColor: Colors.black,
+            foregroundColor: Colors.white,
+          ),
+        ),
       ),
       body: CupertinoTabScaffold(
         tabBar: CupertinoTabBar(
@@ -251,5 +274,47 @@ class _NavigationMenuState extends State<NavigationMenu> {
       ),
       label: Text(label),
     );
+  }
+
+  void initilizeChatbot() {
+    // Initializing chatbot id to work with in the SDK
+    YmChat.setBotId("x1625119673009");
+
+    // Adding payload to communicate with chatbot
+    YmChat.setPayload({"integration": "Flutter"});
+
+    // Enabling UI close button
+    YmChat.showCloseButton(true);
+
+    // Enabling voice input
+    YmChat.setEnableSpeech(true);
+
+    // using new widget
+    YmChat.setVersion(2);
+
+    // Setting statusbar color
+    YmChat.setStatusBarColor("#FFFFFF");
+
+    // Setting close button color
+    YmChat.setCloseButtonColor("#FFFFFF");
+
+    // Using lite version
+    YmChat.useLiteVersion(true);
+
+    // Listening to bot events
+    EventChannel _ymEventChannel = const EventChannel("YMChatEvent");
+    print("ymChat name ->${_ymEventChannel.name}");
+    _ymEventChannel.receiveBroadcastStream().listen((event) {
+      Map ymEvent = event;
+      print("ymChat message ->${ymEvent['data']}");
+      log("${ymEvent['code']} : ${ymEvent['data']}");
+    });
+
+    // Listening to close bot events
+    EventChannel _ymCloseEventChannel = const EventChannel("YMBotCloseEvent");
+    _ymCloseEventChannel.receiveBroadcastStream().listen((event) {
+      bool ymCloseEvent = event;
+      log(event.toString());
+    });
   }
 }

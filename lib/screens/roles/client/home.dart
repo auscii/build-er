@@ -115,6 +115,18 @@ class _ClientHomeState extends State<ClientHome> {
 
   @override
   Widget build(BuildContext context) {
+    
+    floatingActionButton: Container(
+      padding: EdgeInsets.only(bottom: 100.0),
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: FloatingActionButton.extended(
+          onPressed: () {},
+          icon: Icon(Icons.phone_android),
+          label: Text("Authenticate using Phone"),
+        ),
+      ),
+    );
     return SafeArea(
       // minimum: const EdgeInsets.only(top: 30),
       maintainBottomViewPadding: false,
