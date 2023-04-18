@@ -1,4 +1,5 @@
 import 'package:client/core/utils/global.dart';
+import 'package:client/router/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/location.dart';
@@ -26,7 +27,8 @@ class App extends StatelessWidget {
         ),
         darkTheme: ThemeData.light(), //ThemeData.dark(),
         navigatorKey: GlobalNavigator.router,
-        initialRoute: GlobalNavigator.initialRoute(),
+        initialRoute: SharedRoutes.splash,
+        // initialRoute: GlobalNavigator.initialRoute(),
         onGenerateRoute: GlobalNavigator.generateRoute,
       ),
     );

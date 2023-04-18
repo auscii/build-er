@@ -16,14 +16,6 @@ class Ecommerce extends StatefulWidget {
 }
 
 class _EcommerceState extends State<Ecommerce> {
-    List<Map<String, dynamic>> categories = [
-      {"icon": "assets/images/res/products/icons/Flash Icon.svg", "text": "Flash Deal"},
-      {"icon": "assets/images/res/products/icons/Bill Icon.svg", "text": "Bill"},
-      {"icon": "assets/images/res/products/icons/Game Icon.svg", "text": "Game"},
-      {"icon": "assets/images/res/products/icons/Gift Icon.svg", "text": "Daily Gift"},
-      {"icon": "assets/images/res/products/icons/Discover.svg", "text": "More"},
-    ];
-
     var constructionMaterials = 
       Var.productLists.where((i) => i.category == Var.constructionMaterials).toList();
     var constructionTools = 
@@ -67,25 +59,6 @@ class _EcommerceState extends State<Ecommerce> {
             child: Column(
               children: [
                 SizedBox(height: getProportionateScreenHeight(20)),
-                // Padding(
-                //   padding:
-                //       EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [
-                //       SearchField(),
-                //       IconBtnWithCounter(
-                //         svgSrc: "assets/icons/Cart Icon.svg",
-                //         press: () => Navigator.pushNamed(context, CartScreen.routeName),
-                //       ),
-                //       IconBtnWithCounter(
-                //         svgSrc: "assets/icons/Bell.svg",
-                //         numOfitem: 3,
-                //         press: () {},
-                //       ),
-                //     ],
-                //   ),
-                // );
                 SizedBox(height: getProportionateScreenWidth(10)),
                 Container(
                   width: double.infinity,
@@ -295,67 +268,6 @@ class _EcommerceState extends State<Ecommerce> {
       Var.productLists.where((i) => i.category == Var.constructionTools).toList();
   }
 
-}
-
-class IconBtnWithCounter extends StatelessWidget {
-  const IconBtnWithCounter({
-    Key? key,
-    required this.svgSrc,
-    this.numOfitem = 0,
-    required this.press,
-  }) : super(key: key);
-
-  final String svgSrc;
-  final int numOfitem;
-  final GestureTapCallback press;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(100),
-      onTap: press,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Container(
-            padding: EdgeInsets.all(getProportionateScreenWidth(12)),
-            height: getProportionateScreenWidth(46),
-            width: getProportionateScreenWidth(46),
-            decoration: BoxDecoration(
-              color: Color(0xFF979797).withOpacity(0.1),
-              shape: BoxShape.circle,
-            ),
-            child: SvgPicture.asset(svgSrc),
-          ),
-          if (numOfitem != 0)
-            Positioned(
-              top: -3,
-              right: 0,
-              child: Container(
-                height: getProportionateScreenWidth(16),
-                width: getProportionateScreenWidth(16),
-                decoration: BoxDecoration(
-                  color: Color(0xFFFF4848),
-                  shape: BoxShape.circle,
-                  border: Border.all(width: 1.5, color: Colors.white),
-                ),
-                child: Center(
-                  child: Text(
-                    "$numOfitem",
-                    style: TextStyle(
-                      fontSize: getProportionateScreenWidth(10),
-                      height: 1,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            )
-        ],
-      ),
-    );
-  }
 }
 
 class SectionTitle extends StatelessWidget {

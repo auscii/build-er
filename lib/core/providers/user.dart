@@ -19,6 +19,7 @@ class UserProvider extends ChangeNotifier {
 
   init() {
     if (FirebaseAuth.instance.currentUser != null) {
+      AppData.initApplication();
       var userId = FirebaseAuth.instance.currentUser!.uid;
       FirebaseFirestore.instance
           .collection(Var.users)
@@ -36,11 +37,11 @@ class UserProvider extends ChangeNotifier {
       notifyListeners();
     }
 
-    if (_user == UserModel.clear()) {
-      GlobalNavigator.router.currentState!
-          .pushReplacementNamed(GlobalRoutes.auth);
-    }
-    Loader.stop();
+    // if (_user == UserModel.clear()) {
+    //   GlobalNavigator.router.currentState!
+    //       .pushReplacementNamed(GlobalRoutes.auth);
+    // }
+    // Loader.stop();
   }
 
   UserProvider() {

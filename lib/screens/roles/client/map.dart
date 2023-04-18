@@ -9,10 +9,21 @@ import 'package:provider/provider.dart';
 import '../../../core/providers/appdata.dart';
 import '../../../core/providers/location.dart';
 
-class OSM extends StatelessWidget {
-  OSM({super.key});
+class OSM extends StatefulWidget {
+  static const String id = "OSM";
+  const OSM({Key? key}) : super(key: key);
+  @override
+  State<OSM> createState() => _OSMState();
+}
 
+class _OSMState extends State<OSM> {
   final MapController controller = MapController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

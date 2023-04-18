@@ -4,6 +4,7 @@ import 'package:client/screens/roles/client/components/product_details.dart';
 import 'package:client/screens/roles/client/ecommerce.dart';
 import 'package:client/screens/roles/client/locator.dart';
 import 'package:client/screens/roles/contractor/portfolio.dart';
+import 'package:client/screens/shared/splash.dart';
 
 import '../screens/auth/contractor_register.dart';
 import '../screens/auth/resetPassword.dart';
@@ -36,6 +37,7 @@ class SharedRoutes {
   static const String settings = "settings";
   static const String profile = "profile";
   static const String about = "about";
+  static const String splash = SplashScreen.id;
   static const String ecommerce = Ecommerce.id;
 }
 

@@ -54,8 +54,6 @@ flutter:
   assets:
     - assets/images/
     - assets/images/res/
-    - assets/images/res/products/images/
-    - assets/images/res/products/icons/
 
   fonts:
     - family: ProjectBuilder

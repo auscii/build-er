@@ -5,7 +5,6 @@ import 'package:client/core/providers/user.dart';
 import 'package:client/core/utils/global.dart';
 import 'package:client/core/utils/modal.dart';
 import 'package:client/core/utils/toast.dart';
-import 'package:client/screens/roles/contractor/portfolio.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -30,22 +29,22 @@ class AppData extends ChangeNotifier {
   }
 
   AppData() {
-    getClientRequest();
-    getAdminRequest();
-    getServiceRequest();
+    // getClientRequest();
+    // getAdminRequest();
+    // getServiceRequest();
 
-    FirebaseAuth.instance.authStateChanges().listen((event) {
-      if (FirebaseAuth.instance.currentUser == null && event == null) {
-        clientRequestListener.cancel();
-        adminRequestListener.cancel();
-        serviceListener.cancel();
-      }
-      if (FirebaseAuth.instance.currentUser != null && event != null) {
-        clientRequestListener.resume();
-        adminRequestListener.resume();
-        serviceListener.resume();
-      }
-    });
+    // FirebaseAuth.instance.authStateChanges().listen((event) {
+    //   if (FirebaseAuth.instance.currentUser == null && event == null) {
+    //     clientRequestListener.cancel();
+    //     adminRequestListener.cancel();
+    //     serviceListener.cancel();
+    //   }
+    //   if (FirebaseAuth.instance.currentUser != null && event != null) {
+    //     clientRequestListener.resume();
+    //     adminRequestListener.resume();
+    //     serviceListener.resume();
+    //   }
+    // });
   }
 
   List<Client> clients = [];
@@ -64,35 +63,6 @@ class AppData extends ChangeNotifier {
 
   List<ServiceRequest> get serviceRequestC =>
       _serviceRequest.where((req) => req.completed == true).toList();
-
-  Future<void> createServiceRequest(ServiceRequest request) async {
-    return await FirebaseFirestore.instance
-        .collection("serviceRequest")
-        .doc(request.clientId)
-        .collection("Requests")
-        .doc(request.userId)
-        .withConverter(
-          fromFirestore: ServiceRequest.fromFirestore,
-          toFirestore: (ServiceRequest userModel, _) => userModel.toFirestore(),
-        )
-        .set(request);
-  }
-
-  getServiceRequest() {
-    serviceListener = FirebaseFirestore.instance
-        .collection("serviceRequest")
-        .doc(FirebaseAuth.instance.currentUser?.uid)
-        .collection("Requests")
-        .withConverter(
-          fromFirestore: ServiceRequest.fromFirestore,
-          toFirestore: (ServiceRequest userModel, _) => userModel.toFirestore(),
-        )
-        .snapshots()
-        .listen((val) {
-      _serviceRequest = val.docs.map((e) => e.data()).toList();
-      notifyListeners();
-    });
-  }
 
   Future<void> createProduct({required Product product}) async {
     return await FirebaseFirestore.instance
@@ -122,27 +92,28 @@ class AppData extends ChangeNotifier {
   }
 
   static void getPortfolioLists() async {
-    var currentUserId = FirebaseAuth.instance.currentUser!.uid;
-    await FirebaseFirestore.instance
-      .collection(Var.portfolio.toLowerCase())
-      .withConverter(
-        fromFirestore: Portfolio.fromFirestore,
-        toFirestore: (Portfolio values, _) => values.toFirestore())
-      .get()
-      .then((res) {
-        res.docs.forEach((val) {
-          var portfolio = val.data();
-          if (portfolio.createdBy == currentUserId) {
-            Var.portfolioLists.addAll({portfolio});
-          }
-          Var.contractorNearbyPortfolioLists.addAll({portfolio});
+    if (FirebaseAuth.instance.currentUser != null) {
+      var currentUserId = FirebaseAuth.instance.currentUser!.uid;
+      await FirebaseFirestore.instance
+        .collection(Var.portfolio.toLowerCase())
+        .withConverter(
+          fromFirestore: Portfolio.fromFirestore,
+          toFirestore: (Portfolio values, _) => values.toFirestore())
+        .get()
+        .then((res) {
+          res.docs.forEach((val) {
+            var portfolio = val.data();
+            if (portfolio.createdBy == currentUserId) {
+              Var.portfolioLists.addAll({portfolio});
+            }
+            Var.contractorNearbyPortfolioLists.addAll({portfolio});
+          });
+          AppData().notifyListeners();
         });
-        AppData().notifyListeners();
-      });
+    }
   }
 
   static void getProductLists() async {
-    print("getProductLists");
     await FirebaseFirestore.instance
       .collection(Var.productS)
       .withConverter(
@@ -150,11 +121,9 @@ class AppData extends ChangeNotifier {
         toFirestore: (Product values, _) => values.toFirestore())
       .get()
       .then((res) {
-        print("getProductLists res docs");
         res.docs.forEach((val) {
           var products = val.data();
           Var.productLists.addAll({products});
-          print("getProductLists var productLists ->${Var.productLists}");
         });
         AppData().notifyListeners();
       });
@@ -248,56 +217,6 @@ class AppData extends ChangeNotifier {
     return res.data() ?? Client.sample();
   }
 
-  Future<void> createAdminRequest({required AdminRequests payload}) async {
-    return await FirebaseFirestore.instance
-        .collection("adminRequests")
-        .withConverter(
-          fromFirestore: AdminRequests.fromFirestore,
-          toFirestore: (AdminRequests req, _) => req.toFirestore(),
-        )
-        .doc(payload.userId)
-        .set(payload);
-  }
-
-  Future<void> createClientRequest({required ClientRequests payload}) async {
-    return await FirebaseFirestore.instance
-        .collection("clientRequests")
-        .withConverter(
-          fromFirestore: ClientRequests.fromFirestore,
-          toFirestore: (ClientRequests req, _) => req.toFirestore(),
-        )
-        .doc(payload.userId)
-        .set(payload);
-  }
-
-  void getClientRequest() {
-    clientRequestListener = FirebaseFirestore.instance
-        .collection("clientRequests")
-        .withConverter(
-          fromFirestore: ClientRequests.fromFirestore,
-          toFirestore: (ClientRequests userModel, _) => userModel.toFirestore(),
-        )
-        .snapshots()
-        .listen((val) {
-      _clientRequest = val.docs.map((e) => e.data()).toList();
-      notifyListeners();
-    });
-  }
-
-  void getAdminRequest() {
-    adminRequestListener = FirebaseFirestore.instance
-        .collection("adminRequests")
-        .withConverter(
-            fromFirestore: AdminRequests.fromFirestore,
-            toFirestore: (AdminRequests userModel, _) =>
-                userModel.toFirestore())
-        .snapshots()
-        .listen((val) {
-      _adminRequest = val.docs.map((e) => e.data()).toList();
-      notifyListeners();
-    });
-  }
-
   Future<void> updateUserDetails({required String userId}) async {
     final instance = FirebaseFirestore.instance
         .collection(Var.users)
@@ -353,7 +272,6 @@ class AppData extends ChangeNotifier {
 
   static void getPortfolioListsByContractor(String id) async {
     Var.contractorNearbyPortfolioLists.clear();
-    print("getPortfolioListsByContractor");
     await FirebaseFirestore.instance
       .collection(Var.portfolio.toLowerCase())
       // .where("createdBy", isEqualTo: id)
@@ -365,13 +283,22 @@ class AppData extends ChangeNotifier {
         res.docs.forEach((val) {
           var portfolio = val.data();
           if (portfolio.createdBy == id) {
-            print("getPortfolioListsByContractor contractorNearbyPortfolioLists ->${Var.contractorNearbyPortfolioLists}");
             Var.contractorNearbyPortfolioLists.addAll({portfolio});
           }
-          print("getPortfolioListsByContractor res.docs");
         });
         AppData().notifyListeners();
       });
+  }
+
+  static void initApplication() {
+    if (FirebaseAuth.instance.currentUser != null) {
+      AppData.getProductLists();
+      AppData.getUserLists();
+      AppData.getPortfolioLists();
+      AppData.getContractorUser();
+      AppData.getClientUser();
+      AppData.checkUserIfVerified();
+    }
   }
 
 }

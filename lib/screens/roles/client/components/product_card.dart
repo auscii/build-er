@@ -72,23 +72,6 @@ class ProductCard extends StatelessWidget {
                       color: Color(0xFFFF7643),
                     ),
                   ),
-                  /* InkWell(
-                    borderRadius: BorderRadius.circular(50),
-                    onTap: () {},
-                    child: Container(
-                      padding: EdgeInsets.all(getProportionateScreenWidth(8)),
-                      height: getProportionateScreenWidth(28),
-                      width: getProportionateScreenWidth(28),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFF7643).withOpacity(0.15),
-                        shape: BoxShape.circle,
-                      ),
-                      child: SvgPicture.asset(
-                        "assets/images/res/products/icons/Heart Icon_2.svg",
-                        color: Color(0xFFFF4848)
-                      ),
-                    ),
-                  ), */
                 ],
               )
             ],

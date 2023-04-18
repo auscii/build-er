@@ -1,4 +1,5 @@
 import 'package:client/core/providers/appdata.dart';
+import 'package:client/core/utils/toast.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,8 +33,8 @@ class _LoginState extends State<Login> {
     /* TESTING PURPOSES ONLY */
     // _emailController.text = "lsn.stonecold@gmail.com"; // CLIENT
     // _emailController.text = "webmobileappdeveloper@gmail.com"; // CONTRACTOR
-    _emailController.text = "knightdubster@gmail.com"; // ADMIN
-    _passwordController.text = "123qwe";
+    // _emailController.text = "knightdubster@gmail.com"; // ADMIN
+    // _passwordController.text = "123qwe";
     super.initState();
   }
   
@@ -110,6 +111,7 @@ class _LoginState extends State<Login> {
                           height: kIsWeb ? 50 : null,
                           child: ElevatedButton(
                             onPressed: () {
+                              Toast.show("Logging in...");
                               Loader.show(context, 0);
                               if (_formKey.currentState!.validate()) {
                                 _userAuth(
@@ -179,6 +181,7 @@ class _LoginState extends State<Login> {
       email: email,
       password: password,
     );
+    Loader.stop();
   }
 }
 

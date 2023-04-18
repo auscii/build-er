@@ -1,5 +1,6 @@
 import 'package:client/core/utils/toast.dart';
 import 'package:client/router/navigator/menu_drawer.dart';
+import 'package:client/router/routes.dart';
 import 'package:client/screens/roles/admin/admin_products.dart';
 import 'package:client/screens/roles/admin/home.dart';
 import 'package:client/screens/roles/admin/users_lists.dart';
@@ -216,12 +217,29 @@ class _NavigationMenuState extends State<NavigationMenu> {
         tabBuilder: (context, index) {
           CupertinoTabView? home;
           index = NavigationMenu.activeIndex;
-          home = 
-          Var.activeUserRole == Var.client ? 
-          CupertinoTabView(builder: (context) => const ClientHome()) :
-          Var.activeUserRole == Var.contractor ?
-          CupertinoTabView(builder: (context) => const ContractorHome()) :
-          CupertinoTabView(builder: (context) => const AdminHome());
+          home =  CupertinoTabView(builder: (context) => const ClientHome());
+          // home = 
+          // Var.activeUserRole == Var.client ? 
+          // CupertinoTabView(builder: (context) => const ClientHome()) :
+          // Var.activeUserRole == Var.contractor ?
+          // CupertinoTabView(builder: (context) => const ContractorHome()) :
+          // CupertinoTabView(builder: (context) => const AdminHome());
+
+          if (Var.activeUserRole == Var.client) {
+            home =  CupertinoTabView(builder: (context) => const ClientHome());
+          } else if (Var.activeUserRole == Var.contractor) {
+            home =  CupertinoTabView(builder: (context) => const ContractorHome());
+          } else if (Var.activeUserRole == Var.admin) {
+            home =  CupertinoTabView(builder: (context) => const AdminHome());
+          } else {
+            // GlobalNavigator.router.currentState!.pushReplacementNamed(AuthRoutes.onboarding);
+            // GlobalNavigator.push(context, const Onboarding());
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => MyPage()));
+              GlobalNavigator.router.currentState!.pushReplacementNamed(AuthRoutes.onboarding);
+            });
+          }
+          
           switch (index) {
             case 0:
               returnValue = home;

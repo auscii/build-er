@@ -1,16 +1,11 @@
 import 'dart:async';
 import 'package:client/core/models/user.dart';
-import 'package:client/core/utils/loader.dart';
-import 'package:client/core/utils/toast.dart';
-import 'package:client/screens/roles/client/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import '../../../core/providers/location.dart';
 import '../../../core/utils/global.dart';
-import '../../../router/navigator/navigation_menu.dart';
 import '../../../styles/icons/builder_icons.dart';
 import '../../../styles/ui/colors.dart';
 import '../../../core/models/client.dart';
@@ -27,7 +22,6 @@ class Locator extends StatefulWidget {
 
 class _LocatorState extends State<Locator> {
 
-  //TODO: - TO UPDATE GET LISTS OF VERIFIED CONTRACTORS ONLY THEN GET THE LISTS OF ALL PORTFOLIOS
   @override
   void initState() {
     AppData.getUserResultIfVerified(context);

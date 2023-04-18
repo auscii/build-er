@@ -111,7 +111,8 @@ class Var {
   static const ecommerceTagLine2 = "Mega Sale 50% off!";
   static const ourProducts = "Our Products";
   static const contractorHome = "CONTRACTOR HOME";
-  static const startupBg = "assets/images/res/startup-bg.jpg";
+  static const startupBg = "assets/images/res/launch-bg.jpg";
+  static const splashBG = "assets/images/res/splash-bg.png";
   static const addProduct = "+ ADD NEW PRODUCT";
   static const productDescription = "Product Description";
   static const productName = "Product Name";
@@ -167,6 +168,7 @@ class Var {
   static const portfolioCode = "PRTFL";
   static const ratings = "RATINGS";
   static const refresh = "REFRESH";
+  static const splash = "Splashscreen";
   // static const aaa = "aaa";
 
   static const String userPendingForVerification = "DPL1W";

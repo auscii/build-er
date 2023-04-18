@@ -1,10 +1,10 @@
 import 'package:client/core/providers/appdata.dart';
-import 'package:client/core/utils/global.dart';
 import 'package:client/screens/auth/contractor_register.dart';
 import 'package:client/screens/roles/admin/users_lists.dart';
 import 'package:client/screens/roles/client/components/product_details.dart';
 import 'package:client/screens/roles/client/ecommerce.dart';
 import 'package:client/screens/roles/contractor/portfolio.dart';
+import 'package:client/screens/shared/splash.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../screens/auth/resetPassword.dart';
@@ -127,6 +127,8 @@ class GlobalNavigator {
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserLists());
       case PagesRoutes.portfolio:
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const PortfolioScreen());
+      case SharedRoutes.splash:
+        return PageRouteBuilder(pageBuilder: (_, __, ___) => const SplashScreen());
       default:
         return PageRouteBuilder(
             pageBuilder: (_, __, ___) => const AuthNavigator());
@@ -142,9 +144,9 @@ class GlobalNavigator {
     AppData.checkUserIfVerified();
     if (FirebaseAuth.instance.currentUser == null) {
       return AuthRoutes.onboarding; //GlobalRoutes.auth;
-    } else {
-      return PagesRoutes.user;
-    }
+    } 
+    // return AuthRoutes.login;
+    return SharedRoutes.splash;
   }
 
   static void doubleGoBack() {
@@ -158,7 +160,7 @@ class PageRouter {
   static const initialRoute = PagesRoutes.user;
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    Widget page = const ContractorHome();
+    Widget page = const Splash();
 
     switch (settings.name) {
       case PagesRoutes.requestRole:
@@ -189,7 +191,7 @@ class PageRouter {
         page = const PortfolioScreen();
         break;
       default:
-        page = const ContractorHome();
+        page = const Onboarding();
         break;
     }
 
