@@ -298,11 +298,20 @@ class TabbedLayout extends StatelessWidget {
                             Toast.show(Var.verifiedUser);
                             return;
                           }
-                          Modal.promptUserVerify(
-                            context, Var.verifyThisUserMsg 
-                            + (user.name ?? Var.e) + Var.q,
-                            Var.yes, Var.no, user.uid ?? Var.e
+                          Modal.userApproval(
+                            context,
+                            user.userValidID ?? Var.noImageAvailable,
+                            user.name ?? Var.na,
+                            user.uid ?? Var.na,
+                            user.phone ?? Var.na,
+                            user.email ?? Var.na,
+                            user.address?.name ?? Var.na
                           );
+                          // Modal.promptUserVerify(
+                          //   context, Var.verifyThisUserMsg 
+                          //   + (user.name ?? Var.e) + Var.q,
+                          //   Var.yes, Var.no, user.uid ?? Var.e
+                          // );
                         },
                         child: ListTile(
                           // leading: Transform.translate(

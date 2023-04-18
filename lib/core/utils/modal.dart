@@ -203,5 +203,213 @@ class Modal {
       },
     );
   }
+  
+  static Future<dynamic> userApproval(
+    BuildContext context,
+    String userValidID,
+    String name,
+    String id,
+    String phoneNumber,
+    String emailAddress,
+    String address
+  ) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Center(
+            child: 
+              Text(
+                "Here's the Valid ID and user information before user approval:",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: Var.defaultFont,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 21,
+                  color: Colors.black
+                ),
+              )
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const SizedBox(height: 20),
+              Container(
+                margin: EdgeInsets.zero,
+                height: 150,
+                width: 150,
+                child: 
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.network(userValidID)
+                  ),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                margin: EdgeInsets.zero,
+                child: Text(
+                  "Name: $name",
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 18,
+                    color: Colors.black
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                margin: EdgeInsets.zero,
+                child: Text(
+                  "ID No.: $id",
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 18,
+                    color: Colors.black
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                margin: EdgeInsets.zero,
+                child: Text(
+                  "Phone No.: $phoneNumber",
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 18,
+                    color: Colors.black
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                margin: EdgeInsets.zero,
+                child: Text(
+                  "Email Address: $emailAddress",
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 18,
+                    color: Colors.black
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                margin: EdgeInsets.zero,
+                child: Text(
+                  "Address: $address",
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 18,
+                    color: Colors.black
+                  ),
+                ),
+              ),
+              const SizedBox(height: 40),
+              Container(
+                margin: EdgeInsets.zero,
+                child: const Text(
+                  Var.verifyThisUserMsg,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontFamily: Var.defaultFont,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.black
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 25,
+                  right: 25,
+                  // top: getProportionateScreenWidth(2),
+                ),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      child: 
+                        Container(
+                          height: 50,
+                          width: 100,
+                          margin: const EdgeInsets.symmetric(horizontal: 5),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(Radius.circular(25)),
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                  color: const Color.fromARGB(255, 255, 255, 255).withAlpha(100),
+                                  offset: const Offset(1, 1),
+                                  blurRadius: 8,
+                                  spreadRadius: 2
+                              )
+                            ],
+                            color: Colors.green
+                          ),
+                          child: const Text(
+                            Var.yes,
+                            style: TextStyle(
+                              fontFamily: Var.defaultFont,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 19,
+                              color: Colors.white
+                            ),
+                          ),
+                        ),       
+                      onTap: () {
+                        AppData().updateUserDetails(userId: id);
+                        GlobalNavigator.doubleGoBack();
+                      }
+                    ),
+                    GestureDetector(
+                      child: 
+                        Container(
+                          height: 50,
+                          width: 100,
+                          margin: const EdgeInsets.symmetric(horizontal: 5),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(Radius.circular(25)),
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                  color: const Color.fromARGB(255, 255, 255, 255).withAlpha(100),
+                                  offset: const Offset(1, 1),
+                                  blurRadius: 8,
+                                  spreadRadius: 2
+                              )
+                            ],
+                            color: Colors.red
+                          ),
+                          child: const Text(
+                            Var.no,
+                            style: TextStyle(
+                              fontFamily: Var.defaultFont,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 19,
+                              color: Colors.white
+                            ),
+                          ),
+                        ),       
+                      onTap: () => GlobalNavigator.goBack(),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      });
+   }
 
 }

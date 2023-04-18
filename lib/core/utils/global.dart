@@ -138,7 +138,7 @@ class Var {
   static const address = "ADDRESS";
   static const verifyUser = "VERIFY THIS USER";
   static const userVerified = "USER VERIFIED";
-  static const verifyThisUserMsg = "Do you want to verify this user - ";
+  static const verifyThisUserMsg = "Do you want to verify this user?";
   static const contractorRequests = "CONTRACTOR REQUESTS";
   static const clientRequests = "CLIENT REQUESTS";
   static const roles = "roles";
