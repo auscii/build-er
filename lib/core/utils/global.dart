@@ -169,6 +169,7 @@ class Var {
   static const ratings = "RATINGS";
   static const refresh = "REFRESH";
   static const splash = "Splashscreen";
+  static const noAvailablePortfolio = "No available/submitted portfolios...";
   // static const aaa = "aaa";
 
   static const String userPendingForVerification = "DPL1W";

@@ -25,7 +25,7 @@ class _LocatorState extends State<Locator> {
   @override
   void initState() {
     AppData.getUserResultIfVerified(context);
-    print("CLIENT to find contractorNearbyPortfolioLists ->${Var.contractorNearbyPortfolioLists}");
+    // print("CLIENT to find contractorNearbyPortfolioLists ->${Var.contractorNearbyPortfolioLists}");
     super.initState();
   }
 
@@ -39,7 +39,7 @@ class _LocatorState extends State<Locator> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        OSM(),
+        Maps(),
         mapUtils(
           context: context,
           callback: () => _getLocation(context),
@@ -54,14 +54,14 @@ class _LocatorState extends State<Locator> {
   }
 }
 
-class SearchOverlay extends StatefulWidget {
-  const SearchOverlay({Key? key}) : super(key: key);
+class NearbyContractors extends StatefulWidget {
+  const NearbyContractors({Key? key}) : super(key: key);
 
   @override
-  State<SearchOverlay> createState() => _SearchOverlayState();
+  State<NearbyContractors> createState() => _NearbyContractorsState();
 }
 
-class _SearchOverlayState extends State<SearchOverlay> {
+class _NearbyContractorsState extends State<NearbyContractors> {
   Stream<QuerySnapshot<Client>> getClients() {
     return FirebaseFirestore.instance
         .collection('client')
@@ -91,32 +91,26 @@ class _SearchOverlayState extends State<SearchOverlay> {
       results = data;
     } else {
       results = data
-              .where((client) => client.name
-                  .toLowerCase()
-                  .contains(enteredKeyword.toLowerCase()))
-              .toList()
-              .isEmpty
-          ? data
-          : data
-              .where((client) => client.name
-                  .toLowerCase()
-                  .contains(enteredKeyword.toLowerCase()))
-              .toList();
-      // we use the toLowerCase() method to make it case-insensitive
+        .where((client) => client.name
+          .toLowerCase()
+          .contains(enteredKeyword.toLowerCase()))
+        .toList()
+        .isEmpty
+        ? data
+        : data
+        .where((client) => client.name
+            .toLowerCase()
+            .contains(enteredKeyword.toLowerCase()))
+        .toList();
     }
-
-    // Refresh the UI
-    setState(() {
-      data = results;
-    });
+    setState(() => data = results);
   }
 
   @override
   Widget build(BuildContext context) {
     return AppDialog(
       child: SingleChildScrollView(
-        child:
-        Wrap(
+        child: Wrap(
           alignment: WrapAlignment.start,
           crossAxisAlignment: WrapCrossAlignment.start,
           children: [
@@ -218,12 +212,23 @@ class _SearchOverlayState extends State<SearchOverlay> {
             alignment: WrapAlignment.start,
             crossAxisAlignment: WrapCrossAlignment.start,
             children: [
-              Text(
+              const SizedBox(height: 30),
+              Var.selectedContractorPortfolio.isNotEmpty ? Text(
                 "$name ${Var.portfolio.toCapitalized()}",
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 23,
+                  fontFamily: Var.defaultFont,
+                  fontWeight: FontWeight.w700,
+                ),
+              ) : 
+              const Text(
+                Var.noAvailablePortfolio,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 30,
                   fontFamily: Var.defaultFont,
                   fontWeight: FontWeight.w700,
                 ),
@@ -471,65 +476,52 @@ Widget ratings(int? ratingValue) {
   );
 }
 
-Positioned mapUtils(
-    {required BuildContext context, required VoidCallback callback}) {
-  print("from top of mapUtils");
+Positioned mapUtils({
+  required BuildContext context,
+  required VoidCallback callback
+}) {
   return Positioned(
     bottom: 30,
     left: 10,
     right: 10,
     child: Center(
-      // child: ConstrainedBox(
-      //   constraints: pageConstraints,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            // CHAT FAB
-            // ElevatedButton(
-            //   onPressed: () {},
-            //   style: ElevatedButton.styleFrom(
-            //     primary: Colors.black,
-            //     padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 0),
-            //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            //     elevation: 0,
-            //   ),
-            //   child: const Icon(Icons.chat),
-            // ),
-            const SizedBox(height: 10),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 22),
-              decoration: BoxDecoration(
-                color: AppColors.bgDark,
-                borderRadius: BorderRadius.circular(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          const SizedBox(height: 10),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 22),
+            decoration: BoxDecoration(
+              color: AppColors.bgDark,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: TextField(
+              onTap: () {
+                FocusManager.instance.primaryFocus?.unfocus();
+                showDialog(
+                  context: context,
+                  builder: (context) => const NearbyContractors()
+                );
+              },
+              style: const TextStyle(
+                fontFamily: Var.defaultFont,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
               ),
-              child: TextField(
-                onTap: () {
-                  print("find nearby contractors...");
-                  FocusManager.instance.primaryFocus?.unfocus();
-                  showDialog(
-                      context: context,
-                      builder: (context) => const SearchOverlay());
-                },
-                style: const TextStyle(
-                  fontFamily: Var.defaultFont,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
+              decoration: InputDecoration(
+                filled: true,
+                prefixIcon: const Icon(ProjectBuilder.search_filled),
+                fillColor: AppColors.input,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide.none,
                 ),
-                decoration: InputDecoration(
-                  filled: true,
-                  prefixIcon: const Icon(ProjectBuilder.search_filled),
-                  fillColor: AppColors.input,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide.none,
-                  ),
-                  hintText: Var.findNearbyContractors,
-                ),
+                hintText: Var.findNearbyContractors,
               ),
             ),
-          ],
-        ),
-      // ),
+          ),
+        ],
+      ),
     ),
   );
 }

@@ -4,19 +4,17 @@ import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
-
-// 🏘️ Local imports
 import '../../../core/providers/appdata.dart';
 import '../../../core/providers/location.dart';
 
-class OSM extends StatefulWidget {
-  static const String id = "OSM";
-  const OSM({Key? key}) : super(key: key);
+class Maps extends StatefulWidget {
+  static const String id = "Maps";
+  const Maps({Key? key}) : super(key: key);
   @override
-  State<OSM> createState() => _OSMState();
+  State<Maps> createState() => _MapsState();
 }
 
-class _OSMState extends State<OSM> {
+class _MapsState extends State<Maps> {
   final MapController controller = MapController();
 
   @override
@@ -38,11 +36,23 @@ class _OSMState extends State<OSM> {
             onMapReady: () {
               details.getUserLocation(context: context, controller: controller);
               details.locationInstance.onLocationChanged.listen((loc) {
+                final Distance distance = new Distance();
+                print("distance ->$distance");
                 print("latitude -> ${loc.latitude!.toDouble()} longitude -> ${loc.longitude!.toDouble()}");
                 details.updateLocation(
                   LatLng(loc.latitude!.toDouble(), loc.longitude!.toDouble()),
                 );
                 controller.move(details.location, 17);
+                final meter = distance(
+                  new LatLng(loc.latitude!.toDouble(), loc.longitude!.toDouble()),
+                  new LatLng(14.546797, 121.0517604)
+                );
+                print("nearby meters ->$meter");
+                /*
+                Nearest: 
+                  At the equator, an arc-second of longitude approximately equals an arc-second 
+                  of latitude, which is 1/60th of a nautical mile (or 101.27 feet or 30.87 meters).
+                */
               });
             },
           ),
@@ -70,9 +80,10 @@ class _OSMState extends State<OSM> {
                   );
                 }).toList(),
                 polygonOptions: const PolygonOptions(
-                    borderColor: Colors.blueAccent,
-                    color: Colors.black12,
-                    borderStrokeWidth: 3),
+                  borderColor: Colors.blueAccent,
+                  color: Colors.black12,
+                  borderStrokeWidth: 3
+                ),
                 builder: (context, markers) {
                   return FloatingActionButton(
                     onPressed: null,

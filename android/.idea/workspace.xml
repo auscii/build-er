@@ -10,130 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e111177e-1a4d-468a-bcf5-14eafdc46362" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v21/launch_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-v21/launch_background.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/android_city.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher_foreground.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher_foreground.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/launch_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/launch_background.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/startup_bg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/startup_bg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/startup_bg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/startup_bg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/startup_bg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/asdec-logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/asdec-sm-coast.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/asec-building.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/asec-logo.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/build-er.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/cki-logo.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/cki-restaurants.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/datem-buildings.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/datem-logo.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/dewalt-logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/ff-fishport.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/ff-logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/makita-logo.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/monolith-logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/monolith-moa-arena.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/fonts/muli/Muli-Bold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/fonts/muli/Muli-BoldItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/fonts/muli/Muli-ExtraLight.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/fonts/muli/Muli-ExtraLightItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/fonts/muli/Muli-Italic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/fonts/muli/Muli-Light.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/fonts/muli/Muli-LightItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/fonts/muli/Muli-Semi-BoldItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/fonts/muli/Muli-SemiBold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/fonts/muli/Muli.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Back ICon.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Bell.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Bill Icon.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Call.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Camera Icon.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Cart Icon.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Cash.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Chat bubble Icon.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Check mark rounde.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Close.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Conversation.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Discover.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Error.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Flash Icon.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Game Icon.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Gift Icon.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Heart Icon.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Heart Icon_2.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Location point.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Lock.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Log out.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Mail.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Parcel.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Phone.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Plus Icon.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Question mark.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Search Icon.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Settings.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Shop Icon.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Star Icon.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Success.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/Trash.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/User Icon.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/User.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/arrow_right.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/facebook-2.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/google-icon.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/receipt.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/remove.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/icons/twitter.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/Image Banner 2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/Image Banner 3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/Image Popular Product 2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/Image Popular Product 3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/Image_Popular_Product_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/Pattern Success.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/Profile Image.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/apple-pay.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/fedex-express.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/glap.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/google-pay.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/mastercard-2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/paypal.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/product 1 image.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/ps4_console_blue_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/ps4_console_blue_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/ps4_console_blue_3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/ps4_console_blue_4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/ps4_console_white_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/ps4_console_white_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/ps4_console_white_3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/ps4_console_white_4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/shoes2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/splash_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/splash_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/splash_3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/success.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/tshirt.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/visa.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/products/images/wireless_headset.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/stanley-logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../assets/images/res/startup-bg.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/core/core.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/core.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/core/providers/appdata.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/providers/appdata.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/core/providers/location.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/providers/location.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/core/providers/user.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/providers/user.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/core/utils/global.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/utils/global.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/router/navigator/navigation_menu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/router/navigator/navigation_menu.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/router/router.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/router/router.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/router/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/router/routes.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/screens/auth/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/auth/login.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/screens/roles/client/components/product_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/roles/client/components/product_card.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/screens/roles/client/components/product_description.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/roles/client/components/product_description.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/screens/roles/client/ecommerce.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/roles/client/ecommerce.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/screens/roles/client/locator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/roles/client/locator.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/screens/roles/client/map.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/roles/client/map.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/screens/shared/settings.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/shared/settings.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,7 +62,11 @@
     &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/seanaustinnarvasa/Documents/Temp/testing/web/build-er/android/app/src/main/res/mipmap-hdpi&quot;
+    &quot;last_opened_file_path&quot;: &quot;/Users/seanaustinnarvasa/Documents/Temp/testing/web/build-er/android/app/src/main/res/mipmap-hdpi&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
 }</component>
   <component name="RecentsManager">

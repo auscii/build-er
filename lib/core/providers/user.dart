@@ -19,7 +19,7 @@ class UserProvider extends ChangeNotifier {
 
   init() {
     if (FirebaseAuth.instance.currentUser != null) {
-      AppData.initApplication();
+      // AppData.initApplication();
       var userId = FirebaseAuth.instance.currentUser!.uid;
       FirebaseFirestore.instance
           .collection(Var.users)
