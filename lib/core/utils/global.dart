@@ -186,6 +186,7 @@ class Var {
     constructionTools,
   ];
   static bool userIsVerified = false;
+  static bool userReadsNearbyContractors = false;
 
   static Product? product;
   static List<Product> productLists = [];
@@ -195,6 +196,7 @@ class Var {
   static List<UserModel> usersLists = [];
   static List<UserModel> filteredClientUsers = [];
   static List<UserModel> filteredContractorUsers = [];
+  static List<UserModel> nearbyContractorUsers = [];
 
   static charRandomizer() {
     final now = DateTime.now();

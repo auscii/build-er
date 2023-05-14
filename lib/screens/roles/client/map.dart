@@ -1,3 +1,4 @@
+import 'package:client/core/utils/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
@@ -16,6 +17,12 @@ class Maps extends StatefulWidget {
 
 class _MapsState extends State<Maps> {
   final MapController controller = MapController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -37,22 +44,22 @@ class _MapsState extends State<Maps> {
               details.getUserLocation(context: context, controller: controller);
               details.locationInstance.onLocationChanged.listen((loc) {
                 final Distance distance = new Distance();
-                print("distance ->$distance");
-                print("latitude -> ${loc.latitude!.toDouble()} longitude -> ${loc.longitude!.toDouble()}");
+                double currentUserLatitude = loc.latitude!.toDouble();
+                double currentUserLongitude = loc.longitude!.toDouble();
+                print("currentUserLatitude -> $currentUserLatitude currentUserLongitude -> $currentUserLongitude");
                 details.updateLocation(
-                  LatLng(loc.latitude!.toDouble(), loc.longitude!.toDouble()),
+                  LatLng(
+                    currentUserLatitude,
+                    currentUserLongitude
+                  ),
                 );
                 controller.move(details.location, 17);
-                final meter = distance(
-                  new LatLng(loc.latitude!.toDouble(), loc.longitude!.toDouble()),
-                  new LatLng(14.546797, 121.0517604)
-                );
-                print("nearby meters ->$meter");
-                /*
-                Nearest: 
-                  At the equator, an arc-second of longitude approximately equals an arc-second 
-                  of latitude, which is 1/60th of a nautical mile (or 101.27 feet or 30.87 meters).
-                */
+                if (!Var.userReadsNearbyContractors) {
+                  AppData.getNearbyContractorUsers(
+                    currentUserLatitude,
+                    currentUserLongitude,
+                  );
+                }
               });
             },
           ),

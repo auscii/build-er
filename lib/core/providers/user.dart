@@ -22,13 +22,13 @@ class UserProvider extends ChangeNotifier {
       // AppData.initApplication();
       var userId = FirebaseAuth.instance.currentUser!.uid;
       FirebaseFirestore.instance
-          .collection(Var.users)
-          .doc(userId)
-          .withConverter(
-              fromFirestore: UserModel.fromFirestore,
-              toFirestore: (UserModel userModel, _) => userModel.toFirestore())
-          .get()
-          .then((snap) {
+        .collection(Var.users)
+        .doc(userId)
+        .withConverter(
+            fromFirestore: UserModel.fromFirestore,
+            toFirestore: (UserModel userModel, _) => userModel.toFirestore())
+        .get()
+        .then((snap) {
         _user = snap.data()!;
         notifyListeners();
       });

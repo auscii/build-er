@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import '../../core/models/address.dart';
 import '../models/user.dart';
 import '../models/client.dart';
+import 'package:latlong2/latlong.dart';
 
 class AppData extends ChangeNotifier {
   late StreamSubscription<QuerySnapshot<ClientRequests>> clientRequestListener;
@@ -157,6 +158,44 @@ class AppData extends ChangeNotifier {
         res.docs.forEach((val) {
           var users = val.data();
           Var.filteredContractorUsers.addAll({users});
+        });
+        AppData().notifyListeners();
+      });
+  }
+
+  static void getNearbyContractorUsers(
+    double userLatitude,
+    double userLongitude,
+  ) async {
+    final Distance distance = new Distance();
+    double nearbyMeters = 0.0;
+    await FirebaseFirestore.instance
+      .collection(Var.users)
+      .where(Var.roles, isEqualTo: Var.contractor)
+      .withConverter(
+        fromFirestore: UserModel.fromFirestore,
+        toFirestore: (UserModel values, _) => values.toFirestore())
+      .get()
+      .then((res) {
+        res.docs.forEach((val) {
+          var users = val.data();
+          nearbyMeters = distance(
+            LatLng(
+              userLatitude,
+              userLongitude
+            ),
+            LatLng(
+              users.address?.position.latitude.toDouble() ?? 0.0,
+              users.address?.position.longitude.toDouble() ?? 0.0
+            ),
+          );
+          // print("getNearbyContractorUsers getting nearbyMeters ->$nearbyMeters");
+          if (nearbyMeters <= 2500.0) {
+            // print("getNearbyContractorUsers true nearbyMeters ->$nearbyMeters");
+            // print('getNearbyContractorUsers uid ->${users.uid}');
+            Var.nearbyContractorUsers.addAll({users});
+            Var.userReadsNearbyContractors = true;
+          }
         });
         AppData().notifyListeners();
       });

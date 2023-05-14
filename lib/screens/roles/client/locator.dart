@@ -83,11 +83,9 @@ class _NearbyContractorsState extends State<NearbyContractors> {
     super.initState();
   }
 
-  // This function is called whenever the text field changes
   void runFilter(String enteredKeyword) {
     List<Client> results = [];
     if (enteredKeyword.isEmpty) {
-      // if the search field is empty or only contains white-space, we'll display all users
       results = data;
     } else {
       results = data
@@ -125,7 +123,7 @@ class _NearbyContractorsState extends State<NearbyContractors> {
               ),
             ),
             Column(
-              children: Var.filteredContractorUsers.map((user) {
+              children: Var.nearbyContractorUsers.map((user) {
                 return Container(
                   margin: EdgeInsets.zero,
                   child: GestureDetector(
