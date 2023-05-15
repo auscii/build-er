@@ -1,3 +1,4 @@
+import 'package:client/core/models/notifications.dart';
 import 'package:client/core/models/portfolio.dart';
 import 'package:client/core/models/products.dart';
 import 'package:client/core/models/user.dart';
@@ -93,6 +94,7 @@ class Var {
   static const ffCruz = "F.F. Cruz Co., Inc.";
   static const monolithConstruction = "Monolith Construction Development Corporation";
   static const portfolio = "PORTFOLIO";
+  static const notification = "NOTIFICATION";
   static const user = "USERS";
   static const products = "PRODUCTS";
   static const materialIcons = "MaterialIcons";
@@ -166,6 +168,7 @@ class Var {
   static const companyLogo = "COMPANY LOGO";
   static const previousCompany = "PREVIOUS COMPANY";
   static const portfolioCode = "PRTFL";
+  static const notifCode = "NTF";
   static const ratings = "RATINGS";
   static const refresh = "REFRESH";
   static const splash = "Splashscreen";
@@ -197,6 +200,7 @@ class Var {
   static List<UserModel> filteredClientUsers = [];
   static List<UserModel> filteredContractorUsers = [];
   static List<UserModel> nearbyContractorUsers = [];
+  static List<Notifications> notifLists = [];
 
   static charRandomizer() {
     final now = DateTime.now();

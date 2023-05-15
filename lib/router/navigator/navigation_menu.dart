@@ -1,3 +1,4 @@
+import 'package:client/core/models/notifications.dart';
 import 'package:client/core/utils/toast.dart';
 import 'package:client/router/navigator/menu_drawer.dart';
 import 'package:client/router/routes.dart';
@@ -72,32 +73,24 @@ class _NavigationMenuState extends State<NavigationMenu> {
           ),
         ),
         centerTitle: true,
-        actions: [
-          Container(
-            height: 50,
-            width: 50,
-            margin: EdgeInsets.zero,
-            child: DropdownButton<String>(
-              underline: const SizedBox(),
-              icon: const Icon(
-                Icons.notifications,
-                color: Colors.white
-              ),
-              dropdownColor: Colors.white,
-              focusColor: Colors.black,
-              isExpanded: false,
-              enableFeedback: true,
-              items: <String>['A', 'B', 'C', 'D'].map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
+        actions: <Widget>[
+          PopupMenuButton<Notifications>(
+            onSelected:(value) {
+              Toast.show("Pressed: ${value.actionMessage}");
+            },
+            icon: const Icon(
+              Icons.notifications,
+              color: Colors.white
+            ),
+            itemBuilder: (BuildContext context) {
+              return Var.notifLists.map((Notifications notifs) {
+                return PopupMenuItem<Notifications>(
+                  value: notifs,
+                  child: Text(notifs.actionMessage),
                 );
-              }).toList(),
-              onChanged: (index) {
-                Toast.show("Pressed: $index");
-              },
-            )
-          )
+              }).toList();
+            },
+          ),
         ],
         leading: Builder(builder: (context) {
           return IconButton(

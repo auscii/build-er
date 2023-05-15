@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:client/core/models/notifications.dart';
 import 'package:client/core/models/portfolio.dart';
 import 'package:client/core/models/products.dart';
 import 'package:client/core/providers/user.dart';
@@ -337,7 +338,39 @@ class AppData extends ChangeNotifier {
       AppData.getContractorUser();
       AppData.getClientUser();
       AppData.checkUserIfVerified();
+      AppData.getNotifications();
     }
+  }
+
+  static Future<void> storeNewNotification({
+    required Notifications notif
+  }) async {
+    return await FirebaseFirestore.instance
+      .collection(Var.notification.toLowerCase())
+      .doc(notif.id.toString())
+      .withConverter(
+          fromFirestore: Notifications.fromFirestore,
+          toFirestore: (Notifications value, _) => value.toFirestore())
+      .set(notif)
+      .then((value) {
+        print("Store new notification for id: ${notif.id.toString()}");
+      });
+  }
+
+  static void getNotifications() async {
+    await FirebaseFirestore.instance
+      .collection(Var.notification.toLowerCase())
+      .withConverter(
+          fromFirestore: Notifications.fromFirestore,
+          toFirestore: (Notifications notifs, _) => notifs.toFirestore())
+      .get()
+      .then((res) {
+      res.docs.forEach((val) {
+        var not = val.data();
+        Var.notifLists.addAll({not});
+      });
+      AppData().notifyListeners();
+    });
   }
 
 }

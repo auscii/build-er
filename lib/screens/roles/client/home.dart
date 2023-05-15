@@ -1,3 +1,4 @@
+import 'package:client/core/models/notifications.dart';
 import 'package:client/core/providers/appdata.dart';
 import 'package:client/core/providers/user.dart';
 import 'package:client/core/utils/global.dart';
@@ -28,6 +29,16 @@ class _ClientHomeState extends State<ClientHome> {
         AppData.getPortfolioLists();
       });
     });
+    // AppData.storeNewNotification(
+    //   notif: Notifications(
+    //     id: "${Var.notifCode}${Var.charRandomizer()}",
+    //     actionMessage: "New logged in",
+    //     type: "ADD",
+    //     createdAt: "2023-02-15 22:00:23:00 Z",
+    //     createdBy: "lsn.stonecold@gmail.com",
+    //     status: 1
+    //   )
+    // );
     super.initState();
   }
 
