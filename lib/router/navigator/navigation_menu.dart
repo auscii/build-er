@@ -72,13 +72,32 @@ class _NavigationMenuState extends State<NavigationMenu> {
           ),
         ),
         centerTitle: true,
-        // actions: [NotificationButton()],
         actions: [
-          IconButton(icon: const Icon(Icons.notifications),
-          color: Colors.white,
-          onPressed: () {
-            Toast.show(Var.featureNotAvailable);
-          }),
+          Container(
+            height: 50,
+            width: 50,
+            margin: EdgeInsets.zero,
+            child: DropdownButton<String>(
+              underline: const SizedBox(),
+              icon: const Icon(
+                Icons.notifications,
+                color: Colors.white
+              ),
+              dropdownColor: Colors.white,
+              focusColor: Colors.black,
+              isExpanded: false,
+              enableFeedback: true,
+              items: <String>['A', 'B', 'C', 'D'].map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: (index) {
+                Toast.show("Pressed: $index");
+              },
+            )
+          )
         ],
         leading: Builder(builder: (context) {
           return IconButton(
