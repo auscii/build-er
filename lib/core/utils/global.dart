@@ -3,6 +3,7 @@ import 'package:client/core/models/portfolio.dart';
 import 'package:client/core/models/products.dart';
 import 'package:client/core/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -173,6 +174,9 @@ class Var {
   static const refresh = "REFRESH";
   static const splash = "Splashscreen";
   static const noAvailablePortfolio = "No available/submitted portfolios...";
+  static const approval = "APPROVAL";
+  static const approvalAction = "The administrator approved your user verification.";
+  static const noAvailableNotifs = "No available notifications...";
   // static const aaa = "aaa";
 
   static const String userPendingForVerification = "DPL1W";
@@ -201,9 +205,10 @@ class Var {
   static List<UserModel> filteredContractorUsers = [];
   static List<UserModel> nearbyContractorUsers = [];
   static List<Notifications> notifLists = [];
+  static var now = DateTime.now();
+  static String currentUserID = FirebaseAuth.instance.currentUser?.uid ?? Var.e;
 
   static charRandomizer() {
-    final now = DateTime.now();
     return now.microsecondsSinceEpoch.toString();
   }
 

@@ -76,7 +76,11 @@ class _NavigationMenuState extends State<NavigationMenu> {
         actions: <Widget>[
           PopupMenuButton<Notifications>(
             onSelected:(value) {
-              Toast.show("Pressed: ${value.actionMessage}");
+              Toast.show(
+                value.toUser == Var.currentUserID ?
+                value.actionMessage : 
+                Var.noAvailableNotifs
+              );
             },
             icon: const Icon(
               Icons.notifications,
@@ -86,7 +90,11 @@ class _NavigationMenuState extends State<NavigationMenu> {
               return Var.notifLists.map((Notifications notifs) {
                 return PopupMenuItem<Notifications>(
                   value: notifs,
-                  child: Text(notifs.actionMessage),
+                  child: Text(
+                    notifs.toUser == Var.currentUserID ?
+                    notifs.actionMessage : 
+                    Var.noAvailableNotifs
+                  ),
                 );
               }).toList();
             },

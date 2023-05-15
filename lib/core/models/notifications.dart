@@ -4,6 +4,7 @@ class Notifications {
   String id;
   String actionMessage;
   String type;
+  String toUser;
   String createdAt;
   String createdBy;
   int status;
@@ -12,6 +13,7 @@ class Notifications {
     required this.id,
     required this.actionMessage,
     required this.type,
+    required this.toUser,
     required this.createdAt,
     required this.createdBy,
     required this.status
@@ -22,22 +24,12 @@ class Notifications {
       "id": id,
       "actionMessage": actionMessage,
       "type": type,
+      "toUser": toUser,
       "createdAt": createdAt,
       "createdBy": createdBy,
       "status": status
     };
   }
-
-  // factory Notifications.fromFirestore(Map<String, dynamic> data) {
-  //   return Notifications(
-  //     id: data['id'],
-  //     actionMessage: data['actionMessage'],
-  //     type: data['type'],
-  //     createdAt: data['createdAt'],
-  //     createdBy: data['createdBy'],
-  //     status: data['status'],
-  //   );
-  // }
 
   factory Notifications.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -48,6 +40,7 @@ class Notifications {
       id: data['id'],
       actionMessage: data['actionMessage'],
       type: data['type'],
+      toUser: data['toUser'],
       createdAt: data['createdAt'],
       createdBy: data['createdBy'],
       status: data['status'],
