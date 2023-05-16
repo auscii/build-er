@@ -477,7 +477,7 @@ class UserProvider extends ChangeNotifier {
 
   static void clearUserLists() {
     Var.filteredClientUsers.clear();
-    Var.filteredContractorUsers.clear();
+    Var.notifLists.clear();
     AppData.getContractorUser();
     AppData.getClientUser();
   }

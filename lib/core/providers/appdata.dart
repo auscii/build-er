@@ -269,8 +269,6 @@ class AppData extends ChangeNotifier {
       instance.update({
         Var.isUserVerified: Var.adminApprovedUserVerification
       });
-      print("dateNow ->${Var.now.toString()}");
-      print("dateMicrosecondsSinceEpoch ->${Var.now.microsecondsSinceEpoch.toString()}");
       storeNewNotification(
         notif: Notifications(
           id: "${Var.notifCode}${Var.charRandomizer()}",

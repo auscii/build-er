@@ -31,7 +31,8 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     /* TESTING PURPOSES ONLY */
-    _emailController.text = "lsn.stonecold@gmail.com"; // CLIENT
+    // _emailController.text = "lsn.stonecold@gmail.com"; // CLIENT
+    _emailController.text = "xclient@gmail.com"; // CLIENT
     // _emailController.text = "webmobileappdeveloper@gmail.com"; // CONTRACTOR
     // _emailController.text = "knightdubster@gmail.com"; // ADMIN
     _passwordController.text = "123qwe";
@@ -175,6 +176,7 @@ class _LoginState extends State<Login> {
     required String email,
     required String password,
   }) {
+    AppData.initApplication();
     Provider.of<UserProvider>(context, listen: false).authUser(
       context: context,
       signInMethods: SignInMethods.email,

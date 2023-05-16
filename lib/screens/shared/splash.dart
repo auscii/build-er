@@ -17,7 +17,7 @@ class SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    AppData.initApplication();
+    // AppData.initApplication();
     Future.wait([Future.delayed(const Duration(seconds: 3))]).whenComplete(
       () => GlobalNavigator.navigateToScreen(const NavigationMenu())
     );

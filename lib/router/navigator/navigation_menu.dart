@@ -87,14 +87,17 @@ class _NavigationMenuState extends State<NavigationMenu> {
               color: Colors.white
             ),
             itemBuilder: (BuildContext context) {
-              return Var.notifLists.map((Notifications notifs) {
+              return Var.notifLists.where((n) => n.toUser == Var.currentUserID).map((Notifications notifs) {
                 return PopupMenuItem<Notifications>(
                   value: notifs,
                   child: Text(
-                    notifs.toUser == Var.currentUserID ?
-                    notifs.actionMessage : 
-                    Var.noAvailableNotifs
-                  ),
+                    notifs.actionMessage
+                  )
+                  // child: Text(
+                  //   notifs.toUser == Var.currentUserID ?
+                  //   notifs.actionMessage : 
+                  //   Var.noAvailableNotifs
+                  // ),
                 );
               }).toList();
             },
