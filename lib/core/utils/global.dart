@@ -1,3 +1,4 @@
+import 'package:client/core/models/messages.dart';
 import 'package:client/core/models/notifications.dart';
 import 'package:client/core/models/portfolio.dart';
 import 'package:client/core/models/products.dart';
@@ -96,6 +97,7 @@ class Var {
   static const monolithConstruction = "Monolith Construction Development Corporation";
   static const portfolio = "PORTFOLIO";
   static const notification = "NOTIFICATION";
+  static const messages = "MESSAGES";
   static const user = "USERS";
   static const products = "PRODUCTS";
   static const materialIcons = "MaterialIcons";
@@ -170,6 +172,7 @@ class Var {
   static const previousCompany = "PREVIOUS COMPANY";
   static const portfolioCode = "PRTFL";
   static const notifCode = "NTF";
+  static const msCode = "MS";
   static const ratings = "RATINGS";
   static const refresh = "REFRESH";
   static const splash = "Splashscreen";
@@ -177,6 +180,9 @@ class Var {
   static const approval = "APPROVAL";
   static const approvalAction = "The administrator approved your user verification.";
   static const noAvailableNotifs = "No available notifications...";
+  static const messageSuccess = "Message successfully sent!";
+  static const requiredField = "Please fill-up input fields.";
+  static const createdAt = "createdAt";
   // static const aaa = "aaa";
 
   static const String userPendingForVerification = "DPL1W";
@@ -203,8 +209,10 @@ class Var {
   static List<UserModel> usersLists = [];
   static List<UserModel> filteredClientUsers = [];
   static List<UserModel> filteredContractorUsers = [];
+  static List<UserModel> allUsers = [];
   static List<UserModel> nearbyContractorUsers = [];
   static List<Notifications> notifLists = [];
+  static List<Messages> messageLists = [];
   static var now = DateTime.now();
   static String currentUserID = FirebaseAuth.instance.currentUser?.uid ?? Var.e;
 

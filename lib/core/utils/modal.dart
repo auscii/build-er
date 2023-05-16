@@ -1,3 +1,4 @@
+import 'package:client/core/models/user.dart';
 import 'package:client/core/providers/appdata.dart';
 import 'package:client/core/providers/user.dart';
 import 'package:client/core/utils/global.dart';
@@ -8,6 +9,7 @@ import 'package:client/styles/ui/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Modal {
   static final Modal _instance = Modal._internal();
@@ -169,7 +171,7 @@ class Modal {
           ),
         );
       });
-   }
+  }
 
   static modalLoader(
     BuildContext context, String title, String subject) async {
@@ -410,6 +412,6 @@ class Modal {
           ),
         );
       });
-   }
-
+  }
+  
 }

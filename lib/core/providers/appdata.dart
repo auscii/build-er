@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'package:client/core/models/messages.dart';
 import 'package:client/core/models/notifications.dart';
 import 'package:client/core/models/portfolio.dart';
 import 'package:client/core/models/products.dart';
 import 'package:client/core/providers/user.dart';
 import 'package:client/core/utils/global.dart';
+import 'package:client/core/utils/loader.dart';
 import 'package:client/core/utils/modal.dart';
 import 'package:client/core/utils/toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -159,6 +161,7 @@ class AppData extends ChangeNotifier {
         res.docs.forEach((val) {
           var users = val.data();
           Var.filteredContractorUsers.addAll({users});
+          Var.allUsers.addAll({users});
         });
         AppData().notifyListeners();
       });
@@ -214,6 +217,7 @@ class AppData extends ChangeNotifier {
         res.docs.forEach((val) {
           var users = val.data();
           Var.filteredClientUsers.addAll({users});
+          Var.allUsers.addAll({users});
         });
         AppData().notifyListeners();
       });
@@ -350,6 +354,7 @@ class AppData extends ChangeNotifier {
       AppData.getClientUser();
       AppData.checkUserIfVerified();
       AppData.getNotifications();
+      AppData.getMessages();
     }
   }
 
@@ -371,6 +376,7 @@ class AppData extends ChangeNotifier {
   static void getNotifications() async {
     await FirebaseFirestore.instance
       .collection(Var.notification.toLowerCase())
+      .orderBy(Var.createdAt, descending: true)
       .withConverter(
           fromFirestore: Notifications.fromFirestore,
           toFirestore: (Notifications notifs, _) => notifs.toFirestore())
@@ -379,6 +385,40 @@ class AppData extends ChangeNotifier {
       res.docs.forEach((val) {
         var not = val.data();
         Var.notifLists.addAll({not});
+      });
+      AppData().notifyListeners();
+    });
+  }
+
+  static Future<void> sendMessage({
+    required Messages mess
+  }) async {
+    return await FirebaseFirestore.instance
+      .collection(Var.messages.toLowerCase())
+      .doc()
+      .withConverter(
+          fromFirestore: Messages.fromFirestore,
+          toFirestore: (Messages value, _) => value.toFirestore())
+      .set(mess)
+      .then((value) {
+        Var.messageLists.clear();
+        getMessages();
+        print("${Var.messageSuccess} ${mess.id.toString()}");
+      });
+  }
+
+  static void getMessages() async {
+    await FirebaseFirestore.instance
+      .collection(Var.messages.toLowerCase())
+      .orderBy(Var.createdAt, descending: true)
+      .withConverter(
+          fromFirestore: Messages.fromFirestore,
+          toFirestore: (Messages notifs, _) => notifs.toFirestore())
+      .get()
+      .then((res) {
+      res.docs.forEach((val) {
+        var mes = val.data();
+        Var.messageLists.addAll({mes});
       });
       AppData().notifyListeners();
     });

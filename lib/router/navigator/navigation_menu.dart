@@ -1,4 +1,8 @@
+import 'package:client/core/models/messages.dart';
 import 'package:client/core/models/notifications.dart';
+import 'package:client/core/models/user.dart';
+import 'package:client/core/providers/appdata.dart';
+import 'package:client/core/utils/loader.dart';
 import 'package:client/core/utils/toast.dart';
 import 'package:client/router/navigator/menu_drawer.dart';
 import 'package:client/router/routes.dart';
@@ -45,9 +49,11 @@ class _NavigationMenuState extends State<NavigationMenu> {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
   static CupertinoTabView? returnValue;
+  static TextEditingController chatControllerField = new TextEditingController();
 
   @override
   void initState() {
+    print("Var.allUsers ->${Var.allUsers}");
     initilizeChatbot();
     super.initState();
   }
@@ -55,8 +61,9 @@ class _NavigationMenuState extends State<NavigationMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.bgDark,
-      drawer: const MenuDrawer(),//customDrawer(context),
+      drawer: const MenuDrawer(),
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
         elevation: 0,
@@ -87,7 +94,8 @@ class _NavigationMenuState extends State<NavigationMenu> {
               color: Colors.white
             ),
             itemBuilder: (BuildContext context) {
-              return Var.notifLists.where((n) => n.toUser == Var.currentUserID).map((Notifications notifs) {
+              return Var.notifLists.where((n) => n.toUser == Var.currentUserID)
+                .map((Notifications notifs) {
                 return PopupMenuItem<Notifications>(
                   value: notifs,
                   child: Text(
@@ -122,7 +130,8 @@ class _NavigationMenuState extends State<NavigationMenu> {
         child: Align(
           alignment: Alignment.bottomRight,
           child: FloatingActionButton.extended(
-            onPressed: () => YmChat.startChatbot(),
+            // onPressed: () => YmChat.startChatbot(),
+            onPressed: () => selectChatUser(context), //Modal.privateChat(context, ""),
             icon: const Icon(Icons.chat),
             label: const Text("CHAT"),
             backgroundColor: Colors.black,
@@ -366,4 +375,325 @@ class _NavigationMenuState extends State<NavigationMenu> {
       log(event.toString());
     });
   }
+  
+  Future<dynamic> selectChatUser(BuildContext context) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Center(
+            child: 
+              Text(
+                "Please select user to Chat",
+                style: TextStyle(
+                  fontFamily: Var.defaultFont,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 21,
+                  color: Colors.black
+                ),
+              )
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              // Container(
+              //   margin: EdgeInsets.zero,
+              //   child: const Text(
+              //     "Users:",
+              //     textAlign: TextAlign.justify,
+              //     style: TextStyle(
+              //       fontFamily: Var.defaultFont,
+              //       fontWeight: FontWeight.normal,
+              //       fontSize: 19,
+              //       color: Colors.black
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(height: 15),
+              Container(
+                height: 75,
+                width: double.infinity,
+                margin: const EdgeInsets.symmetric(horizontal: 28),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(25)),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      color: const Color.fromARGB(255, 255, 255, 255).withAlpha(100),
+                      offset: const Offset(1, 1),
+                      blurRadius: 8,
+                      spreadRadius: 2
+                    )
+                  ],
+                  color: Colors.black
+                ),
+                child: Expanded(
+                  child: DropdownButton<UserModel>(
+                    focusColor: Colors.black,
+                    dropdownColor: Colors.black,
+                    value: Var.allUsers.where(
+                      (u) => u.isUserVerified == Var.adminApprovedUserVerification &&
+                      u.uid != Var.currentUserID
+                    ).first,
+                    icon: const Icon(
+                      Icons.arrow_drop_down_circle_sharp,
+                      color: Colors.white
+                    ),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.white),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.black,
+                    ),
+                    onChanged: (UserModel? value) {
+                      privateChat(context, value!.name ?? Var.e, value.uid ?? Var.e);
+                    },
+                    items: Var.allUsers.where(
+                      (u) => u.isUserVerified == Var.adminApprovedUserVerification &&
+                      u.uid != Var.currentUserID
+                    ).map<DropdownMenuItem<UserModel>>((UserModel value) {
+                      return DropdownMenuItem<UserModel>(
+                        value: value,
+                        child: Text(value.name ?? Var.na),
+                      );
+                    }).toList(),
+                  )
+                ),
+                // const Text(
+                //   Var.ok,
+                //   style: TextStyle(
+                //     backgroundColor: AppColors.primary,
+                //     fontFamily: Var.defaultFont,
+                //     fontWeight: FontWeight.bold,
+                //     fontSize: 19,
+                //     color: Colors.white
+                //   ),
+                // ),
+              ),
+            ],
+          ),
+        );
+      });
+  }
+  
+  Future<dynamic> privateChat(
+    BuildContext context, 
+    String chatName,
+    String chatUserID
+  ) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Center(
+            child: Text(
+              "Private message with - $chatName",
+              style: const TextStyle(
+                fontFamily: Var.defaultFont,
+                fontWeight: FontWeight.bold,
+                fontSize: 21,
+                color: Colors.black
+              ),
+            )
+          ),
+          content: SingleChildScrollView(
+            physics: const ScrollPhysics(),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minWidth: MediaQuery.of(context).size.width,
+                minHeight: 2500, //MediaQuery.of(context).size.height,
+              ),
+              child: IntrinsicHeight(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const SizedBox(height: 30),
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: SizedBox(
+                        width: 300,
+                        child: TextFormField(
+                          onFieldSubmitted: (value) {
+                            if (value.isEmpty) {
+                              Toast.show(Var.requiredField);
+                              return;
+                            }
+                            chatControllerField.clear();
+                            Loader.show(context, 0);
+                            AppData.sendMessage(
+                              mess: Messages(
+                                id: "${Var.msCode}${Var.charRandomizer()}",
+                                message: value,
+                                receiverUserID: chatUserID,
+                                createdAt: Var.now.toString(),
+                                createdBy: Var.currentUserID,
+                                status: 1
+                              )
+                            );
+                            setState(() {
+                              Var.messageLists.clear();
+                            });
+                            Future.delayed(const Duration(milliseconds: 5000), () {
+                              Loader.stop();
+                              GlobalNavigator.doubleGoBack();
+                              privateChat(
+                                context, 
+                                chatName,
+                                chatUserID
+                              );
+                              Toast.show(Var.messageSuccess);
+                            });
+                          },
+                          controller: chatControllerField,
+                          textAlignVertical: TextAlignVertical.center,
+                          obscureText: false,
+                          keyboardType: TextInputType.text,
+                          style: const TextStyle(
+                            fontFamily: Var.defaultFont,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 0.6,
+                          ),
+                          decoration: InputDecoration(
+                            filled: true,
+                            isCollapsed: true,
+                            contentPadding: const EdgeInsets.fromLTRB(30, 17, 0, 17),
+                            fillColor: AppColors.input,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: BorderSide.none,
+                            ),
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                                width: 0.0
+                              ),
+                            ),
+                            hintText: "Enter chat message...",
+                            helperStyle: const TextStyle(
+                              fontFamily: Var.defaultFont,
+                              fontSize: 10,
+                              color: AppColors.error,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0.8,
+                            ),
+                          ),
+                        ),
+                      )
+                    ),
+                    const SizedBox(height: 30),
+                    Container(
+                      margin: EdgeInsets.zero,
+                      height: 2500,
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        children: Var.messageLists.where(
+                          (m) => m.createdBy == Var.currentUserID &&
+                          m.receiverUserID == chatUserID
+                          ).map((value) {
+                            return Container(
+                              padding: value.createdBy == Var.currentUserID ? const EdgeInsets.only(
+                                right: 100,
+                                left: 14,
+                                top: 10,
+                                bottom: 10
+                              ) : const EdgeInsets.only(
+                                left: 100, 
+                                right: 14, 
+                                top: 10,
+                                bottom: 10
+                              ),
+                              child: Align(
+                                child: Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: (value.createdBy == Var.currentUserID ?
+                                      Colors.blue[200] :
+                                      Colors.grey.shade200
+                                    ),
+                                  ),
+                                  padding: const EdgeInsets.all(16),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(16.0),
+                                    width: MediaQuery.of(context).size.width*0.6,
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text(
+                                          "Me: ${value.message}",
+                                          textAlign: TextAlign.left
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                )
+                              ),
+                            );
+                        }).toList(),
+                      ),
+                      /*
+                      child: ListView.builder(
+                        itemCount: Var.messageLists.where(
+                          (m) => //m.receiverUserID == chatUserID &&
+                          m.createdBy == Var.currentUserID
+                        ).length,
+                        itemCount: Var.messageLists.length,
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.only(top: 0, bottom: 0),
+                        // physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, i) {
+                          return Container(
+                            padding: const EdgeInsets.only(
+                              right: 14,
+                              left: 14, 
+                              top: 10,
+                              bottom: 10
+                            ),
+                            // padding: Var.messageLists[i].createdBy == Var.currentUserID ?
+                            // const EdgeInsets.only(
+                            //   right: 100,
+                            //   left: 14, 
+                            //   top: 10,
+                            //   bottom: 10
+                            // ) : const EdgeInsets.only(
+                            //   left: 100, 
+                            //   right: 14, 
+                            //   top: 10,
+                            //   bottom: 10
+                            // ),
+                            child: Align(
+                              // alignment: (Var.messageLists[index].type == "APPROVAL"?Alignment.topLeft:Alignment.topRight),
+                              child: Container( // Var.messageLists[i].receiverUserID == chatUserID ? Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: (Var.messageLists[i].createdBy == Var.currentUserID ?
+                                    Colors.blue[200] :
+                                    Colors.grey.shade200
+                                  ),
+                                ),
+                                padding: const EdgeInsets.all(16),
+                                child: Text(
+                                  Var.messageLists[i].message,
+                                  style: const TextStyle(fontSize: 15)
+                                ),
+                              )
+                              //: const SizedBox(),
+                            ),
+                          );
+                        },
+                      ),
+                      */
+                    ),
+                  ],
+                ),
+              ),
+            )
+          )
+        );
+      });
+  }
+
 }
