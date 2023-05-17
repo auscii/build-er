@@ -357,6 +357,7 @@ class AppData extends ChangeNotifier {
       AppData.checkUserIfVerified();
       AppData.getNotifications();
       AppData.getMessages();
+      AppData.getOrderStatuses();
     }
   }
 
@@ -489,6 +490,36 @@ class AppData extends ChangeNotifier {
       });
       AppData().notifyListeners();
     });
+  }
+
+  static void getOrderStatuses() {
+    Var.orderStatuses.addAll({Var.orderConfirmed});
+    Var.orderStatuses.addAll({Var.orderPreparing});
+    Var.orderStatuses.addAll({Var.outForDelivery});
+    Var.orderStatuses.addAll({Var.delivered});
+  }
+
+  static Future<void> updateProductOrder({
+    required String userId,
+    required String transactionNumber,
+    required String orderStatusCode,
+  }) async {
+    print("updateProductOrder userId ->$userId");
+    final instance = FirebaseFirestore.instance
+        .collection(Var.order.toLowerCase())
+        .withConverter(
+            fromFirestore: ProductOrder.fromFirestore,
+            toFirestore: (ProductOrder order, _) 
+            => order.toFirestore())
+        .doc(userId);
+    instance.get().then((value) {
+      instance.update({
+        "orderStatus": orderStatusCode
+      });
+    }).then((_) => {
+      Toast.show("Product order status are now $orderStatusCode !", null)
+    });
+    Loader.stop();
   }
 
 }

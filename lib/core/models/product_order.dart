@@ -1,4 +1,3 @@
-import 'package:client/core/models/products.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductOrder {

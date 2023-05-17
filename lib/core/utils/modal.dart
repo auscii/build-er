@@ -717,7 +717,6 @@ class Modal {
     String orderCustomerName,
     double orderGrandTotalPrice,
   ) {
-    print("orderGrandTotalPrice ->$orderGrandTotalPrice");
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -769,6 +768,130 @@ class Modal {
                           NavigationMenu.activeIndex = 8;
                           GlobalNavigator.navigateToScreen(const NavigationMenu());
                         });
+                      },
+                      child: Container(
+                        height: 50,
+                        width: 100,
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(Radius.circular(25)),
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                              color: const Color.fromARGB(255, 255, 255, 255).withAlpha(100),
+                              offset: const Offset(1, 1),
+                              blurRadius: 8,
+                              spreadRadius: 2
+                            )
+                          ],
+                          color: Colors.green
+                        ),
+                        child: const Text(
+                          Var.yes,
+                          style: TextStyle(
+                            fontFamily: Var.defaultFont,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 19,
+                            color: Colors.white
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      child: 
+                        Container(
+                          height: 50,
+                          width: 100,
+                          margin: const EdgeInsets.symmetric(horizontal: 5),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(Radius.circular(25)),
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                color: const Color.fromARGB(255, 255, 255, 255).withAlpha(100),
+                                offset: const Offset(1, 1),
+                                blurRadius: 8,
+                                spreadRadius: 2
+                              )
+                            ],
+                            color: Colors.red
+                          ),
+                          child: const Text(
+                            Var.no,
+                            style: TextStyle(
+                              fontFamily: Var.defaultFont,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 19,
+                              color: Colors.white
+                            ),
+                          ),
+                        ),       
+                      onTap: () => GlobalNavigator.goBack(),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      });
+  }
+  
+  static Future<dynamic> adminProductOrderApproval(
+    BuildContext context,
+    String userId,
+    String transactionNumber,
+    String orderStatusCode
+  ) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Center(
+            child: 
+              Text(
+                "Are you sure you want to place your order(s)?",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: Var.defaultFont,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 21,
+                  color: Colors.black
+                ),
+              )
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 25,
+                  right: 25,
+                ),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Loader.show(context, 0);
+                        AppData.updateProductOrder(
+                          userId: userId,
+                          transactionNumber: transactionNumber,
+                          orderStatusCode: orderStatusCode
+                        );
+                        // Var.productOrders.clear();
+                        // AppData.storeProductOrder(
+                        //   order: ProductOrder(
+                        //     transactionNumber: Var.charRandomizer().toString(),
+                        //     orderStatus: Var.orderConfirmed,
+                        //     grandTotal: orderGrandTotalPrice,
+                        //     customerName: Provider.of<UserProvider>(context, listen: false).user.name ?? Var.na,
+                        //     transactionDateTimeCreated: Var.now.toString(),
+                        //     userAddedBy: Var.currentUserID,
+                        //     status: 1
+                        //   )
+                        // );
                       },
                       child: Container(
                         height: 50,

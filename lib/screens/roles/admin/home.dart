@@ -3,6 +3,7 @@ import 'package:client/core/utils/global.dart';
 import 'package:client/core/utils/modal.dart';
 import 'package:client/core/utils/sizes.dart';
 import 'package:client/core/utils/toast.dart';
+import 'package:client/screens/roles/admin/product_orders.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,7 @@ class _AdminHomeState extends State<AdminHome> {
 
   @override
   void initState() {
+    AppData.getProductOrder();
     super.initState();
   }
 
@@ -118,19 +120,20 @@ class _AdminHomeState extends State<AdminHome> {
                 ),
                 const SizedBox(height: 50),
                 Expanded(
-                  flex: 2,
+                  flex: 0,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Admin Tasks",
+                        Var.products,
                         style: TextStyle(
                           fontFamily: Var.defaultFont,
-                          fontWeight: FontWeight.normal,
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),
+                      const SizedBox(height: 10),
                       Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -145,8 +148,21 @@ class _AdminHomeState extends State<AdminHome> {
                               ),
                             ),
                           ),
+                          const SizedBox(width: 20),
+                          _buildAddItem(
+                            context: context,
+                            label: "PRODUCT ORDERS",
+                            onPressed: () => showDialog(
+                              context: context,
+                              builder: (context) => const AdminProductOrders(
+                                admin: true,
+                              ),
+                            ),
+                            // onPressed: ()
+                            //   => Modal.adminProductOrderApprovalPrompt(context),
+                          ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -157,10 +173,10 @@ class _AdminHomeState extends State<AdminHome> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
                       Text(
-                        "Users Verification",
+                        "USERS VERIFICATION",
                         style: TextStyle(
                           fontFamily: Var.defaultFont,
-                          fontWeight: FontWeight.normal,
+                          fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
                       ),

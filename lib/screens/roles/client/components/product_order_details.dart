@@ -14,11 +14,10 @@ class ProductOrderDetails extends StatefulWidget {
 }
 
 class _ProductOrderDetailsState extends State<ProductOrderDetails> {
+  var productOrders = Var.productOrders.toList();
 
   @override
   void initState() {
-    // _pullRefresh();
-    print("Var.productOrders->${Var.productOrders}");
     super.initState();
   }
 
@@ -49,7 +48,7 @@ class _ProductOrderDetailsState extends State<ProductOrderDetails> {
               physics: const ScrollPhysics(),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: Var.productOrders.where((c) 
+                  children: productOrders.where((c) 
                       => c.userAddedBy == Var.currentUserID
                   ).map((order) {
                     return Column(
@@ -154,15 +153,19 @@ class _ProductOrderDetailsState extends State<ProductOrderDetails> {
     );
   }
 
+  initProductOrders() {
+    productOrders = Var.productOrders.toList();
+  }
+
   Future<void> _pullRefresh() async {
     Loader.show(context, 0);
-    Var.productOrders.clear();
-    AppData.getProductOrder();
+    setState(() {
+      Var.productOrders.clear();
+      AppData.getProductOrder();
+    });
     Future.delayed(const Duration(milliseconds: 10000), () {
       Loader.stop();
-      // setState(() {
-      //   initProducts();
-      // });
+      setState(() => initProductOrders());
     });
   }
 

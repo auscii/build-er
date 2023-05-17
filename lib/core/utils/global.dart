@@ -227,6 +227,7 @@ class Var {
   static List<Messages> messageLists = [];
   static List<Cart> productCarts = [];
   static List<ProductOrder> productOrders = [];
+  static List<String> orderStatuses = [];
   static var now = DateTime.now();
   static String currentUserID = FirebaseAuth.instance.currentUser?.uid ?? Var.e;
 
