@@ -135,6 +135,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
             Align(
               alignment: Alignment.topRight,
               child: FloatingActionButton.extended(
+                heroTag: Var.product,
                 onPressed: () {
                   Var.productCarts.clear();
                   AppData.getProductCarts();
@@ -154,6 +155,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
             Align(
               alignment: Alignment.bottomRight,
               child: FloatingActionButton.extended(
+                heroTag: "CHAT",
                 // onPressed: () => YmChat.startChatbot(),
                 onPressed: () => selectChatUser(context), //Modal.privateChat(context, ""),
                 icon: const Icon(Icons.chat),
@@ -167,6 +169,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
         Align(
           alignment: Alignment.bottomRight,
           child: FloatingActionButton.extended(
+            heroTag: "CHAT2",
             onPressed: () => selectChatUser(context),
             icon: const Icon(Icons.chat),
             label: const Text("CHAT"),

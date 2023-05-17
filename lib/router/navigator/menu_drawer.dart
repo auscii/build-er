@@ -1,5 +1,7 @@
+import 'package:client/core/providers/appdata.dart';
 import 'package:client/core/providers/user.dart';
 import 'package:client/core/utils/global.dart';
+import 'package:client/core/utils/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../router.dart';
@@ -32,6 +34,10 @@ class _MenuDrawerState extends State<MenuDrawer> {
         'title': Var.profile,
       },
       {
+        'icon': Icons.shopping_bag,
+        'title': Var.productOrderDetails,
+      },
+      {
         'icon': Icons.info,
         'title': Var.about,
       },
@@ -51,6 +57,15 @@ class _MenuDrawerState extends State<MenuDrawer> {
       } else if (title == Var.about) {
         NavigationMenu.activeIndex = 4;
         GlobalNavigator.pushReplaceNav(context, 4);
+      } else if (title == Var.productOrderDetails) {
+        Loader.show(context, 0);
+        Var.productOrders.clear();
+        AppData.getProductOrder();
+        Future.delayed(const Duration(milliseconds: 5000), () {
+          Loader.stop();
+          NavigationMenu.activeIndex = 8;
+          GlobalNavigator.pushReplaceNav(context, 8);
+        });
       } else if (title == Var.logout) {
         Provider.of<UserProvider>(
           context, 

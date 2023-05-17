@@ -37,7 +37,7 @@ class _EcommerceState extends State<Ecommerce> {
     // SizeConfig().init(context);
     initProducts();
     return SafeArea(
-      child: RefreshIndicator( 
+      child: RefreshIndicator(
         onRefresh: _pullRefresh,
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),

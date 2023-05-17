@@ -93,6 +93,7 @@ class _MapsState extends State<Maps> {
                 ),
                 builder: (context, markers) {
                   return FloatingActionButton(
+                    heroTag: "MAP",
                     onPressed: null,
                     child: Text(markers.length.toString()),
                   );

@@ -120,6 +120,7 @@ class _ClientHomeState extends State<ClientHome> {
       child: Align(
         alignment: Alignment.bottomCenter,
         child: FloatingActionButton.extended(
+          heroTag: "AUTHPHONE",
           onPressed: () {},
           icon: const Icon(Icons.phone_android),
           label: const Text("Authenticate using Phone"),
