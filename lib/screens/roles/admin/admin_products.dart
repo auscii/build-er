@@ -536,31 +536,31 @@ class _AdminProductsState extends State<AdminProducts> {
               case TaskState.running:
                 final progress =
                     100.0 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
-                Toast.show("${Var.uploading} $progress%");
+                Toast.show("${Var.uploading} $progress%", null);
                 Loader.show(context, 0);
                 break;
               case TaskState.success:
-                Toast.show(Var.uploadingCompleted);
+                Toast.show(Var.uploadingCompleted, null);
                 String downloadURL = await taskSnapshot.ref.getDownloadURL();
                 // setState(() => productImagePath = downloadURL);
                 Loader.stop();
                 break;
               case TaskState.paused:
-                Toast.show(Var.uploadingPaused);
+                Toast.show(Var.uploadingPaused, null);
                 Loader.stop();
                 break;
               case TaskState.canceled:
-                Toast.show(Var.uploadingCanceled);
+                Toast.show(Var.uploadingCanceled, null);
                 Loader.stop();
                 break;
               case TaskState.error:
-                Toast.show(Var.uploadingError);
+                Toast.show(Var.uploadingError, null);
                 Loader.stop();
                 break;
             }
           });
       } else {
-        Toast.show(Var.noImageReceived);
+        Toast.show(Var.noImageReceived, null);
       }
   }
 

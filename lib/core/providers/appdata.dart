@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:client/core/models/cart.dart';
 import 'package:client/core/models/messages.dart';
 import 'package:client/core/models/notifications.dart';
 import 'package:client/core/models/portfolio.dart';
+import 'package:client/core/models/product_order.dart';
 import 'package:client/core/models/products.dart';
 import 'package:client/core/providers/user.dart';
 import 'package:client/core/utils/global.dart';
@@ -77,7 +79,7 @@ class AppData extends ChangeNotifier {
           toFirestore: (Product value, _) => value.toFirestore())
       .set(product)
       .then((value) {
-        Toast.show(Var.productSuccess);
+        Toast.show(Var.productSuccess, null);
       });
   }
 
@@ -90,7 +92,7 @@ class AppData extends ChangeNotifier {
           toFirestore: (Portfolio value, _) => value.toFirestore())
       .set(portfolio)
       .then((value) {
-        Toast.show(Var.portfolioSuccess);
+        Toast.show(Var.portfolioSuccess, null);
         // AppData.clearPortfolioLists();
       });
   }
@@ -286,7 +288,7 @@ class AppData extends ChangeNotifier {
       );
       UserProvider.clearUserLists();
     }).then((_) => {
-      Toast.show(Var.userIsNowUpdated)
+      Toast.show(Var.userIsNowUpdated, null)
     });
   }
 
@@ -419,6 +421,71 @@ class AppData extends ChangeNotifier {
       res.docs.forEach((val) {
         var mes = val.data();
         Var.messageLists.addAll({mes});
+      });
+      AppData().notifyListeners();
+    });
+  }
+
+  static Future<void> insertProductCart({
+    required Cart cart
+  }) async {
+    return await FirebaseFirestore.instance
+      .collection(Var.carts.toLowerCase())
+      .doc()
+      .withConverter(
+          fromFirestore: Cart.fromFirestore,
+          toFirestore: (Cart value, _) => value.toFirestore())
+      .set(cart)
+      .then((value) {
+        // getProductCarts();
+        print("added new ${Var.carts} ${cart.id.toString()}");
+      });
+  }
+
+  static void getProductCarts() async {
+    await FirebaseFirestore.instance
+      .collection(Var.carts.toLowerCase())
+      .orderBy(Var.createdAt, descending: true)
+      .withConverter(
+          fromFirestore: Cart.fromFirestore,
+          toFirestore: (Cart cart, _) => cart.toFirestore())
+      .get()
+      .then((res) {
+      res.docs.forEach((val) {
+        var cart = val.data();
+        Var.productCarts.addAll({cart});
+      });
+      AppData().notifyListeners();
+    });
+  }
+
+  static Future<void> storeProductOrder({
+    required ProductOrder order
+  }) async {
+    return await FirebaseFirestore.instance
+      .collection(Var.order.toLowerCase())
+      .doc(Var.currentUserID)
+      .withConverter(
+          fromFirestore: ProductOrder.fromFirestore,
+          toFirestore: (ProductOrder value, _) => value.toFirestore())
+      .set(order)
+      .then((value) {
+        getProductOrder();
+        print("added new ${Var.order} ${order.transactionNumber.toString()}");
+      });
+  }
+
+  static void getProductOrder() async {
+    await FirebaseFirestore.instance
+      .collection(Var.order.toLowerCase())
+      .withConverter(
+          fromFirestore: ProductOrder.fromFirestore,
+          toFirestore: (ProductOrder order, _) => order.toFirestore())
+      .get()
+      .then((res) {
+      res.docs.forEach((val) {
+        var order = val.data();
+        Var.productOrders.addAll({order});
       });
       AppData().notifyListeners();
     });

@@ -1,7 +1,10 @@
+import 'package:client/core/models/product_order.dart';
+import 'package:client/core/models/products.dart';
 import 'package:client/core/models/user.dart';
 import 'package:client/core/providers/appdata.dart';
 import 'package:client/core/providers/user.dart';
 import 'package:client/core/utils/global.dart';
+import 'package:client/core/utils/loader.dart';
 import 'package:client/core/utils/toast.dart';
 import 'package:client/router/navigator/navigation_menu.dart';
 import 'package:client/router/router.dart';
@@ -86,7 +89,7 @@ class Modal {
         cancelButton: CupertinoActionSheetAction(
           child: Text(negativeBtn),
           onPressed: () {
-            Toast.show(Var.userCancelled);
+            Toast.show(Var.userCancelled, null);
             GlobalNavigator.goBack();
           },
         ),
@@ -389,6 +392,427 @@ class Modal {
                                   offset: const Offset(1, 1),
                                   blurRadius: 8,
                                   spreadRadius: 2
+                              )
+                            ],
+                            color: Colors.red
+                          ),
+                          child: const Text(
+                            Var.no,
+                            style: TextStyle(
+                              fontFamily: Var.defaultFont,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 19,
+                              color: Colors.white
+                            ),
+                          ),
+                        ),       
+                      onTap: () => GlobalNavigator.goBack(),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      });
+  }
+  
+  static Future<dynamic> productCartConfirmation(
+    BuildContext context,
+    String productId,
+    String productName,
+    String productDetails,
+    String productImage,
+    String productCategory,
+    String productCreatedBy,
+    double productPrice
+  ) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Center(
+            child: 
+              Text(
+                "Do you want to check or view the added products in your cart?",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: Var.defaultFont,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 21,
+                  color: Colors.black
+                ),
+              )
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 25,
+                  right: 25,
+                ),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        AppData.getProductCarts();
+                        Loader.show(context, 0);
+                        Future.delayed(const Duration(milliseconds: 5000), () {
+                          Loader.stop();
+                          GlobalNavigator.doubleGoBack();
+                          productCart(context);
+                        });
+                      },
+                      child: 
+                        Container(
+                          height: 50,
+                          width: 100,
+                          margin: const EdgeInsets.symmetric(horizontal: 5),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(Radius.circular(25)),
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                  color: const Color.fromARGB(255, 255, 255, 255).withAlpha(100),
+                                  offset: const Offset(1, 1),
+                                  blurRadius: 8,
+                                  spreadRadius: 2
+                              )
+                            ],
+                            color: Colors.green
+                          ),
+                          child: const Text(
+                            Var.yes,
+                            style: TextStyle(
+                              fontFamily: Var.defaultFont,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 19,
+                              color: Colors.white
+                            ),
+                          ),
+                        ),
+                    ),
+                    GestureDetector(
+                      child: 
+                        Container(
+                          height: 50,
+                          width: 100,
+                          margin: const EdgeInsets.symmetric(horizontal: 5),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(Radius.circular(25)),
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                  color: const Color.fromARGB(255, 255, 255, 255).withAlpha(100),
+                                  offset: const Offset(1, 1),
+                                  blurRadius: 8,
+                                  spreadRadius: 2
+                              )
+                            ],
+                            color: Colors.red
+                          ),
+                          child: const Text(
+                            Var.no,
+                            style: TextStyle(
+                              fontFamily: Var.defaultFont,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 19,
+                              color: Colors.white
+                            ),
+                          ),
+                        ),       
+                      onTap: () => GlobalNavigator.goBack(),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      });
+  }
+  
+  static Future<dynamic> productCart(BuildContext context) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        if (Var.productCarts.isEmpty) {
+          Toast.show("No available products...", null);
+        }
+        return AlertDialog(
+          title: const Center(
+            child: Text(
+              "PRODUCT CART",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: Var.defaultFont,
+                fontWeight: FontWeight.bold,
+                fontSize: 21,
+                color: Colors.black
+              ),
+            )
+          ),
+          content: SingleChildScrollView(
+            physics: const ScrollPhysics(),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.zero,
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          NavigationMenu.activeIndex = 7;
+                          GlobalNavigator.navigateToScreen(const NavigationMenu());
+                        },
+                        child: Container(
+                          height: 50,
+                          width: 200,
+                          margin: const EdgeInsets.symmetric(horizontal: 5),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(Radius.circular(25)),
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                  color: const Color.fromARGB(255, 255, 255, 255).withAlpha(100),
+                                  offset: const Offset(1, 1),
+                                  blurRadius: 8,
+                                  spreadRadius: 2
+                              )
+                            ],
+                            color: Colors.green
+                          ),
+                          child: const Text(
+                            "PROCEED TO CHECKOUT",
+                            style: TextStyle(
+                              fontFamily: Var.defaultFont,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 19,
+                              color: Colors.white
+                            ),
+                          ),
+                        ),
+                      ),
+                      // GestureDetector(
+                      //   child: 
+                      //     Container(
+                      //       height: 50,
+                      //       width: 100,
+                      //       margin: const EdgeInsets.symmetric(horizontal: 5),
+                      //       alignment: Alignment.center,
+                      //       decoration: BoxDecoration(
+                      //         borderRadius: const BorderRadius.all(Radius.circular(25)),
+                      //         boxShadow: <BoxShadow>[
+                      //           BoxShadow(
+                      //               color: const Color.fromARGB(255, 255, 255, 255).withAlpha(100),
+                      //               offset: const Offset(1, 1),
+                      //               blurRadius: 8,
+                      //               spreadRadius: 2
+                      //           )
+                      //         ],
+                      //         color: Colors.black
+                      //       ),
+                      //       child: const Text(
+                      //         "Close",
+                      //         style: TextStyle(
+                      //           fontFamily: Var.defaultFont,
+                      //           fontWeight: FontWeight.bold,
+                      //           fontSize: 19,
+                      //           color: Colors.white
+                      //         ),
+                      //       ),
+                      //     ),       
+                      //   onTap: () => GlobalNavigator.goBack(),
+                      // ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 50),
+                const Divider(color: Colors.black),
+                const SizedBox(height: 20),
+                Container(
+                  margin: EdgeInsets.zero,
+                  height: 5000,
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    children: Var.productCarts.where((c) 
+                        => c.userAddedBy == Var.currentUserID
+                      ).map((prod) {
+                        return Column(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.zero,
+                              height: 150,
+                              width: 150,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.network(prod.image)
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            Container(
+                              margin: EdgeInsets.zero,
+                              child: Text(
+                                "Product Name: ${prod.title}",
+                                textAlign: TextAlign.left,
+                                style: const TextStyle(
+                                  fontFamily: Var.defaultFont,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 18,
+                                  color: Colors.black
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            Container(
+                              margin: EdgeInsets.zero,
+                              child: Text(
+                                "Description: ${prod.description}",
+                                textAlign: TextAlign.left,
+                                style: const TextStyle(
+                                  fontFamily: Var.defaultFont,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 18,
+                                  color: Colors.black
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            Container(
+                              margin: EdgeInsets.zero,
+                              child: Text(
+                                "Price: ${prod.price}",
+                                textAlign: TextAlign.left,
+                                style: const TextStyle(
+                                  fontFamily: Var.defaultFont,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 18,
+                                  color: Colors.black
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            const Divider(color: Colors.black),
+                            const SizedBox(height: 20),
+                          ],
+                        );
+                    }).toList(),
+                  ),
+                ),
+              ],
+            ),
+          )
+        );
+      });
+  }
+  
+  static Future<dynamic> orderProductsPrompt(
+    BuildContext context,
+    String orderCustomerName,
+    double orderGrandTotalPrice,
+  ) {
+    print("orderGrandTotalPrice ->$orderGrandTotalPrice");
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Center(
+            child: 
+              Text(
+                "Are you sure you want to place your order(s)?",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: Var.defaultFont,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 21,
+                  color: Colors.black
+                ),
+              )
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 25,
+                  right: 25,
+                ),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Toast.show("Product successfully placed order!", null);
+                        Loader.show(context, 0);
+                        Var.productOrders.clear();
+                        AppData.storeProductOrder(
+                          order: ProductOrder(
+                            transactionNumber: Var.charRandomizer().toString(),
+                            orderStatus: Var.orderConfirmed,
+                            // products: Var.productCarts,
+                            grandTotal: orderGrandTotalPrice,
+                            customerName: Provider.of<UserProvider>(context, listen: false).user.name ?? Var.na,
+                            transactionDateTimeCreated: Var.now.toString(),
+                            userAddedBy: Var.currentUserID,
+                            status: 1
+                          )
+                        );
+                        Future.delayed(const Duration(milliseconds: 5000), () {
+                          Loader.stop();
+                          NavigationMenu.activeIndex = 8;
+                          GlobalNavigator.navigateToScreen(const NavigationMenu());
+                        });
+                      },
+                      child: Container(
+                        height: 50,
+                        width: 100,
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(Radius.circular(25)),
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                              color: const Color.fromARGB(255, 255, 255, 255).withAlpha(100),
+                              offset: const Offset(1, 1),
+                              blurRadius: 8,
+                              spreadRadius: 2
+                            )
+                          ],
+                          color: Colors.green
+                        ),
+                        child: const Text(
+                          Var.yes,
+                          style: TextStyle(
+                            fontFamily: Var.defaultFont,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 19,
+                            color: Colors.white
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      child: 
+                        Container(
+                          height: 50,
+                          width: 100,
+                          margin: const EdgeInsets.symmetric(horizontal: 5),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(Radius.circular(25)),
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                color: const Color.fromARGB(255, 255, 255, 255).withAlpha(100),
+                                offset: const Offset(1, 1),
+                                blurRadius: 8,
+                                spreadRadius: 2
                               )
                             ],
                             color: Colors.red

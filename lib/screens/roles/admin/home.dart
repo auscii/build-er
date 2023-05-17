@@ -295,7 +295,7 @@ class TabbedLayout extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           if (user.isUserVerified == Var.adminApprovedUserVerification) {
-                            Toast.show(Var.verifiedUser);
+                            Toast.show(Var.verifiedUser, null);
                             return;
                           }
                           Modal.userApproval(

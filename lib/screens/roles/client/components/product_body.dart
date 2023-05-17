@@ -47,7 +47,7 @@ class ProductBody extends StatelessWidget {
                         child: DefaultButton(
                           text: Var.addCart,
                           press: () {
-                            Toast.show(Var.featureNotAvailable);
+                            Toast.show(Var.featureNotAvailable, null);
                           },
                         ),
                       ),

@@ -24,23 +24,17 @@ class _EcommerceState extends State<Ecommerce> {
   @override
   void initState() {
     AppData.getUserResultIfVerified(context);
-    // initProducts();
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     // SizeConfig().init(context);
-    // var constructionMaterials = 
-    //   Var.productLists.where((i) => i.category == Var.constructionMaterials).toList();
-    // var constructionTools = 
-    //   Var.productLists.where((i) => i.category == Var.constructionTools).toList();
     initProducts();
     return SafeArea(
       child: RefreshIndicator( 
@@ -87,21 +81,6 @@ class _EcommerceState extends State<Ecommerce> {
                     ),
                   ),
                 ),
-                // Padding(
-                //   padding: EdgeInsets.all(getProportionateScreenWidth(20)),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: List.generate(
-                //       categories.length,
-                //       (index) => CategoryCard(
-                //         icon: categories[index]["icon"],
-                //         text: categories[index]["text"],
-                //         press: () {},
-                //       ),
-                //     ),
-                //   ),
-                // ),
                 Column(
                   children: [
                     Padding(

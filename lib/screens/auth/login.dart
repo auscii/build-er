@@ -112,7 +112,7 @@ class _LoginState extends State<Login> {
                           height: kIsWeb ? 50 : null,
                           child: ElevatedButton(
                             onPressed: () {
-                              Toast.show("Logging in...");
+                              Toast.show("Logging in...", null);
                               Loader.show(context, 0);
                               if (_formKey.currentState!.validate()) {
                                 _userAuth(

@@ -3,13 +3,16 @@ import 'package:client/core/models/notifications.dart';
 import 'package:client/core/models/user.dart';
 import 'package:client/core/providers/appdata.dart';
 import 'package:client/core/utils/loader.dart';
+import 'package:client/core/utils/modal.dart';
 import 'package:client/core/utils/toast.dart';
 import 'package:client/router/navigator/menu_drawer.dart';
 import 'package:client/router/routes.dart';
 import 'package:client/screens/roles/admin/admin_products.dart';
 import 'package:client/screens/roles/admin/home.dart';
 import 'package:client/screens/roles/admin/users_lists.dart';
+import 'package:client/screens/roles/client/components/product_checkout.dart';
 import 'package:client/screens/roles/client/components/product_details.dart';
+import 'package:client/screens/roles/client/components/product_order_details.dart';
 import 'package:client/screens/roles/client/ecommerce.dart';
 import 'package:client/screens/roles/client/locator.dart';
 import 'package:client/screens/roles/contractor/home.dart';
@@ -53,7 +56,6 @@ class _NavigationMenuState extends State<NavigationMenu> {
 
   @override
   void initState() {
-    print("Var.allUsers ->${Var.allUsers}");
     initilizeChatbot();
     super.initState();
   }
@@ -86,7 +88,8 @@ class _NavigationMenuState extends State<NavigationMenu> {
               Toast.show(
                 value.toUser == Var.currentUserID ?
                 value.actionMessage : 
-                Var.noAvailableNotifs
+                Var.noAvailableNotifs,
+                null
               );
             },
             icon: const Icon(
@@ -126,12 +129,45 @@ class _NavigationMenuState extends State<NavigationMenu> {
       ),
       // Var.activeUserRole != Var.admin ?
       floatingActionButton: Container(
-        padding: const EdgeInsets.only(bottom: 55.0, right: 0),
-        child: Align(
+        margin: const EdgeInsets.only(top: 640),
+        child: Var.activeUserRole == Var.client ? Column(
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: FloatingActionButton.extended(
+                onPressed: () {
+                  Var.productCarts.clear();
+                  AppData.getProductCarts();
+                  Loader.show(context, 0);
+                  Future.delayed(const Duration(milliseconds: 5000), () {
+                    Loader.stop();
+                    Modal.productCart(context);
+                  });
+                },
+                icon: const Icon(Icons.shopping_cart),
+                label: const Text("PRODUCT CART"),
+                backgroundColor: Colors.black,
+                foregroundColor: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: FloatingActionButton.extended(
+                // onPressed: () => YmChat.startChatbot(),
+                onPressed: () => selectChatUser(context), //Modal.privateChat(context, ""),
+                icon: const Icon(Icons.chat),
+                label: const Text("CHAT"),
+                backgroundColor: Colors.black,
+                foregroundColor: Colors.white,
+              ),
+            ),
+          ],
+        ) : 
+        Align(
           alignment: Alignment.bottomRight,
           child: FloatingActionButton.extended(
-            // onPressed: () => YmChat.startChatbot(),
-            onPressed: () => selectChatUser(context), //Modal.privateChat(context, ""),
+            onPressed: () => selectChatUser(context),
             icon: const Icon(Icons.chat),
             label: const Text("CHAT"),
             backgroundColor: Colors.black,
@@ -305,6 +341,12 @@ class _NavigationMenuState extends State<NavigationMenu> {
               break;
             case 6:
               returnValue = CupertinoTabView(builder: (context) => const AdminProducts());
+              break;
+            case 7:
+              returnValue = CupertinoTabView(builder: (context) => const ProductCheckout());
+              break;
+            case 8:
+              returnValue = CupertinoTabView(builder: (context) => const ProductOrderDetails());
               break;
           }
           return returnValue ?? home;
@@ -518,7 +560,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
                         child: TextFormField(
                           onFieldSubmitted: (value) {
                             if (value.isEmpty) {
-                              Toast.show(Var.requiredField);
+                              Toast.show(Var.requiredField, null);
                               return;
                             }
                             chatControllerField.clear();
@@ -544,7 +586,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
                                 chatName,
                                 chatUserID
                               );
-                              Toast.show(Var.messageSuccess);
+                              Toast.show(Var.messageSuccess, null);
                             });
                           },
                           controller: chatControllerField,

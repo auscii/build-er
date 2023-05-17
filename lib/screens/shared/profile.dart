@@ -119,7 +119,7 @@ class ProfilePage extends StatelessWidget {
                       height: kIsWeb ? 50 : null,
                       child: ElevatedButton(
                         onPressed: () {
-                          Toast.show(Var.featureNotAvailable);
+                          Toast.show(Var.featureNotAvailable, null);
                         },
                         style: ElevatedButton.styleFrom(
                           primary: AppColors.primary,

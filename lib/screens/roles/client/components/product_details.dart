@@ -1,11 +1,13 @@
 import 'package:client/core/providers/appdata.dart';
 import 'package:client/core/utils/global.dart';
+import 'package:client/core/utils/modal.dart';
 import 'package:client/core/utils/toast.dart';
 import 'package:client/router/router.dart';
 import 'package:client/screens/roles/client/components/product_description.dart';
 import 'package:client/screens/roles/client/components/product_images.dart';
 import 'package:flutter/material.dart';
 import 'package:client/core/models/products.dart';
+import '../../../../core/models/cart.dart';
 import 'top_rounded_container.dart';
 import 'package:client/core/utils/sizes.dart';
 import 'default_button.dart';
@@ -82,7 +84,31 @@ class _ProductDetailsState extends State<ProductDetails> {
                             child: DefaultButton(
                               text: Var.addCart,
                               press: () {
-                                Toast.show(Var.featureNotAvailable);
+                                Toast.show(Var.successAddCart, 1);
+                                Var.productCarts.clear();
+                                AppData.insertProductCart(
+                                  cart: Cart(
+                                    id: products.id,
+                                    title: products.title,
+                                    image: products.image,
+                                    description: products.description,
+                                    price: products.price,
+                                    category: products.category,
+                                    createdBy: products.createdBy,
+                                    userAddedBy: Var.currentUserID,
+                                    createdAt: Var.now.toString()
+                                  )
+                                );
+                                Modal.productCartConfirmation(
+                                  context,
+                                  products.id,
+                                  products.title,
+                                  products.description,
+                                  products.image,
+                                  products.category,
+                                  products.createdBy,
+                                  products.price
+                                );
                               },
                             ),
                           ),

@@ -389,7 +389,7 @@ class UserProvider extends ChangeNotifier {
           isUserVerified: isUserVerified
         ),
       );
-    Toast.show("Successfully Registered new user!");
+    Toast.show("Successfully Registered new user!", null);
     GlobalNavigator.router.currentState!
       .popAndPushNamed(AuthRoutes.onboarding);
   }

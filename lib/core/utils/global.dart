@@ -1,6 +1,8 @@
+import 'package:client/core/models/cart.dart';
 import 'package:client/core/models/messages.dart';
 import 'package:client/core/models/notifications.dart';
 import 'package:client/core/models/portfolio.dart';
+import 'package:client/core/models/product_order.dart';
 import 'package:client/core/models/products.dart';
 import 'package:client/core/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -100,6 +102,7 @@ class Var {
   static const messages = "MESSAGES";
   static const user = "USERS";
   static const products = "PRODUCTS";
+  static const carts = "CARTS";
   static const materialIcons = "MaterialIcons";
   static const faq = "FAQ";
   static const locator = "LOCATOR";
@@ -110,6 +113,9 @@ class Var {
   static const findNearbyContractors = "Find nearby Contractors";
   static const nearby = "Nearby";
   static const productDetails = "PRODUCT DETAILS";
+  static const productCheckout = "PRODUCT CHECKOUT";
+  static const order = "ORDERS";
+  static const productOrderDetails = "PRODUCT ORDER DETAILS";
   static const goBack = "GO BACK";
   static const addCart = "ADD TO CART";
   static const ecommerceTagLine1 = "A Summer Surprise\n";
@@ -183,6 +189,12 @@ class Var {
   static const messageSuccess = "Message successfully sent!";
   static const requiredField = "Please fill-up input fields.";
   static const createdAt = "createdAt";
+  static const successAddCart = "Successfully added to cart!";
+  static const orderConfirmed = "CONFIRMED";
+  static const orderPreparing = "PREPARING";
+  static const outForDelivery = "OUT FOR DELIVERY";
+  static const delivered = "DELIVERED";
+  static String currentUseFullname = "";
   // static const aaa = "aaa";
 
   static const String userPendingForVerification = "DPL1W";
@@ -213,6 +225,8 @@ class Var {
   static List<UserModel> nearbyContractorUsers = [];
   static List<Notifications> notifLists = [];
   static List<Messages> messageLists = [];
+  static List<Cart> productCarts = [];
+  static List<ProductOrder> productOrders = [];
   static var now = DateTime.now();
   static String currentUserID = FirebaseAuth.instance.currentUser?.uid ?? Var.e;
 
