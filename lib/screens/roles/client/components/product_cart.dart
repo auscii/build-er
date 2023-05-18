@@ -32,9 +32,7 @@ class _ProductCartState extends State<ProductCart> {
 
   @override
   void dispose() {
-    _productQuantity.forEach((TextEditingController element) {
-      element.dispose();
-    });
+    _productQuantity.clear();
     super.dispose();
   }
 
@@ -138,12 +136,12 @@ class _ProductCartState extends State<ProductCart> {
                                 Container(
                                   margin: EdgeInsets.zero,
                                   child: Text(
-                                    "Product Name: ${prod.title}",
-                                    textAlign: TextAlign.left,
+                                    prod.title,
+                                    textAlign: TextAlign.center,
                                     style: const TextStyle(
                                       fontFamily: Var.defaultFont,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 19,
                                       color: Colors.black
                                     ),
                                   ),
