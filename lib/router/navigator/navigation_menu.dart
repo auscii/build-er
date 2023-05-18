@@ -10,6 +10,7 @@ import 'package:client/router/routes.dart';
 import 'package:client/screens/roles/admin/admin_products.dart';
 import 'package:client/screens/roles/admin/home.dart';
 import 'package:client/screens/roles/admin/users_lists.dart';
+import 'package:client/screens/roles/client/components/product_cart.dart';
 import 'package:client/screens/roles/client/components/product_checkout.dart';
 import 'package:client/screens/roles/client/components/product_details.dart';
 import 'package:client/screens/roles/client/components/product_order_details.dart';
@@ -52,10 +53,11 @@ class _NavigationMenuState extends State<NavigationMenu> {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
   static CupertinoTabView? returnValue;
-  static TextEditingController chatControllerField = new TextEditingController();
+  static TextEditingController chatControllerField = TextEditingController();
 
   @override
   void initState() {
+    // AppData.getProductCarts();
     initilizeChatbot();
     super.initState();
   }
@@ -129,50 +131,51 @@ class _NavigationMenuState extends State<NavigationMenu> {
       ),
       // Var.activeUserRole != Var.admin ?
       floatingActionButton: Container(
-        margin: const EdgeInsets.only(top: 640),
-        child: Var.activeUserRole == Var.client ? Column(
-          children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: FloatingActionButton.extended(
-                heroTag: Var.product,
-                onPressed: () {
-                  Var.productCarts.clear();
-                  AppData.getProductCarts();
-                  Loader.show(context, 0);
-                  Future.delayed(const Duration(milliseconds: 5000), () {
-                    Loader.stop();
-                    Modal.productCart(context);
-                  });
-                },
-                icon: const Icon(Icons.shopping_cart),
-                label: const Text("PRODUCT CART"),
-                backgroundColor: Colors.black,
-                foregroundColor: Colors.white,
-              ),
-            ),
-            const SizedBox(height: 20),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: FloatingActionButton.extended(
-                heroTag: "CHAT",
-                // onPressed: () => YmChat.startChatbot(),
-                onPressed: () => selectChatUser(context), //Modal.privateChat(context, ""),
-                icon: const Icon(Icons.chat),
-                label: const Text("CHAT"),
-                backgroundColor: Colors.black,
-                foregroundColor: Colors.white,
-              ),
-            ),
-          ],
-        ) : 
+        margin: const EdgeInsets.only(bottom: 55),
+        child: 
+        // Var.activeUserRole == Var.client ? Column(
+        //   children: [
+        //     Align(
+        //       alignment: Alignment.topRight,
+        //       child: FloatingActionButton.extended(
+        //         heroTag: Var.product,
+        //         onPressed: () {
+        //           Var.productCarts.clear();
+        //           AppData.getProductCarts();
+        //           Loader.show(context, 0);
+        //           Future.delayed(const Duration(milliseconds: 5000), () {
+        //             Loader.stop();
+        //             productCart(context);
+        //           });
+        //         },
+        //         icon: const Icon(Icons.shopping_cart),
+        //         label: const Text("PRODUCT CART"),
+        //         backgroundColor: Colors.black,
+        //         foregroundColor: Colors.white,
+        //       ),
+        //     ),
+        //     const SizedBox(height: 20),
+        //     Align(
+        //       alignment: Alignment.bottomRight,
+        //       child: FloatingActionButton.extended(
+        //         heroTag: "CHAT",
+        //         // onPressed: () => YmChat.startChatbot(),
+        //         onPressed: () => selectChatUser(context), //Modal.privateChat(context, ""),
+        //         icon: const Icon(Icons.chat),
+        //         label: const Text("CHAT"),
+        //         backgroundColor: Colors.black,
+        //         foregroundColor: Colors.white,
+        //       ),
+        //     ),
+        //   ],
+        // ) : 
         Align(
           alignment: Alignment.bottomRight,
           child: FloatingActionButton.extended(
-            heroTag: "CHAT2",
+            heroTag: Var.chat,
             onPressed: () => selectChatUser(context),
             icon: const Icon(Icons.chat),
-            label: const Text("CHAT"),
+            label: const SizedBox(),
             backgroundColor: Colors.black,
             foregroundColor: Colors.white,
           ),
@@ -351,6 +354,9 @@ class _NavigationMenuState extends State<NavigationMenu> {
             case 8:
               returnValue = CupertinoTabView(builder: (context) => const ProductOrderDetails());
               break;
+            case 9:
+              returnValue = CupertinoTabView(builder: (context) => const ProductCart());
+              break;
           }
           return returnValue ?? home;
         },
@@ -406,10 +412,8 @@ class _NavigationMenuState extends State<NavigationMenu> {
 
     // Listening to bot events
     EventChannel _ymEventChannel = const EventChannel("YMChatEvent");
-    print("ymChat name ->${_ymEventChannel.name}");
     _ymEventChannel.receiveBroadcastStream().listen((event) {
       Map ymEvent = event;
-      print("ymChat message ->${ymEvent['data']}");
       log("${ymEvent['code']} : ${ymEvent['data']}");
     });
 

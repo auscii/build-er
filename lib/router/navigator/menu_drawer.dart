@@ -38,6 +38,10 @@ class _MenuDrawerState extends State<MenuDrawer> {
         'title': Var.productOrderDetails,
       },
       {
+        'icon': Icons.shopping_cart,
+        'title': Var.productcart,
+      },
+      {
         'icon': Icons.info,
         'title': Var.about,
       },
@@ -57,6 +61,15 @@ class _MenuDrawerState extends State<MenuDrawer> {
       } else if (title == Var.about) {
         NavigationMenu.activeIndex = 4;
         GlobalNavigator.pushReplaceNav(context, 4);
+      } else if (title == Var.productcart) {
+        AppData.getProductCarts();
+        Loader.show(context, 0);
+        Future.delayed(const Duration(milliseconds: 5000), () {
+          Loader.stop();
+          GlobalNavigator.doubleGoBack();
+          NavigationMenu.activeIndex = 9;
+          GlobalNavigator.navigateToScreen(const NavigationMenu());
+        });
       } else if (title == Var.productOrderDetails) {
         Loader.show(context, 0);
         Var.productOrders.clear();

@@ -10,6 +10,7 @@ import 'package:client/core/utils/global.dart';
 import 'package:client/core/utils/loader.dart';
 import 'package:client/core/utils/modal.dart';
 import 'package:client/core/utils/toast.dart';
+import 'package:client/router/router.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -455,7 +456,21 @@ class AppData extends ChangeNotifier {
       .then((res) {
       res.docs.forEach((val) {
         var cart = val.data();
-        Var.productCarts.addAll({cart});
+        Var.productCarts.addAll({
+          Cart(
+            docID: val.id,
+            id: cart.id,
+            title: cart.title,
+            description: cart.description,
+            image: cart.image,
+            price: cart.price,
+            quantity: cart.quantity,
+            category: cart.category,
+            createdBy: cart.createdBy,
+            createdAt: cart.createdAt,
+            userAddedBy: cart.userAddedBy, 
+          )
+        });
       });
       AppData().notifyListeners();
     });
@@ -502,10 +517,9 @@ class AppData extends ChangeNotifier {
 
   static Future<void> updateProductOrder({
     required String userId,
-    required String transactionNumber,
-    required String orderStatusCode,
+    required String fieldName,
+    required String fieldValue,
   }) async {
-    print("updateProductOrder userId ->$userId");
     final instance = FirebaseFirestore.instance
         .collection(Var.order.toLowerCase())
         .withConverter(
@@ -515,14 +529,48 @@ class AppData extends ChangeNotifier {
         .doc(userId);
     instance.get().then((value) {
       instance.update({
-        "orderStatus": orderStatusCode
+        fieldName: fieldValue
       });
-    }).then((_) => {
-      Toast.show("Product order status are now $orderStatusCode !", null)
+    }).then((_) {
+      Toast.show("Product order $fieldName - $fieldValue !", null);
+      GlobalNavigator.doubleGoBack();
     });
     Loader.stop();
   }
 
+  static Future<void> updateProductCart({
+    required String docID,
+    required String fieldName,
+    required double fieldValue,
+  }) async {
+    final instance = FirebaseFirestore.instance
+      .collection(Var.carts.toLowerCase())
+      .withConverter(
+        fromFirestore: Cart.fromFirestore,
+        toFirestore: (Cart cart, _) 
+        => cart.toFirestore())
+      .doc(docID);
+    instance.get().then((value) {
+      instance.update({
+        fieldName: fieldValue
+      });
+    }).then((_) => {
+      print("Product cart updated $fieldName: ${fieldValue.toInt().toString()}")
+    });
+  }
+
+  static Future<void> removeProductCart({required String docID}) async {
+    FirebaseFirestore.instance
+      .collection(Var.carts.toLowerCase())
+      .withConverter(
+        fromFirestore: Cart.fromFirestore,
+        toFirestore: (Cart cart, _) 
+        => cart.toFirestore())
+      .doc(docID)
+      .delete()
+      .then((_) => print("Product cart removed $docID"))
+      .catchError((error) => print('Product cart delete failed: $error'));
+  }
 }
 
 class AdminRequests {

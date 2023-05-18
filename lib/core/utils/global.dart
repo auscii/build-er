@@ -5,15 +5,14 @@ import 'package:client/core/models/portfolio.dart';
 import 'package:client/core/models/product_order.dart';
 import 'package:client/core/models/products.dart';
 import 'package:client/core/models/user.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 class Var {
   static const e = "";
   static const s = " ";
   static const q = "?";
+  static const p = "₱";
   static const na = "N/A";
   static const appName = "ProjectBuilder";
   static const appLogo = "assets/images/res/builder-logo.png";
@@ -194,13 +193,17 @@ class Var {
   static const orderPreparing = "PREPARING";
   static const outForDelivery = "OUT FOR DELIVERY";
   static const delivered = "DELIVERED";
-  static String currentUseFullname = "";
   static const productOrderS = "PRODUCT ORDERS";
+  static const chat = "CHAT";
+  static const productcart = "PRODUCT CART";
+  static const orderStatus = "orderStatus";
+  static const quantity = "quantity";
   // static const aaa = "aaa";
 
   static const String userPendingForVerification = "DPL1W";
   static const String adminApprovedUserVerification = "VML2RW";
   static const String adminStatus = "PFA9R";
+  static String currentUseFullname = "";
   
   static var appTitle = "";
   static var activePage = "";
@@ -229,9 +232,11 @@ class Var {
   static List<Cart> productCarts = [];
   static List<ProductOrder> productOrders = [];
   static List<String> orderStatuses = [];
-  static var now = DateTime.now();
   static String currentUserID = FirebaseAuth.instance.currentUser?.uid ?? Var.e;
-
+  
+  static var now = DateTime.now();
+  static var formatter = NumberFormat('#,##,000.00');
+  
   static charRandomizer() {
     return now.microsecondsSinceEpoch.toString();
   }

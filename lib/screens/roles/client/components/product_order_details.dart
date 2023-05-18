@@ -130,12 +130,12 @@ class _ProductOrderDetailsState extends State<ProductOrderDetails> {
                         const Divider(color: Colors.black),
                         const SizedBox(height: 20),
                         Text(
-                          "GRAND TOTAL:  ₱ ${order.grandTotal.toStringAsFixed(2)}".toUpperCase(),
+                          "PRODUCT ORDER(S) GRAND TOTAL: \n${Var.p}${Var.e}${Var.formatter.format(order.grandTotal)}",
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontFamily: Var.defaultFont,
                             fontWeight: FontWeight.bold,
-                            fontSize: 19,
+                            fontSize: 22,
                             color: Colors.black
                           ),
                         ),

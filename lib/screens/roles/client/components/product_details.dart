@@ -88,11 +88,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 Var.productCarts.clear();
                                 AppData.insertProductCart(
                                   cart: Cart(
+                                    docID: Var.na,
                                     id: products.id,
                                     title: products.title,
                                     image: products.image,
                                     description: products.description,
                                     price: products.price,
+                                    quantity: 1.1,
                                     category: products.category,
                                     createdBy: products.createdBy,
                                     userAddedBy: Var.currentUserID,

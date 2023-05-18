@@ -463,7 +463,8 @@ class Modal {
                         Future.delayed(const Duration(milliseconds: 5000), () {
                           Loader.stop();
                           GlobalNavigator.doubleGoBack();
-                          productCart(context);
+                          NavigationMenu.activeIndex = 9;
+                          GlobalNavigator.navigateToScreen(const NavigationMenu());
                         });
                       },
                       child: 
@@ -535,183 +536,6 @@ class Modal {
       });
   }
   
-  static Future<dynamic> productCart(BuildContext context) {
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        if (Var.productCarts.isEmpty) {
-          Toast.show("No available products...", null);
-        }
-        return AlertDialog(
-          title: const Center(
-            child: Text(
-              "PRODUCT CART",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: Var.defaultFont,
-                fontWeight: FontWeight.bold,
-                fontSize: 21,
-                color: Colors.black
-              ),
-            )
-          ),
-          content: SingleChildScrollView(
-            physics: const ScrollPhysics(),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const SizedBox(height: 20),
-                Padding(
-                  padding: EdgeInsets.zero,
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          NavigationMenu.activeIndex = 7;
-                          GlobalNavigator.navigateToScreen(const NavigationMenu());
-                        },
-                        child: Container(
-                          height: 50,
-                          width: 200,
-                          margin: const EdgeInsets.symmetric(horizontal: 5),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(25)),
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                  color: const Color.fromARGB(255, 255, 255, 255).withAlpha(100),
-                                  offset: const Offset(1, 1),
-                                  blurRadius: 8,
-                                  spreadRadius: 2
-                              )
-                            ],
-                            color: Colors.green
-                          ),
-                          child: const Text(
-                            "PROCEED TO CHECKOUT",
-                            style: TextStyle(
-                              fontFamily: Var.defaultFont,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 19,
-                              color: Colors.white
-                            ),
-                          ),
-                        ),
-                      ),
-                      // GestureDetector(
-                      //   child: 
-                      //     Container(
-                      //       height: 50,
-                      //       width: 100,
-                      //       margin: const EdgeInsets.symmetric(horizontal: 5),
-                      //       alignment: Alignment.center,
-                      //       decoration: BoxDecoration(
-                      //         borderRadius: const BorderRadius.all(Radius.circular(25)),
-                      //         boxShadow: <BoxShadow>[
-                      //           BoxShadow(
-                      //               color: const Color.fromARGB(255, 255, 255, 255).withAlpha(100),
-                      //               offset: const Offset(1, 1),
-                      //               blurRadius: 8,
-                      //               spreadRadius: 2
-                      //           )
-                      //         ],
-                      //         color: Colors.black
-                      //       ),
-                      //       child: const Text(
-                      //         "Close",
-                      //         style: TextStyle(
-                      //           fontFamily: Var.defaultFont,
-                      //           fontWeight: FontWeight.bold,
-                      //           fontSize: 19,
-                      //           color: Colors.white
-                      //         ),
-                      //       ),
-                      //     ),       
-                      //   onTap: () => GlobalNavigator.goBack(),
-                      // ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 50),
-                const Divider(color: Colors.black),
-                const SizedBox(height: 20),
-                Container(
-                  margin: EdgeInsets.zero,
-                  height: 5000,
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    children: Var.productCarts.where((c) 
-                        => c.userAddedBy == Var.currentUserID
-                      ).map((prod) {
-                        return Column(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.zero,
-                              height: 150,
-                              width: 150,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Image.network(prod.image)
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            Container(
-                              margin: EdgeInsets.zero,
-                              child: Text(
-                                "Product Name: ${prod.title}",
-                                textAlign: TextAlign.left,
-                                style: const TextStyle(
-                                  fontFamily: Var.defaultFont,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 18,
-                                  color: Colors.black
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            Container(
-                              margin: EdgeInsets.zero,
-                              child: Text(
-                                "Description: ${prod.description}",
-                                textAlign: TextAlign.left,
-                                style: const TextStyle(
-                                  fontFamily: Var.defaultFont,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 18,
-                                  color: Colors.black
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            Container(
-                              margin: EdgeInsets.zero,
-                              child: Text(
-                                "Price: ${prod.price}",
-                                textAlign: TextAlign.left,
-                                style: const TextStyle(
-                                  fontFamily: Var.defaultFont,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 18,
-                                  color: Colors.black
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            const Divider(color: Colors.black),
-                            const SizedBox(height: 20),
-                          ],
-                        );
-                    }).toList(),
-                  ),
-                ),
-              ],
-            ),
-          )
-        );
-      });
-  }
-  
   static Future<dynamic> orderProductsPrompt(
     BuildContext context,
     String orderCustomerName,
@@ -723,17 +547,16 @@ class Modal {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Center(
-            child: 
-              Text(
-                "Are you sure you want to place your order(s)?",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: Var.defaultFont,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 21,
-                  color: Colors.black
-                ),
-              )
+            child: Text(
+              "Are you sure you want to place your order(s)?",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: Var.defaultFont,
+                fontWeight: FontWeight.bold,
+                fontSize: 21,
+                color: Colors.black
+              ),
+            )
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -763,6 +586,11 @@ class Modal {
                             status: 1
                           )
                         );
+                        Var.productCarts.where((c) 
+                          => c.userAddedBy == Var.currentUserID
+                        ).forEach((p) {
+                          AppData.removeProductCart(docID: p.docID);
+                        });
                         Future.delayed(const Duration(milliseconds: 5000), () {
                           Loader.stop();
                           NavigationMenu.activeIndex = 8;
@@ -848,18 +676,17 @@ class Modal {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Center(
-            child: 
-              Text(
-                "Are you sure you want to place your order(s)?",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: Var.defaultFont,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 21,
-                  color: Colors.black
-                ),
-              )
+          title: Center(
+            child: Text(
+              "TRANSACTION NUMBER: $transactionNumber \n\nAre you sure you want to update this order into $orderStatusCode?",
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontFamily: Var.defaultFont,
+                fontWeight: FontWeight.normal,
+                fontSize: 21,
+                color: Colors.black
+              ),
+            )
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -877,21 +704,9 @@ class Modal {
                         Loader.show(context, 0);
                         AppData.updateProductOrder(
                           userId: userId,
-                          transactionNumber: transactionNumber,
-                          orderStatusCode: orderStatusCode
+                          fieldName: Var.orderStatus,
+                          fieldValue: orderStatusCode
                         );
-                        // Var.productOrders.clear();
-                        // AppData.storeProductOrder(
-                        //   order: ProductOrder(
-                        //     transactionNumber: Var.charRandomizer().toString(),
-                        //     orderStatus: Var.orderConfirmed,
-                        //     grandTotal: orderGrandTotalPrice,
-                        //     customerName: Provider.of<UserProvider>(context, listen: false).user.name ?? Var.na,
-                        //     transactionDateTimeCreated: Var.now.toString(),
-                        //     userAddedBy: Var.currentUserID,
-                        //     status: 1
-                        //   )
-                        // );
                       },
                       child: Container(
                         height: 50,

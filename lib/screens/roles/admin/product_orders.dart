@@ -98,7 +98,7 @@ class _AdminProductOrdersState extends State<AdminProductOrders> {
                   )
                 ],
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 5),
               Text(
                 Var.appTitle,
                 textAlign: TextAlign.center,
@@ -109,9 +109,8 @@ class _AdminProductOrdersState extends State<AdminProductOrders> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(height: 35),
+              const SizedBox(height: 5),
               adminProductOrderApprovalPrompt(context),
-              const SizedBox(height: 35),
             ],
           ),
         ),
@@ -126,7 +125,7 @@ class _AdminProductOrdersState extends State<AdminProductOrders> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          const SizedBox(height: 50),
+          const SizedBox(height: 10),
           const Divider(color: Colors.black),
           const SizedBox(height: 20),
           Container(
