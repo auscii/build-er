@@ -27,7 +27,6 @@ class _AdminHomeState extends State<AdminHome> {
 
   @override
   void initState() {
-    AppData.getProductOrder();
     super.initState();
   }
 

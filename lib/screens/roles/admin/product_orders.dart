@@ -69,6 +69,7 @@ class _AdminProductOrdersState extends State<AdminProductOrders> {
 
   @override
   void initState() {
+    print("Var.productOrders ->${Var.productOrders}");
     setState(() => Var.appTitle = "PRODUCT ORDERS");
     super.initState();
   }

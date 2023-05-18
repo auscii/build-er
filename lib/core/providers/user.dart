@@ -291,14 +291,10 @@ class UserProvider extends ChangeNotifier {
           .then((_) => init())
           .then((_) => GlobalNavigator.router.currentState!
               .pushReplacementNamed(GlobalRoutes.switchRoles))
-          .then((value) => AppData.checkUserIfVerified())
-          .onError(
-            (FirebaseAuthException error, stackTrace) => _resolveAuthError(
-              error: error,
-              context: context,
-              signInMethods: SignInMethods.email,
-            ),
-          );
+          .then((value) {
+            AppData.initApplication();
+            AppData.checkUserIfVerified();
+          });
         break;
       case SignInMethods.google:
         googleSignIn(context);

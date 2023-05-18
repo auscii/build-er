@@ -358,6 +358,7 @@ class AppData extends ChangeNotifier {
       AppData.getNotifications();
       AppData.getMessages();
       AppData.getOrderStatuses();
+      AppData.getProductOrder();
     }
   }
 
