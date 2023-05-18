@@ -107,7 +107,7 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                     key: _formKey,
                     child: Column(mainAxisSize: MainAxisSize.min, children: [
                       authInput(
-                        hint: Var.enterName,
+                        hint: "(e.g. Last name, First name, Middle name)",
                         controller: _nameController,
                         focusNode: _nameFocusNode,
                         inputType: TextInputType.name,
@@ -161,7 +161,7 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                       ),
                       const SizedBox(height: 15),
                       authInput(
-                        hint: Var.enterPhone,
+                        hint: "(+639) 166-860-971",
                         controller: _phoneController,
                         focusNode: _phoneFocusNode,
                         inputType: TextInputType.phone, //TextInputType.phone,
