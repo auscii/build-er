@@ -3,7 +3,6 @@ import 'package:client/core/models/notifications.dart';
 import 'package:client/core/models/user.dart';
 import 'package:client/core/providers/appdata.dart';
 import 'package:client/core/utils/loader.dart';
-import 'package:client/core/utils/modal.dart';
 import 'package:client/core/utils/toast.dart';
 import 'package:client/router/navigator/menu_drawer.dart';
 import 'package:client/router/routes.dart';
@@ -54,6 +53,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
   final FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
   static CupertinoTabView? returnValue;
   static TextEditingController chatControllerField = TextEditingController();
+  bool hasOneIndex = false;
 
   @override
   void initState() {
@@ -496,6 +496,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
                       color: Colors.black,
                     ),
                     onChanged: (UserModel? value) {
+                      setState(() => checkIfFirstMessage(value?.uid));
                       privateChat(context, value!.name ?? Var.e, value.uid ?? Var.e);
                     },
                     items: Var.allUsers.where(
@@ -536,16 +537,15 @@ class _NavigationMenuState extends State<NavigationMenu> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Center(
-            child: Text(
-              "Private message with - $chatName",
-              style: const TextStyle(
-                fontFamily: Var.defaultFont,
-                fontWeight: FontWeight.bold,
-                fontSize: 21,
-                color: Colors.black
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                onPressed: () 
+                  => Navigator.of(context, rootNavigator: true).pop(),
+                icon: const Icon(Icons.close),
               ),
-            )
+            ],
           ),
           content: SingleChildScrollView(
             physics: const ScrollPhysics(),
@@ -559,6 +559,18 @@ class _NavigationMenuState extends State<NavigationMenu> {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    Center(
+                      child: Text(
+                        "Send private message to:\n$chatName",
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontFamily: Var.defaultFont,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 21,
+                          color: Colors.black
+                        ),
+                      )
+                    ),
                     const SizedBox(height: 30),
                     Align(
                       alignment: Alignment.topCenter,
@@ -583,6 +595,18 @@ class _NavigationMenuState extends State<NavigationMenu> {
                               )
                             );
                             setState(() {
+                              if (hasOneIndex) {
+                                hasOneIndex = false;
+                              } else {
+                                // hasOneIndex = true;
+                                if (Var.messageLists.where((m) 
+                                    => m.createdBy == Var.currentUserID &&
+                                      m.receiverUserID == chatUserID ||
+                                      m.receiverUserID == Var.currentUserID
+                                    ).length == 1) {
+                                  hasOneIndex = true;
+                                }
+                              }
                               Var.messageLists.clear();
                             });
                             Future.delayed(const Duration(milliseconds: 5000), () {
@@ -641,45 +665,125 @@ class _NavigationMenuState extends State<NavigationMenu> {
                       child: Column(
                         children: Var.messageLists.where(
                           (m) => m.createdBy == Var.currentUserID &&
-                          m.receiverUserID == chatUserID
+                                 m.receiverUserID == chatUserID ||
+                                 m.receiverUserID == Var.currentUserID
                           ).map((value) {
+                            String user = "You:";
+                            if (value.createdBy != Var.currentUserID) {
+                              user = "$chatName:";
+                            }
                             return Container(
-                              padding: value.createdBy == Var.currentUserID ? const EdgeInsets.only(
-                                right: 100,
-                                left: 14,
-                                top: 10,
-                                bottom: 10
-                              ) : const EdgeInsets.only(
-                                left: 100, 
-                                right: 14, 
-                                top: 10,
-                                bottom: 10
-                              ),
-                              child: Align(
-                                child: Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: (value.createdBy == Var.currentUserID ?
-                                      Colors.blue[200] :
-                                      Colors.grey.shade200
+                              margin: EdgeInsets.zero,
+                              // padding: value.createdBy == Var.currentUserID ? const EdgeInsets.only(
+                              //   right: 100,
+                              //   left: 14,
+                              //   top: 10,
+                              //   bottom: 10
+                              // ) : const EdgeInsets.only(
+                              //   left: 100, 
+                              //   right: 14, 
+                              //   top: 10,
+                              //   bottom: 10
+                              // ),
+                              child: hasOneIndex ? Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 20, bottom: 20),
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: (value.createdBy == Var.currentUserID ?
+                                        Colors.blue[200] :
+                                        Colors.grey.shade200
+                                      ),
                                     ),
+                                    padding: const EdgeInsets.all(16),
+                                    child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(
+                                            "$user ${value.message}",
+                                            textAlign: TextAlign.left
+                                          ),
+                                        ],
+                                      ),
+                                    )
                                   ),
-                                  padding: const EdgeInsets.all(16),
-                                  child: Container(
-                                    padding: const EdgeInsets.all(16.0),
-                                    width: MediaQuery.of(context).size.width*0.6,
+                                  const SizedBox(height: 20),
+                                  Container(
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.grey.shade200
+                                    ),
+                                    padding: const EdgeInsets.all(16),
+                                    child: Align(
+                                      alignment: Alignment.topRight,
+                                      child: Column(
+                                        children: const <Widget>[
+                                          Text(
+                                            "Admin: Thank you for your message. We'll get back to you later.",
+                                            textAlign: TextAlign.right
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  )
+                                ],
+                              ) : Container(
+                                margin: const EdgeInsets.only(top: 20, bottom: 20),
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: (value.createdBy == Var.currentUserID ?
+                                    Colors.blue[200] :
+                                    Colors.grey.shade200
+                                  ),
+                                ),
+                                padding: const EdgeInsets.all(16),
+                                child: Container(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Align(
+                                    alignment: Alignment.topLeft,
                                     child: Column(
                                       children: <Widget>[
                                         Text(
-                                          "Me: ${value.message}",
+                                          "$user ${value.message}",
                                           textAlign: TextAlign.left
                                         ),
                                       ],
                                     ),
                                   )
                                 )
-                              ),
+                              )
+                              // child: Align(
+                              //   child: Container(
+                              //     width: double.infinity,
+                              //     decoration: BoxDecoration(
+                              //       borderRadius: BorderRadius.circular(20),
+                              //       color: (value.createdBy == Var.currentUserID ?
+                              //         Colors.blue[200] :
+                              //         Colors.grey.shade200
+                              //       ),
+                              //     ),
+                              //     padding: const EdgeInsets.all(16),
+                              //     child: Container(
+                              //       padding: const EdgeInsets.all(16.0),
+                              //       width: MediaQuery.of(context).size.width*0.6,
+                              //       child: Column(
+                              //         children: <Widget>[
+                              //           Text(
+                              //             "Me: ${value.message}",
+                              //             textAlign: TextAlign.left
+                              //           ),
+                              //         ],
+                              //       ),
+                              //     )
+                              //   )
+                              // ),
                             );
                         }).toList(),
                       ),
@@ -743,6 +847,18 @@ class _NavigationMenuState extends State<NavigationMenu> {
           )
         );
       });
+  }
+
+  void checkIfFirstMessage(uid) {
+    if (Var.messageLists.where((m) 
+        => m.createdBy == Var.currentUserID &&
+           m.receiverUserID == uid ||
+           m.receiverUserID == Var.currentUserID
+        ).length == 1) {
+      hasOneIndex = true;
+    } else {
+      hasOneIndex = false;
+    }
   }
 
 }
