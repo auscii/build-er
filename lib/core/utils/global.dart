@@ -195,6 +195,7 @@ class Var {
   static const outForDelivery = "OUT FOR DELIVERY";
   static const delivered = "DELIVERED";
   static String currentUseFullname = "";
+  static const productOrderS = "PRODUCT ORDERS";
   // static const aaa = "aaa";
 
   static const String userPendingForVerification = "DPL1W";

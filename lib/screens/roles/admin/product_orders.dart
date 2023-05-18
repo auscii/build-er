@@ -55,7 +55,7 @@ class AppDialog2 extends StatelessWidget {
 }
 
 class AdminProductOrders extends StatefulWidget {
-  static const id = "PRODUCT ORDERS";
+  static const id = Var.productOrderS;
   final bool admin;
   const AdminProductOrders({
     Key? key,
@@ -69,8 +69,7 @@ class _AdminProductOrdersState extends State<AdminProductOrders> {
 
   @override
   void initState() {
-    print("Var.productOrders ->${Var.productOrders}");
-    setState(() => Var.appTitle = "PRODUCT ORDERS");
+    setState(() => Var.appTitle = Var.productOrderS);
     super.initState();
   }
 
@@ -90,6 +89,15 @@ class _AdminProductOrdersState extends State<AdminProductOrders> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    onPressed: () => GlobalNavigator.goBack(),
+                    icon: const Icon(Icons.close),
+                  )
+                ],
+              ),
               const SizedBox(height: 50),
               Text(
                 Var.appTitle,

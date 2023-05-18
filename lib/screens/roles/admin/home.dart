@@ -150,7 +150,7 @@ class _AdminHomeState extends State<AdminHome> {
                           const SizedBox(width: 20),
                           _buildAddItem(
                             context: context,
-                            label: "PRODUCT ORDERS",
+                            label: Var.productOrderS,
                             onPressed: () => showDialog(
                               context: context,
                               builder: (context) => const AdminProductOrders(
