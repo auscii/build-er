@@ -622,6 +622,17 @@ class _NavigationMenuState extends State<NavigationMenu> {
                                 status: 1
                               )
                             );
+                            AppData.storeNewNotification(
+                              notif: Notifications(
+                                id: "${Var.user}${Var.charRandomizer()}",
+                                actionMessage: "You have new message. \n Message: $value",
+                                type: Var.chat,
+                                toUser: chatUserID,
+                                createdAt: Var.now.toString(),
+                                createdBy: Var.currentUserID,
+                                status: 1
+                              )
+                            );
                             setState(() {
                               if (hasOneIndex) {
                                 hasOneIndex = false;
