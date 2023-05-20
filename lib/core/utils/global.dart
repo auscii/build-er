@@ -107,7 +107,7 @@ class Var {
   static const faq = "FAQ";
   static const locator = "LOCATOR";
   static const privacyPolicy = "PRIVACY POLICY";
-  static const copyright = "2023 BUILD-er.\nALL RIGHTS RESERVED.\nv1.0.3";
+  static const copyright = "2023 BUILD-er.\nALL RIGHTS RESERVED.\nv1.0.4";
   static const welcome = "Welcome, ";
   static const featureNotAvailable = "Sorry, this feature isn't available right now.";
   static const findNearbyContractors = "Find nearby Contractors";

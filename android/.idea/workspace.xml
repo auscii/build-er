@@ -10,9 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e111177e-1a4d-468a-bcf5-14eafdc46362" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/core/utils/global.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/utils/global.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lib/screens/auth/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/auth/login.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
