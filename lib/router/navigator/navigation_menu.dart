@@ -84,7 +84,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
           ),
         ),
         centerTitle: true,
-        actions: <Widget>[
+        actions: <Widget>[ Var.activeUserRole != Var.admin ?
           PopupMenuButton<Notifications>(
             onSelected:(value) {
               Toast.show(
@@ -114,7 +114,8 @@ class _NavigationMenuState extends State<NavigationMenu> {
                 );
               }).toList();
             },
-          ),
+          ) : 
+          const SizedBox(),
         ],
         leading: Builder(builder: (context) {
           return IconButton(
