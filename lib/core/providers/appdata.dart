@@ -406,6 +406,7 @@ class AppData extends ChangeNotifier {
       AppData.getPortfolioLists();
       AppData.getContractorUser();
       AppData.getClientUser();
+      AppData.getAdminUser();
       AppData.checkUserIfVerified();
       AppData.getNotifications();
       AppData.getMessages();
@@ -413,6 +414,23 @@ class AppData extends ChangeNotifier {
       AppData.getProductOrder();
       AppData.populateNavigationItems();
     }
+  }
+
+  static void getAdminUser() async {
+    await FirebaseFirestore.instance
+      .collection(Var.users)
+      .where(Var.roles, isEqualTo: Var.admin)
+      .withConverter(
+        fromFirestore: UserModel.fromFirestore,
+        toFirestore: (UserModel values, _) => values.toFirestore())
+      .get()
+      .then((res) {
+        res.docs.forEach((val) {
+          var admins = val.data();
+          Var.adminUsers.addAll({admins});
+        });
+        AppData().notifyListeners();
+      });
   }
 
   static Future<void> storeNewNotification({

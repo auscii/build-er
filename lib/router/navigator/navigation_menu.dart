@@ -59,6 +59,8 @@ class _NavigationMenuState extends State<NavigationMenu> {
   void initState() {
     // AppData.getProductCarts();
     initilizeChatbot();
+    print("NavMenu Var.allUsers ->${Var.allUsers}");
+    print("NavMenu Var.activeUserRole ->${Var.activeUserRole}");
     super.initState();
   }
 
@@ -479,7 +481,42 @@ class _NavigationMenuState extends State<NavigationMenu> {
                   color: Colors.black
                 ),
                 child: Expanded(
-                  child: DropdownButton<UserModel>(
+                  child: Var.activeUserRole == Var.client || 
+                  Var.activeUserRole == Var.contractor ?
+
+                  DropdownButton<UserModel>(
+                    focusColor: Colors.black,
+                    dropdownColor: Colors.black,
+                    value: Var.adminUsers.where(
+                      (u) => u.isUserVerified == Var.adminApprovedUserVerification &&
+                      u.uid != Var.currentUserID
+                    ).first,
+                    icon: const Icon(
+                      Icons.arrow_drop_down_circle_sharp,
+                      color: Colors.white
+                    ),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.white),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.black,
+                    ),
+                    onChanged: (UserModel? value) {
+                      setState(() => checkIfFirstMessage(value?.uid));
+                      privateChat(context, value!.name ?? Var.e, value.uid ?? Var.e);
+                    },
+                    items: Var.adminUsers.where(
+                      (u) => u.isUserVerified == Var.adminApprovedUserVerification &&
+                      u.uid != Var.currentUserID
+                    ).map<DropdownMenuItem<UserModel>>((UserModel value) {
+                      return DropdownMenuItem<UserModel>(
+                        value: value,
+                        child: Text(value.name ?? Var.na),
+                      );
+                    }).toList(),
+                  ) :
+
+                  DropdownButton<UserModel>(
                     focusColor: Colors.black,
                     dropdownColor: Colors.black,
                     value: Var.allUsers.where(
@@ -511,16 +548,6 @@ class _NavigationMenuState extends State<NavigationMenu> {
                     }).toList(),
                   )
                 ),
-                // const Text(
-                //   Var.ok,
-                //   style: TextStyle(
-                //     backgroundColor: AppColors.primary,
-                //     fontFamily: Var.defaultFont,
-                //     fontWeight: FontWeight.bold,
-                //     fontSize: 19,
-                //     color: Colors.white
-                //   ),
-                // ),
               ),
             ],
           ),
@@ -663,44 +690,80 @@ class _NavigationMenuState extends State<NavigationMenu> {
                       margin: EdgeInsets.zero,
                       height: 2500,
                       width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        children: Var.messageLists.where(
-                          (m) => m.createdBy == Var.currentUserID &&
-                                 m.receiverUserID == chatUserID ||
-                                 m.receiverUserID == Var.currentUserID
-                          ).map((value) {
-                            String user = "You:";
-                            if (value.createdBy != Var.currentUserID) {
-                              user = "$chatName:";
-                            }
-                            return Container(
-                              margin: EdgeInsets.zero,
-                              // padding: value.createdBy == Var.currentUserID ? const EdgeInsets.only(
-                              //   right: 100,
-                              //   left: 14,
-                              //   top: 10,
-                              //   bottom: 10
-                              // ) : const EdgeInsets.only(
-                              //   left: 100, 
-                              //   right: 14, 
-                              //   top: 10,
-                              //   bottom: 10
-                              // ),
-                              child: hasOneIndex ? Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(top: 20, bottom: 20),
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: (value.createdBy == Var.currentUserID ?
-                                        Colors.blue[200] :
-                                        Colors.grey.shade200
+                      child: Var.activeUserRole == Var.admin ?
+                        Column(
+                          children: Var.messageLists.where(
+                            (m) => m.createdBy == chatUserID ||
+                                   m.createdBy == Var.currentUserID &&
+                                   m.receiverUserID == chatUserID
+                            ).map((value) {
+                              String user = "You:";
+                              if (value.createdBy != Var.currentUserID) {
+                                user = "$chatName:";
+                              }
+                              return Container(
+                                margin: EdgeInsets.zero,
+                                child: hasOneIndex ? Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.only(top: 20, bottom: 20),
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: (value.createdBy == Var.currentUserID ?
+                                          Colors.blue[200] :
+                                          Colors.grey.shade200
+                                        ),
                                       ),
+                                      padding: const EdgeInsets.all(16),
+                                      child: Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Column(
+                                          children: <Widget>[
+                                            Text(
+                                              "$user ${value.message}",
+                                              textAlign: TextAlign.left
+                                            ),
+                                          ],
+                                        ),
+                                      )
                                     ),
-                                    padding: const EdgeInsets.all(16),
+                                    const SizedBox(height: 20),
+                                    Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: Colors.grey.shade200
+                                      ),
+                                      padding: const EdgeInsets.all(16),
+                                      child: Align(
+                                        alignment: Alignment.topRight,
+                                        child: Column(
+                                          children: const <Widget>[
+                                            Text(
+                                              "Admin: Thank you for your message. We'll get back to you later.",
+                                              textAlign: TextAlign.right
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    )
+                                  ],
+                                ) : Container(
+                                  margin: const EdgeInsets.only(top: 20, bottom: 20),
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: (value.createdBy == Var.currentUserID ?
+                                      Colors.blue[200] :
+                                      Colors.grey.shade200
+                                    ),
+                                  ),
+                                  padding: const EdgeInsets.all(16),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(16.0),
                                     child: Align(
                                       alignment: Alignment.topLeft,
                                       child: Column(
@@ -712,134 +775,100 @@ class _NavigationMenuState extends State<NavigationMenu> {
                                         ],
                                       ),
                                     )
-                                  ),
-                                  const SizedBox(height: 20),
-                                  Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: Colors.grey.shade200
+                                  )
+                                )
+                              );
+                          }).toList(),
+                        ) : 
+                        Column(
+                          children: Var.messageLists.where(
+                            (m) => m.createdBy == Var.currentUserID ||
+                                  m.receiverUserID == Var.currentUserID
+                            ).map((value) {
+                              String user = "You:";
+                              if (value.createdBy != Var.currentUserID) {
+                                user = "$chatName:";
+                              }
+                              return Container(
+                                margin: EdgeInsets.zero,
+                                child: hasOneIndex ? Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.only(top: 20, bottom: 20),
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: (value.createdBy == Var.currentUserID ?
+                                          Colors.blue[200] :
+                                          Colors.grey.shade200
+                                        ),
+                                      ),
+                                      padding: const EdgeInsets.all(16),
+                                      child: Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Column(
+                                          children: <Widget>[
+                                            Text(
+                                              "$user ${value.message}",
+                                              textAlign: TextAlign.left
+                                            ),
+                                          ],
+                                        ),
+                                      )
                                     ),
-                                    padding: const EdgeInsets.all(16),
+                                    const SizedBox(height: 20),
+                                    Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: Colors.grey.shade200
+                                      ),
+                                      padding: const EdgeInsets.all(16),
+                                      child: Align(
+                                        alignment: Alignment.topRight,
+                                        child: Column(
+                                          children: const <Widget>[
+                                            Text(
+                                              "Admin: Thank you for your message. We'll get back to you later.",
+                                              textAlign: TextAlign.right
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    )
+                                  ],
+                                ) : Container(
+                                  margin: const EdgeInsets.only(top: 20, bottom: 20),
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: (value.createdBy == Var.currentUserID ?
+                                      Colors.blue[200] :
+                                      Colors.grey.shade200
+                                    ),
+                                  ),
+                                  padding: const EdgeInsets.all(16),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(16.0),
                                     child: Align(
-                                      alignment: Alignment.topRight,
+                                      alignment: Alignment.topLeft,
                                       child: Column(
-                                        children: const <Widget>[
+                                        children: <Widget>[
                                           Text(
-                                            "Admin: Thank you for your message. We'll get back to you later.",
-                                            textAlign: TextAlign.right
+                                            "$user ${value.message}",
+                                            textAlign: TextAlign.left
                                           ),
                                         ],
                                       ),
                                     )
                                   )
-                                ],
-                              ) : Container(
-                                margin: const EdgeInsets.only(top: 20, bottom: 20),
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: (value.createdBy == Var.currentUserID ?
-                                    Colors.blue[200] :
-                                    Colors.grey.shade200
-                                  ),
-                                ),
-                                padding: const EdgeInsets.all(16),
-                                child: Container(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Column(
-                                      children: <Widget>[
-                                        Text(
-                                          "$user ${value.message}",
-                                          textAlign: TextAlign.left
-                                        ),
-                                      ],
-                                    ),
-                                  )
                                 )
-                              )
-                              // child: Align(
-                              //   child: Container(
-                              //     width: double.infinity,
-                              //     decoration: BoxDecoration(
-                              //       borderRadius: BorderRadius.circular(20),
-                              //       color: (value.createdBy == Var.currentUserID ?
-                              //         Colors.blue[200] :
-                              //         Colors.grey.shade200
-                              //       ),
-                              //     ),
-                              //     padding: const EdgeInsets.all(16),
-                              //     child: Container(
-                              //       padding: const EdgeInsets.all(16.0),
-                              //       width: MediaQuery.of(context).size.width*0.6,
-                              //       child: Column(
-                              //         children: <Widget>[
-                              //           Text(
-                              //             "Me: ${value.message}",
-                              //             textAlign: TextAlign.left
-                              //           ),
-                              //         ],
-                              //       ),
-                              //     )
-                              //   )
-                              // ),
-                            );
-                        }).toList(),
-                      ),
-                      /*
-                      child: ListView.builder(
-                        itemCount: Var.messageLists.where(
-                          (m) => //m.receiverUserID == chatUserID &&
-                          m.createdBy == Var.currentUserID
-                        ).length,
-                        itemCount: Var.messageLists.length,
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.only(top: 0, bottom: 0),
-                        // physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, i) {
-                          return Container(
-                            padding: const EdgeInsets.only(
-                              right: 14,
-                              left: 14, 
-                              top: 10,
-                              bottom: 10
-                            ),
-                            // padding: Var.messageLists[i].createdBy == Var.currentUserID ?
-                            // const EdgeInsets.only(
-                            //   right: 100,
-                            //   left: 14, 
-                            //   top: 10,
-                            //   bottom: 10
-                            // ) : const EdgeInsets.only(
-                            //   left: 100, 
-                            //   right: 14, 
-                            //   top: 10,
-                            //   bottom: 10
-                            // ),
-                            child: Align(
-                              // alignment: (Var.messageLists[index].type == "APPROVAL"?Alignment.topLeft:Alignment.topRight),
-                              child: Container( // Var.messageLists[i].receiverUserID == chatUserID ? Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: (Var.messageLists[i].createdBy == Var.currentUserID ?
-                                    Colors.blue[200] :
-                                    Colors.grey.shade200
-                                  ),
-                                ),
-                                padding: const EdgeInsets.all(16),
-                                child: Text(
-                                  Var.messageLists[i].message,
-                                  style: const TextStyle(fontSize: 15)
-                                ),
-                              )
-                              //: const SizedBox(),
-                            ),
-                          );
-                        },
-                      ),
-                      */
+                              );
+                          }).toList(),
+                        )
+                      
                     ),
                   ],
                 ),

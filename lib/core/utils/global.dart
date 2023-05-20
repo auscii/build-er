@@ -227,6 +227,7 @@ class Var {
   static List<UserModel> filteredClientUsers = [];
   static List<UserModel> filteredContractorUsers = [];
   static List<UserModel> allUsers = [];
+  static List<UserModel> adminUsers = [];
   static List<UserModel> nearbyContractorUsers = [];
   static List<Notifications> notifLists = [];
   static List<Messages> messageLists = [];
