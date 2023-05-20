@@ -5,6 +5,7 @@ import 'package:client/core/models/portfolio.dart';
 import 'package:client/core/models/product_order.dart';
 import 'package:client/core/models/products.dart';
 import 'package:client/core/models/user.dart';
+import 'package:client/router/navigator/menu_drawer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 
@@ -106,7 +107,7 @@ class Var {
   static const faq = "FAQ";
   static const locator = "LOCATOR";
   static const privacyPolicy = "PRIVACY POLICY";
-  static const copyright = "2023 BUILD-er.\nALL RIGHTS RESERVED.";
+  static const copyright = "2023 BUILD-er.\nALL RIGHTS RESERVED.\nv1.0.3";
   static const welcome = "Welcome, ";
   static const featureNotAvailable = "Sorry, this feature isn't available right now.";
   static const findNearbyContractors = "Find nearby Contractors";
@@ -232,6 +233,7 @@ class Var {
   static List<Cart> productCarts = [];
   static List<ProductOrder> productOrders = [];
   static List<String> orderStatuses = [];
+  static List<NavItems> navMenu = [];
   static String currentUserID = FirebaseAuth.instance.currentUser?.uid ?? Var.e;
   
   static var now = DateTime.now();

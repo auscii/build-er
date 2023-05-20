@@ -7,6 +7,16 @@ import 'package:provider/provider.dart';
 import '../router.dart';
 import 'navigation_menu.dart';
 
+class NavItems {
+  IconData icon;
+  String title;
+
+  NavItems({
+    required this.icon,
+    required this.title
+  });
+}
+
 class MenuDrawer extends StatefulWidget {
   const MenuDrawer({super.key});
   @override
@@ -14,9 +24,60 @@ class MenuDrawer extends StatefulWidget {
 }
 
 class _MenuDrawerState extends State<MenuDrawer> {
-  Map userDetails = {};
+  // List navMenu = [];
+  // static List<NavItems> navMenu = [];
+
   @override
   void initState() {
+    // setState(() {
+    //   if (Var.activeUserRole == Var.client) {
+    //     navMenu.addAll({
+    //       NavItems(
+    //         icon: Icons.home,
+    //         title: Var.home
+    //       ),
+    //       NavItems(
+    //         icon: Icons.person,
+    //         title: Var.profile
+    //       ),
+    //       NavItems(
+    //         icon: Icons.shopping_bag,
+    //         title: Var.productOrderDetails
+    //       ),
+    //       NavItems(
+    //         icon: Icons.shopping_cart,
+    //         title: Var.productcart
+    //       ),
+    //       NavItems(
+    //         icon: Icons.info,
+    //         title: Var.about
+    //       ),
+    //       NavItems(
+    //         icon: Icons.lock,
+    //         title: Var.logout
+    //       ),
+    //     });
+    //   } else {
+    //     navMenu.addAll({
+    //       NavItems(
+    //         icon: Icons.home,
+    //         title: Var.home
+    //       ),
+    //       NavItems(
+    //         icon: Icons.person,
+    //         title: Var.profile
+    //       ),
+    //       NavItems(
+    //         icon: Icons.info,
+    //         title: Var.about
+    //       ),
+    //       NavItems(
+    //         icon: Icons.lock,
+    //         title: Var.logout
+    //       ),
+    //     });
+    //   }
+    // });
     super.initState();
   }
 
@@ -24,32 +85,36 @@ class _MenuDrawerState extends State<MenuDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    final List navMenu = [
-      {
-        'icon': Icons.home,
-        'title': Var.home,
-      },
-      {
-        'icon': Icons.person,
-        'title': Var.profile,
-      },
-      {
-        'icon': Icons.shopping_bag,
-        'title': Var.productOrderDetails,
-      },
-      {
-        'icon': Icons.shopping_cart,
-        'title': Var.productcart,
-      },
-      {
-        'icon': Icons.info,
-        'title': Var.about,
-      },
-      {
-        'icon': Icons.lock,
-        'title': Var.logout,
-      }
-    ];
+    // final List navMenu = [
+    //   {
+    //     'icon': Icons.home,
+    //     'title': Var.home,
+    //   },
+    //   {
+    //     'icon': Icons.person,
+    //     'title': Var.profile,
+    //   },
+    //   {
+    //     'icon': Icons.shopping_bag,
+    //     'title': Var.productOrderDetails,
+    //   },
+    //   {
+    //     'icon': Icons.shopping_cart,
+    //     'title': Var.productcart,
+    //   },
+    //   {
+    //     'icon': Icons.info,
+    //     'title': Var.about,
+    //   },
+    //   {
+    //     'icon': Icons.lock,
+    //     'title': Var.logout,
+    //   }
+    // ];
+    
+    // if (Var.activeUserRole == Var.admin || Var.activeUserRole == Var.contractor) {
+    //   navMenu.removeWhere((nav) => nav["title"] == Var.productOrderDetails && nav["productcart"]);
+    // }
 
     navigateTo(title) {
       if (title == Var.home) {
@@ -144,16 +209,20 @@ class _MenuDrawerState extends State<MenuDrawer> {
               ],
             ),
             const SizedBox(height: 20),
-            for (var i in navMenu) 
+            // for (var i in navMenu.where((nav) => nav["title"] == Var.productOrderDetails )) 
+            for (var i in Var.navMenu) 
+            // navMenu.where((nav) => nav["title"] == "").fp
               ListTile(
                 minLeadingWidth: 20,
                 leading: Icon(
-                  i['icon'],
+                  // i['icon'],
+                  i.icon,
                   size: 22,
                   color: Colors.white,
                 ),
                 title: Text(
-                  i['title'],
+                  // i['title'],
+                  i.title,
                   style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w500,
@@ -161,7 +230,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ),
                 ),
                 onTap: () {
-                  navigateTo(i['title']);
+                  // navigateTo(i['title']);
+                  navigateTo(i.title);
                 },
               ),
               const SizedBox(height: 20),

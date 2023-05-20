@@ -10,6 +10,7 @@ import 'package:client/core/utils/global.dart';
 import 'package:client/core/utils/loader.dart';
 import 'package:client/core/utils/modal.dart';
 import 'package:client/core/utils/toast.dart';
+import 'package:client/router/navigator/menu_drawer.dart';
 import 'package:client/router/router.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -348,6 +349,56 @@ class AppData extends ChangeNotifier {
       });
   }
 
+  static void populateNavigationItems() {
+    if (Var.activeUserRole == Var.client) {
+        Var.navMenu.addAll({
+          NavItems(
+            icon: Icons.home,
+            title: Var.home
+          ),
+          NavItems(
+            icon: Icons.person,
+            title: Var.profile
+          ),
+          NavItems(
+            icon: Icons.shopping_bag,
+            title: Var.productOrderDetails
+          ),
+          NavItems(
+            icon: Icons.shopping_cart,
+            title: Var.productcart
+          ),
+          NavItems(
+            icon: Icons.info,
+            title: Var.about
+          ),
+          NavItems(
+            icon: Icons.lock,
+            title: Var.logout
+          ),
+        });
+      } else {
+        Var.navMenu.addAll({
+          NavItems(
+            icon: Icons.home,
+            title: Var.home
+          ),
+          NavItems(
+            icon: Icons.person,
+            title: Var.profile
+          ),
+          NavItems(
+            icon: Icons.info,
+            title: Var.about
+          ),
+          NavItems(
+            icon: Icons.lock,
+            title: Var.logout
+          ),
+        });
+      }
+  }
+
   static void initApplication() {
     if (FirebaseAuth.instance.currentUser != null) {
       AppData.getProductLists();
@@ -360,6 +411,7 @@ class AppData extends ChangeNotifier {
       AppData.getMessages();
       AppData.getOrderStatuses();
       AppData.getProductOrder();
+      AppData.populateNavigationItems();
     }
   }
 

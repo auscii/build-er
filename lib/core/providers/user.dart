@@ -317,6 +317,7 @@ class UserProvider extends ChangeNotifier {
       Var.activePage = "";
       Var.activeUserRole = "";
       Var.previousRoute = "";
+      Var.navMenu.clear();
       notifyListeners();
       UserProvider.clearUserLists();
       GlobalNavigator.router.currentState!
