@@ -37,9 +37,9 @@ class _MapsState extends State<Maps> {
         return FlutterMap(
           mapController: controller,
           options: MapOptions(
-            center: details.location,
-            minZoom: 12,
-            zoom: 17,
+            // center: details.location,
+            // minZoom: 12,
+            // zoom: 17,
             onMapReady: () {
               details.getUserLocation(context: context, controller: controller);
               details.locationInstance.onLocationChanged.listen((loc) {
@@ -68,7 +68,12 @@ class _MapsState extends State<Maps> {
               urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
               subdomains: const ['a', 'b', 'c'],
             ),
-            CurrentLocationLayer(),
+            CurrentLocationLayer(
+              style: const LocationMarkerStyle(
+                headingSectorColor: Color.fromARGB(204, 33, 138, 243),
+                marker: DefaultLocationMarker(color: Color.fromARGB(255, 0, 0, 0))
+              ),
+            ),
             MarkerClusterLayerWidget(
               options: MarkerClusterLayerOptions(
                 maxClusterRadius: 60,
@@ -76,18 +81,34 @@ class _MapsState extends State<Maps> {
                 fitBoundsOptions: const FitBoundsOptions(
                   padding: EdgeInsets.all(50),
                 ),
-                markers: Provider.of<AppData>(context).clients.map((client) {
+                markers: Var.nearbyContractorUsers.map((user) {
+                  print("nearbyContractorUsers userGeocodes ->${user.address?.position}");
                   return Marker(
-                    width: 40.0,
-                    height: 40.0,
-                    point: client.address.position,
+                    width: 120.0,
+                    height: 120.0,
+                    point: LatLng(
+                      user.address!.position.latitude,
+                      user.address!.position.longitude
+                    ), //client.address.position,
                     builder: (ctx) => const Icon(
-                      Icons.garage,
+                      Icons.pin_drop_sharp,
+                      color: Colors.red,
                     ),
                   );
                 }).toList(),
+                // markers: Provider.of<AppData>(context).clients.map((client) {
+                //   return Marker(
+                //     width: 100.0,
+                //     height: 100.0,
+                //     point: LatLng(14.5465215, 121.0586234), //client.address.position,
+                //     builder: (ctx) => const Icon(
+                //       Icons.pin_drop_sharp,
+                //       color: Colors.red,
+                //     ),
+                //   );
+                // }).toList(),
                 polygonOptions: const PolygonOptions(
-                  borderColor: Colors.blueAccent,
+                  borderColor: Colors.greenAccent,
                   color: Colors.black12,
                   borderStrokeWidth: 3
                 ),

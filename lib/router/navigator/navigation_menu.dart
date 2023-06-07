@@ -59,8 +59,6 @@ class _NavigationMenuState extends State<NavigationMenu> {
   void initState() {
     // AppData.getProductCarts();
     initilizeChatbot();
-    print("NavMenu Var.allUsers ->${Var.allUsers}");
-    print("NavMenu Var.activeUserRole ->${Var.activeUserRole}");
     super.initState();
   }
 

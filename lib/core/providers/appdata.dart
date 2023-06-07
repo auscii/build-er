@@ -99,6 +99,58 @@ class AppData extends ChangeNotifier {
       });
   }
 
+  Future<void> updateUserProfile({
+    required String userId,
+    required String name,
+    // required String address,
+    required String phone,
+  }) async {
+    final instance = FirebaseFirestore.instance
+        .collection(Var.users)
+        .withConverter(
+            fromFirestore: UserModel.fromFirestore,
+            toFirestore: (UserModel userModel, _) 
+            => userModel.toFirestore())
+        .doc(userId);
+    instance.get().then((value) {
+      instance.update({
+        "name": name,
+        "phone": phone,
+      });
+    }).then((_) => {
+      Toast.show("Please re-login again. Thank you!", null)
+      // Toast.show(Var.successUpdated, null)
+    });
+  }
+  // Future<void> updateUserDetails({required String userId}) async {
+  //   final instance = FirebaseFirestore.instance
+  //       .collection(Var.users)
+  //       .withConverter(
+  //           fromFirestore: UserModel.fromFirestore,
+  //           toFirestore: (UserModel userModel, _) 
+  //           => userModel.toFirestore())
+  //       .doc(userId);
+  //   instance.get().then((value) {
+  //     instance.update({
+  //       Var.isUserVerified: Var.adminApprovedUserVerification
+  //     });
+  //     storeNewNotification(
+  //       notif: Notifications(
+  //         id: "${Var.notifCode}${Var.charRandomizer()}",
+  //         actionMessage: Var.approvalAction,
+  //         type: Var.approval,
+  //         toUser: userId,
+  //         createdAt: Var.now.toString(),
+  //         createdBy: Var.currentUserID,
+  //         status: 1
+  //       )
+  //     );
+  //     UserProvider.clearUserLists();
+  //   }).then((_) => {
+  //     Toast.show(Var.userIsNowUpdated, null)
+  //   });
+  // }
+
   static void getPortfolioLists() async {
     if (FirebaseAuth.instance.currentUser != null) {
       var currentUserId = FirebaseAuth.instance.currentUser!.uid;

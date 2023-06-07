@@ -1,10 +1,11 @@
+import 'package:client/core/providers/appdata.dart';
 import 'package:client/core/utils/toast.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:client/core/utils/validator.dart';
+import 'package:client/router/router.dart';
+import 'package:client/screens/roles/admin/add_products.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-// 🏘️ Local imports
 import '../../core/providers/user.dart';
 import '../../core/utils/global.dart';
 import '../../styles/ui/colors.dart';
@@ -12,6 +13,13 @@ import '../../router/navigator/navigation_menu.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({Key? key}) : super(key: key);
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _phonenumberController = TextEditingController();
+  final FocusNode _nameFocusNode = FocusNode();
+  final FocusNode _adddressFocusNode = FocusNode();
+  final FocusNode _phonenumberFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -118,9 +126,13 @@ class ProfilePage extends StatelessWidget {
                     SizedBox(
                       height: kIsWeb ? 50 : null,
                       child: ElevatedButton(
-                        onPressed: () {
-                          Toast.show(Var.featureNotAvailable, null);
-                        },
+                        onPressed: () => showDialog(
+                          context: context,
+                          builder: (context) => updateProfile(
+                            context,
+                            Provider.of<UserProvider>(context).user.uid ?? Var.na
+                          ),
+                        ),
                         style: ElevatedButton.styleFrom(
                           primary: AppColors.primary,
                           padding: const EdgeInsets.symmetric(
@@ -148,4 +160,150 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
+
+  Widget updateProfile(
+    BuildContext context,
+    String uid
+  ) {
+    return AppDialog(
+      child: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                "UPDATE PROFILE",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 30,
+                  fontFamily: Var.defaultFont,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 35),
+              textArea(
+                _nameController,
+                _nameFocusNode,
+                "Name"
+              ),
+              // const SizedBox(height: 25),
+              // textArea(
+              //   _addressController,
+              //   _adddressFocusNode,
+              //   "Address"
+              // ),
+              const SizedBox(height: 25),
+              textArea(
+                _phonenumberController,
+                _phonenumberFocusNode,
+                "Phone Number"
+              ),
+              const SizedBox(height: 50),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    Provider.of<AppData>(context, listen: false)
+                    .updateUserProfile(
+                      userId: uid,
+                      name: _nameController.text,
+                      // address: _addressController.text,
+                      phone: _phonenumberController.text,
+                    ).then(
+                      (value) {
+                        GlobalNavigator.goBack();
+                        Provider.of<UserProvider>(
+                          context, 
+                          listen: false
+                        ).signOut(context);
+                        // NavigationMenu.activeIndex = 1;
+                        // GlobalNavigator.navigateToScreen(const NavigationMenu());
+                      },
+                    );
+                  } else {
+                    Toast.show(Var.unableSave, null);
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: AppColors.primary,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 17, horizontal: 24),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      Var.submit,
+                      style: TextStyle(
+                        fontFamily: Var.defaultFont,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 30),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  textArea(
+    TextEditingController fieldController,
+    FocusNode fieldNode,
+    String inputName
+  ) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          inputName,
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+            fontFamily: Var.defaultFont,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 10),
+        TextFormField(
+          controller: fieldController,
+          focusNode: fieldNode,
+          validator: (value) => InputValidator.validateName(
+            name: value!,
+            label: inputName
+          ),
+          minLines: 4,
+          maxLines: 5,
+          style: const TextStyle(
+            fontFamily: Var.defaultFont,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.6,
+            color: Colors.black
+          ),
+          decoration: InputDecoration(
+            hintText: Var.enter + inputName,
+            filled: true,
+            isCollapsed: true,
+            contentPadding: const EdgeInsets.fromLTRB(15, 20, 5, 20),
+            fillColor: AppColors.input,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide.none,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
 }

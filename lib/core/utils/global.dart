@@ -45,9 +45,9 @@ class Var {
   static const jpeg = ".jpeg";
   static const uploadFromGallery = "Upload Image from Gallery";
   static const permit = "PERMIT";
-  static const license = "LICENSE";
-  static const dti = "DTI";
-  static const sec = "SEC";
+  static const license = "PCAB";
+  static const dti = "BIR";
+  static const sec = "SEC/DTI";
   static const upload = "Upload";
   static const createClientAccount = "Create New Client Account";
   static const createContractorAccount = "Create New Contractor Account";
@@ -107,7 +107,7 @@ class Var {
   static const faq = "FAQ";
   static const locator = "LOCATOR";
   static const privacyPolicy = "PRIVACY POLICY";
-  static const copyright = "2023 BUILD-er.\nALL RIGHTS RESERVED.\nv1.0.4";
+  static const copyright = "2023 BUILD-er.\nALL RIGHTS RESERVED.\nv1.0.5";
   static const welcome = "Welcome, ";
   static const featureNotAvailable = "Sorry, this feature isn't available right now.";
   static const findNearbyContractors = "Find nearby Contractors";
@@ -157,6 +157,7 @@ class Var {
   static const contractorRequestTab = "ContractorRequestsTab";
   static const clientRequestTab = "ClientRequestsTab";
   static const userIsNowUpdated = "Successfully updated! This user is now approved!";
+  static const successUpdated = "Successfully updated!";
   static const isUserVerified = "isUserVerified";
   static const userCancelled = "User cancelled!";
   static const userNotVerified = "User not Verified.";
@@ -170,11 +171,11 @@ class Var {
   static const reviewsImg = "assets/images/res/reviews-bg.png";
   static const partnersImg = "assets/images/res/partners-bg.png";
   static const addPortfolio = "ADD NEW PORTFOLIO";
-  static const companyName = "COMPANY NAME";
-  static const briefDetails = "BRIEF DETAILS OF THE COMPANY";
+  static const companyName = "Project's Details"; //"COMPANY NAME";
+  static const briefDetails = "Project's Name"; //"BRIEF DETAILS OF THE COMPANY";
   static const feedback = "FEEDBACK";
   static const enter = "ENTER ";
-  static const companyLogo = "COMPANY LOGO";
+  static const companyLogo = "IMAGE"; //"COMPANY LOGO";
   static const previousCompany = "PREVIOUS COMPANY";
   static const portfolioCode = "PRTFL";
   static const notifCode = "NTF";

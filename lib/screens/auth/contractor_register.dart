@@ -204,8 +204,8 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                                 backgroundColor:
                                     MaterialStateProperty.all(AppColors.primary),
                               ),
-                              markerIcon: ProjectBuilder.client,
-                              markerIconColor: AppColors.primary,
+                              // markerIcon: ProjectBuilder.client,
+                              // markerIconColor: AppColors.primary,
                               searchBarBackgroundColor: AppColors.input,
                               zoomButtonsBackgroundColor: AppColors.primary,
                               locationButtonBackgroundColor: AppColors.primary,
@@ -263,7 +263,7 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                       ),
                       const SizedBox(height: 40),
                       const Text(
-                        Var.license,
+                        Var.license, //PCAB
                         style: TextStyle(
                           fontFamily: Var.defaultFont,
                           fontSize: 16,
@@ -297,7 +297,7 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                       ),
                       const SizedBox(height: 40),
                       const Text(
-                        Var.dti,
+                        Var.dti, //BIR
                         style: TextStyle(
                           fontFamily: Var.defaultFont,
                           fontSize: 16,
@@ -331,7 +331,7 @@ class _ContractorRegisterState extends State<ContractorRegister> {
                       ),
                       const SizedBox(height: 40),
                       const Text(
-                        Var.sec,
+                        Var.sec, //SEC/DTI
                         style: TextStyle(
                           fontFamily: Var.defaultFont,
                           fontSize: 16,

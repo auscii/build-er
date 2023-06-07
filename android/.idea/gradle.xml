@@ -10,25 +10,24 @@
         <option name="gradleJvm" value="11" />
         <option name="modules">
           <set>
-            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/cloud_firestore-3.5.1/android" />
-            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/desktop_webview_auth-0.0.11/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/cloud_firestore-4.8.0/android" />
             <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/device_info-2.0.3/android" />
-            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_analytics-9.3.8/android" />
-            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_auth-3.11.2/android" />
-            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_core-1.24.0/android" />
-            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_crashlytics-2.9.0/android" />
-            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_storage-10.3.11/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_analytics-10.4.2/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_auth-4.6.2/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_core-2.13.1/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_crashlytics-3.3.2/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_storage-11.2.2/android" />
             <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_compass-0.7.0/android" />
-            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.9/android" />
-            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/fluttertoast-8.2.1/android" />
-            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/geolocator_android-4.1.7/android" />
-            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/image_picker_android-0.8.6+6/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.15/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/fluttertoast-8.2.2/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/geolocator_android-4.1.8/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/image_picker_android-0.8.6+19/android" />
             <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/location-4.4.0/android" />
-            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_android-2.0.24/android" />
-            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/permission_handler_android-10.2.0/android" />
-            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/shared_preferences_android-2.1.0/android" />
-            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/url_launcher_android-6.0.33/android" />
-            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/ymchat_flutter-2.3.5/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_android-2.0.27/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/permission_handler_android-10.2.2/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/shared_preferences_android-2.1.4/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/url_launcher_android-6.0.35/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/ymchat_flutter-2.6.0/android" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
           </set>

@@ -10,14 +10,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e111177e-1a4d-468a-bcf5-14eafdc46362" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/../.flutter-plugins" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/../.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/core/providers/appdata.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/providers/appdata.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lib/core/utils/global.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/core/utils/global.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/router/navigator/menu_drawer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/router/navigator/menu_drawer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/router/navigator/navigation_menu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/router/navigator/navigation_menu.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/screens/auth/client_register.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/auth/client_register.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/screens/auth/contractor_register.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/auth/contractor_register.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/screens/roles/client/map.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/roles/client/map.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/screens/shared/profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/shared/profile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/screens/shared/settings.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../lib/screens/shared/settings.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/../linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../linux/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/../windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../windows/flutter/generated_plugins.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[RF8M60PWYFE]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/seanaustinnarvasa/.android/avd/Pixel_5_API_28.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -55,20 +74,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/seanaustinnarvasa/Documents/Temp/testing/web/build-er/android/app/src/main/res/mipmap-hdpi&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "cidr.known.project.marker": "true",
+    "last_opened_file_path": "/Users/seanaustinnarvasa/Documents/Temp/testing/app/build-er/android",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi" />

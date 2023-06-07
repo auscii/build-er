@@ -267,13 +267,13 @@ class _MenuDrawerState extends State<MenuDrawer> {
                           )
                       ),
                       const SizedBox(height: 50),
-                      Column(
+                      const Column(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: const [
+                            children: [
                               SizedBox(width: 15),
                               Text(
                                 Var.copyright,

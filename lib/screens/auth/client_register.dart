@@ -204,8 +204,8 @@ class _ClientRegisterState extends State<ClientRegister> {
                                 backgroundColor:
                                     MaterialStateProperty.all(AppColors.primary),
                               ),
-                              markerIcon: ProjectBuilder.client,
-                              markerIconColor: AppColors.primary,
+                              // markerIcon: ProjectBuilder.client,
+                              // markerIconColor: AppColors.primary,
                               searchBarBackgroundColor: AppColors.input,
                               zoomButtonsBackgroundColor: AppColors.primary,
                               locationButtonBackgroundColor: AppColors.primary,

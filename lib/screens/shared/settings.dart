@@ -501,8 +501,8 @@ class EditDetails extends StatelessWidget {
                         backgroundColor:
                             MaterialStateProperty.all(AppColors.primary),
                       ),
-                      markerIcon: ProjectBuilder.client,
-                      markerIconColor: AppColors.primary,
+                      // markerIcon: ProjectBuilder.client,
+                      // markerIconColor: AppColors.primary,
                       searchBarBackgroundColor: AppColors.input,
                       zoomButtonsBackgroundColor: AppColors.primary,
                       locationButtonBackgroundColor: AppColors.primary,
